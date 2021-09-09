@@ -2,5 +2,8 @@
 Asiago FEC for hack reactor 
 
 Compile using Webpack(babel)
-React
+React hooks
+Materiel UI
+Node
+
 
