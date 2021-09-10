@@ -15,10 +15,11 @@ const config = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
+        filename: "main.js"
     },
     devServer: {
         open: true,
-        host: 'localhost',
+        host: 'http://127.0.0.1:8080/dist',
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -52,10 +53,10 @@ const config = {
 module.exports = () => {
     if (isProduction) {
         config.mode = 'production';
-        
-        
+
+
         config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
-        
+
     } else {
         config.mode = 'development';
     }

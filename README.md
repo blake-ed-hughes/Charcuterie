@@ -15,5 +15,7 @@ Jest
 # startup commands
 $ npm install
 $ npm run build
+$ npm run watch
+-- open new terminal ---
 $ npm start
 
