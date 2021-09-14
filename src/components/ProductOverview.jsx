@@ -40,9 +40,6 @@ function Overview(props) {
           container
           spacing={3}
           padding={3}
-          // direction="row"
-          // justifyContent="space-around"
-          // alignItems="flex-start"
         >
           <Grid item xs={12} sm={8} container justifyContent="center">
           <Paper >
