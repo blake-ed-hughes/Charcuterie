@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 // import SearchBar from "material-ui-search-bar";
 
 
@@ -8,17 +9,17 @@ class QnA extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
-      productId: 38323
+      productId: 38322
     });
   }
 
   render() {
     return (
-      <main>
+      <Grid container spacing={3}>
         <div>
-        here will be a search bar
+          here will be a search bar
         </div>
-      </main>
+      </Grid>
     );
   }
 }
