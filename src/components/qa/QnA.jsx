@@ -14,11 +14,11 @@ class QnA extends React.Component {
 
   render() {
     return (
-      <main>
-        <div>
+
+      <div>
         here will be a search bar
-        </div>
-      </main>
+      </div>
+
     );
   }
 }
