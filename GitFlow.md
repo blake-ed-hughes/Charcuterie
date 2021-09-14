@@ -5,6 +5,8 @@ Goal: code collaboratively, working together to build software.
 
 **Pull From Upstream Master Daily**
 Before you begin coding for the day, pull from the upstream main branch with git pull upstream master.
+<git pull origin main> pulling down the latest version of master from GitHub
+
 
 **Git Commands**
 - git log
@@ -15,10 +17,10 @@ Before you begin coding for the day, pull from the upstream main branch with git
 **To Resolve a Conflict**
 STEP BY STEP
 To fix this, we’ll need to do some syncing up of these different code versions:
-<git checkout master>
-<git pull origin master> pulling down the latest version of master from GitHub
+<git checkout main>
+<git pull origin main> pulling down the latest version of master from GitHub
 <git checkout featureBranchInConflict> swap to the conflicting branch
-<git merge master> merge conflict now happening/visible and fixable on our device, on the feature branch specifically
+<git merge main> merge conflict now happening/visible and fixable on our device, on the feature branch specifically
 
 Note: Be careful with the VSCode buttons — “Keep both changes” can sometimes break things, similarly if there are multiple conflicts in one file I’ve also seen “Accept all incoming changes” or “Accept all current changes”.  These may have unintended side effects
 

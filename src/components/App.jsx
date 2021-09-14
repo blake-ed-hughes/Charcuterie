@@ -1,6 +1,6 @@
 import React from 'react';
 import Overview from './ProductOverview.jsx';
-import Questions from './QnA.jsx';
+import Questions from './qa/QnA.jsx';
 import Ratings from './RatingsnReviews.jsx';
 
 class App extends React.Component {
