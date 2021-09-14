@@ -1,24 +1,34 @@
 import React from 'react';
 import Overview from './ProductOverview.jsx';
-import Questions from './QnA.jsx';
+import Questions from './qa/QnA.jsx';
 import Ratings from './RatingsnReviews.jsx';
+import Grid from '@material-ui/core/Grid';
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state =({
-      productId: 38323
+    this.state = ({
+      productId: 38322
     });
   }
 
-  render(){
+  render() {
     return (
-    <main>
-      <Overview productId={this.state.productId}/>
-      <Questions productId={this.state.productId}/>
-      <Ratings productId={this.state.productId}/>
-    </main>
-      );
+      <main>
+        <Grid container justifyContent="space-evenly" spacing={3} padding={3} direction="column">
+          <Grid item xs container>
+            <Overview productId={this.state.productId}/>
+          </Grid>
+          <Grid item xs container>
+            <Questions productId={this.state.productId}/>
+          </Grid>
+          <Grid item xs container>
+            <Ratings productId={this.state.productId}/>
+          </Grid>
+        </Grid>
+      </main>
+    );
   }
 }
 
