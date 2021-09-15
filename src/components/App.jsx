@@ -1,7 +1,7 @@
 import React from 'react';
 import Overview from './ProductOverview.jsx';
 import Questions from './qa/QnA.jsx';
-import Ratings from './RatingsnReviews.jsx';
+import Ratings from './ratings&reviews/RatingsAndReviews.jsx';
 import Grid from '@material-ui/core/Grid';
 
 
