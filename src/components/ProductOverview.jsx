@@ -11,10 +11,26 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+function styleSelect(props) {
+  const classes = useStyles();
+  const [pid, setPID] = useState(props.productId);
+  const [style, setStyle] = useState(props.style);
+  const [thumbnails, setThumbnails] = useState([]);
+  useEffect(() => {
+    let thumbs = []
+    for (i=0; i<props.photos;i++) {
+
+    }
+  });
+
+
+}
+
 function Overview(props) {
   const classes = useStyles();
   const [pid, setPID] = useState(props.productId);
   const [style, setStyle] = useState({});
+  const [styleIndex, setStyleIndex] = useState(0);
   const [styles, setStyles] = useState({});
   const [productInfo, setProductInfo] = useState({});
   const [stylePhotos, setPhotos] = useState([{url:''}]);
@@ -22,8 +38,6 @@ function Overview(props) {
     getProductStyles(pid)
     .then((response) => {
       setStyles(response.data.results);
-      setStyle(response.data.results[0]);
-      setPhotos([...response.data.results[0].photos]);
     })
     .catch((err) => {console.log('styles', err)});
     getProduct(pid)
@@ -32,6 +46,11 @@ function Overview(props) {
     })
     .catch((err) => {console.log('info', err)});
   }, [pid])
+
+  useEffect(() => {
+    setStyle(response.data.results[styleIndex]);
+    setPhotos([...response.data.results[styleIndex].photos]);
+  }, [styleIndex])
 
   return(
     <div>
@@ -70,6 +89,7 @@ function Overview(props) {
     </div>
   )
 }
+
 
 
 export default Overview;
