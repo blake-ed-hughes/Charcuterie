@@ -31,13 +31,19 @@ function Overview(props) {
   const [pid, setPID] = useState(props.productId);
   const [style, setStyle] = useState({});
   const [styleIndex, setStyleIndex] = useState(0);
-  const [styles, setStyles] = useState({});
+  const [styles, setStyles] = useState([{photos:{url:''}}]);
   const [productInfo, setProductInfo] = useState({});
   const [stylePhotos, setPhotos] = useState([{url:''}]);
+  useEffect(() => {
+    setStyle(styles[styleIndex]);
+    setPhotos([styles[styleIndex].photos]);
+  }, [styleIndex])
   useEffect(() => {
     getProductStyles(pid)
     .then((response) => {
       setStyles(response.data.results);
+      setStyle(response.data.results[styleIndex]);
+      setPhotos([...response.data.results[styleIndex].photos]);
     })
     .catch((err) => {console.log('styles', err)});
     getProduct(pid)
@@ -47,10 +53,6 @@ function Overview(props) {
     .catch((err) => {console.log('info', err)});
   }, [pid])
 
-  useEffect(() => {
-    setStyle(response.data.results[styleIndex]);
-    setPhotos([...response.data.results[styleIndex].photos]);
-  }, [styleIndex])
 
   return(
     <div>
