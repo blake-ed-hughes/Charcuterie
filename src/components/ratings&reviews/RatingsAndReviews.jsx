@@ -1,6 +1,7 @@
 import React from 'react';
 import ReviewTile from './ReviewTile.jsx';
-import { getReviews } from './r&rAxios';
+import Breakdown from './Breakdown.jsx';
+import { getReviews, getAllReviews, getReviewsMeta } from './RatingsAxios';
 import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -20,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  moreReviewsButton: {},
+  addReviewButton: {},
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -32,27 +35,43 @@ function Ratings({ productId }) {
 
   const [pid, setProductId] = useState(productId);
   const [reviewsData, setReviewsData] = useState([]);
-  const [sortList, setSortList] = useState('newest');
-  const [reviewCount, setReviewCount] = useState(0);
-
+  const [reviewsMetaData, setReviewsMetaData] = useState({});
+  const [sortList, setSortList] = useState('relevant');
+  const [reviewCount, setReviewCount] = useState(2);
+  const [totalReviewsCount, setTotalReviewsCount] = useState(0);
 
   const handleChange = (event) => {
-     // console.log('sortList---> ', sortList);
     setSortList(event.target.value);
   };
 
-
   useEffect(() => {
-    console.log('useEffect ran');
-    console.log('sortList--> ', sortList);
-    getReviews(pid, sortList)
+
+    getReviews(pid, sortList, reviewCount)
       .then((response) => {
         setReviewsData(response.data.results);
         setReviewCount(response.data.count);
       })
-      .catch((err) => { console.log('Failure in getReviews axios call', err)
+      .catch((err) => {
+        console.log('Failure in getReviews axios call', err)
       });
-  }, [pid, sortList])
+
+    getAllReviews(pid)
+      .then((response) => {
+        setTotalReviewsCount(response.data.count);
+      })
+      .catch((err) => {
+        console.log('Failure in getAllReviews axios call', err)
+      });
+
+    getReviewsMeta(pid)
+      .then((response) => {
+        setReviewsMetaData(response.data);
+      })
+      .catch((err) => {
+        console.log('Failure in getReviewsMeta axios call', err)
+      });
+
+  }, [pid, sortList, reviewCount, totalReviewsCount])
 
   return (
     <div className={classes.root}>
@@ -60,12 +79,16 @@ function Ratings({ productId }) {
         <Grid item xs={12}>
           <Paper className={classes.paper}>Ratings & Reviews</Paper>
         </Grid>
+
         <Grid item xs={4}>
           Breakdown
-          <Paper className={classes.paper}>Future Breakdown Data</Paper>
+          <Paper className={classes.paper}>
+            <Breakdown reviewsMetaData={reviewsMetaData} />
+          </Paper>
         </Grid>
+
         <Grid item xs={8}>
-          {reviewCount} reviews, sorted by
+          {reviewCount} reviews, sorted by :
           <Select
             value={sortList}
             onChange={handleChange}>
@@ -73,25 +96,27 @@ function Ratings({ productId }) {
             <MenuItem value={'newest'}>newest reviews</MenuItem>
             <MenuItem value={'helpful'}>helpfulness</MenuItem>
           </Select>
-          {/* Review Tile  */} {/* Conditional Sorting */}
-          <Paper className={classes.paper}>
-            <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
-              {/* Map Over List Items Review Data */}
-              {reviewsData.map(reviewData =>
-                <ListItem>
-                  <ReviewTile reviewData={reviewData} />
-                </ListItem>
-              )}
-            </List>
-          </Paper>
-          {/* More Reviews Buttons */} {/* Add Review Buttons */}
-          <Button variant="outlined" color="primary" className={classes.button}>
-            More Reviews
-          </Button>
-          <Button variant="outlined" color="secondary" className={classes.button}>
+
+
+          <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
+            {reviewsData.map((reviewData, index) =>
+
+              <ReviewTile key={index} reviewData={reviewData} />
+
+            )}
+          </List>
+
+
+          {reviewCount < totalReviewsCount && (
+            <Button onClick={() => setReviewCount(reviewCount + 1)} variant="outlined" color="primary" className={classes.moreReviewsButton}>
+              More Reviews
+            </Button>
+          )}
+          <Button variant="outlined" color="secondary" className={classes.addReviewButton}>
             Add Review +
           </Button>
         </Grid>
+
       </Grid>
     </div>
   );
