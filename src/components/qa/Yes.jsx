@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const HandleYesClick = () => {
+const Yes = () => {
   const [counter, setCounter] = useState(0);
   const increment = () => {
     setCounter(counter+1);
@@ -13,4 +13,4 @@ const HandleYesClick = () => {
   );
 }
 
-export default HandleYesClick;
+export default Yes;
