@@ -15,7 +15,7 @@ function getQuestions(pid) {
 function getAnswers(pid) {
   return Axios({
     method: 'get',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/qa/questions/${pid}/answers`,
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/qa/questions/?product_id=${pid}/answers`,
     headers: {'Authorization': API_key}
   })
 }

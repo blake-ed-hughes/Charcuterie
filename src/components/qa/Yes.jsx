@@ -6,10 +6,10 @@ const Yes = () => {
     setCounter(counter+1);
   }
   return (
-    <div>
+    <a>
       <button onClick={increment}>Yes</button>
       {counter}
-    </div>
+    </a>
   );
 }
 
