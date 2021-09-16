@@ -1,6 +1,7 @@
 // resourses:
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 
 // material UI
 import { Button } from '@material-ui/core';
@@ -15,16 +16,22 @@ import Paper from '@material-ui/core/Paper';
 import Yes from './Yes.jsx';
 import Search from './Search.jsx';
 import { getQuestions, getAnswers } from './axiosHelper.js';
+import Questions from './Questions.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  moreQuestionsButton: {},
+  addQuestionButton: {},
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: 'start-flex',
     color: theme.palette.text.secondary,
   },
+  gridWrapper: {
+    border: "1px solid grey"
+  }
 }));
 
 export default function QnA(props) {
@@ -44,36 +51,35 @@ export default function QnA(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
+
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>Questions & Answers</Paper>
+        </Grid>
 
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <Search />
           </Paper>
-        </Grid>
 
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Grid container spacing={6}>
-              <Typography variant='h3' color="textSecondary">user:{question.asker_name}</Typography>
+          <div className={classes.gridWrapper}>
+            {questions && questions.length && questions.map(question => {
+              return (
+                <Questions question={question} key={question.question_id} />
+              )
+            })}
+          </div>
 
-              <Typography variant='h4' color="textSecondary">Q: {question.question_body}</Typography>
-              <span>Helpful?
-                  <Yes />
-              </span>
-            </Grid>
-          </Paper>
-        </Grid>
+          <Button onClick={() => setReviewCount(reviewCount + 1)} variant="outlined" color="primary" className={classes.moreQuestionsButton}>
+            MORE ANSWERED QUESTIONS
+        </Button>
 
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>MORE ANSWERED QUESTIONS</Paper>
-        </Grid>
-
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>ADD A QUESTION</Paper>
+          <Button variant="outlined" color="secondary" className={classes.addQuestionButton}>
+            ADD A QUESTION +
+        </Button>
         </Grid>
 
       </Grid>
-    </div>
+    </div >
   );
 }

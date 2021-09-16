@@ -41,8 +41,8 @@ class Search extends React.Component {
 export default Search;
 
 
-//<SearchBar
-// value={this.state.value}
-// onChange={(newValue) => this.setState({ value: newValue })}
-// onRequestSearch={() => doSomethingWith(this.state.value)}
-// />
+//       {questions && questions.length && questions.map(question => {
+//   return (
+//     <Question question={question} key={question.question_id} />
+// )
+// })}
