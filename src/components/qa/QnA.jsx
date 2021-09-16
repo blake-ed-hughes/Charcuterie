@@ -36,7 +36,6 @@ export default function QnA(props) {
   useEffect(() => {
     getQuestions(pid)
       .then((response) => {
-        // console.log(response.data.results);
         setQuestions(response.data.results);
         setQuestion(response.data.results[0]);
       })
