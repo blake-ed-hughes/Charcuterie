@@ -17,4 +17,13 @@ function getProductStyles (pid) {
   })
 }
 
-export {getProduct, getProductStyles};
+function postItemToCart (sku) {
+  return Axios({
+    method: 'post',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/cart`,
+    data: {sku_id: sku},
+    headers: {'Authorization': API_key}
+  })
+}
+
+export {getProduct, getProductStyles, postItemToCart};
