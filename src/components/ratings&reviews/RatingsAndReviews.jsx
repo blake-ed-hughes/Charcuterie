@@ -25,9 +25,12 @@ const useStyles = makeStyles((theme) => ({
   addReviewButton: {},
   paper: {
     padding: theme.spacing(2),
-    textAlign: 'center',
+    textAlign: 'start-flex',
     color: theme.palette.text.secondary,
   },
+  gridWrapper: {
+    border: "1px solid grey"
+  }
 }));
 
 function Ratings({ productId }) {
@@ -81,31 +84,29 @@ function Ratings({ productId }) {
         </Grid>
 
         <Grid item xs={4}>
-          Breakdown
+          {/* Breakdown */}
           <Paper className={classes.paper}>
             <Breakdown reviewsMetaData={reviewsMetaData} />
           </Paper>
         </Grid>
 
         <Grid item xs={8}>
-          {reviewCount} reviews, sorted by :
+          {reviewCount} {' reviews, sorted by '}
           <Select
             value={sortList}
             onChange={handleChange}>
             <MenuItem value={'relevant'}>relevance</MenuItem>
-            <MenuItem value={'newest'}>newest reviews</MenuItem>
+            <MenuItem value={'newest'}>most recent</MenuItem>
             <MenuItem value={'helpful'}>helpfulness</MenuItem>
           </Select>
-
 
           <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
             {reviewsData.map((reviewData, index) =>
 
-              <ReviewTile key={index} reviewData={reviewData} />
+              <ReviewTile spacing={4} padding={4} key={index} reviewData={reviewData} />
 
             )}
           </List>
-
 
           {reviewCount < totalReviewsCount && (
             <Button onClick={() => setReviewCount(reviewCount + 1)} variant="outlined" color="primary" className={classes.moreReviewsButton}>
