@@ -1,5 +1,6 @@
 import Axios from 'axios';
-import API_key from '../../config.js';
+
+import API_key from '../../config';
 
 
 function getQuestions(pid) {
