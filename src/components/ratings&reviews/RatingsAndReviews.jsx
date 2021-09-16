@@ -17,6 +17,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -61,6 +62,9 @@ function Ratings({ productId }) {
     getAllReviews(pid)
       .then((response) => {
         setTotalReviewsCount(response.data.count);
+        if (response.data.results.length === 0) {
+          setReviewCount(reviewCount - 2);
+        }
       })
       .catch((err) => {
         console.log('Failure in getAllReviews axios call', err)
@@ -91,7 +95,7 @@ function Ratings({ productId }) {
         </Grid>
 
         <Grid item xs={8}>
-          {reviewCount} {' reviews, sorted by '}
+        {'Showing '} {reviewCount} {' of '} {totalReviewsCount} {' reviews, sorted by '}
           <Select
             value={sortList}
             onChange={handleChange}>

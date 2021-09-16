@@ -7,10 +7,14 @@ The old client is an outdated client-facing retail web-portal has become signifi
 # Tools
 Compile using Webpack(babel)
 React hooks
-Materiel UI
+Materiel UI / MUI
 Node
 Axios
 Jest
+---------
+DateFormat
+Emotion
+React-icons
 
 # startup commands
 $ npm install
