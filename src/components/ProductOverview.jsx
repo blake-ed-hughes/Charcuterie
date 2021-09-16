@@ -6,23 +6,60 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
+import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
 
 const useStyles = makeStyles((theme) => ({
-
+  large: {
+    width: '80px',
+    height: '80px',
+  }
 }));
 
-function styleSelect(props) {
+function StyleSelect(props) {
   const classes = useStyles();
-  const [pid, setPID] = useState(props.productId);
   const [style, setStyle] = useState(props.style);
   const [thumbnails, setThumbnails] = useState([]);
   useEffect(() => {
-    let thumbs = []
-    for (i=0; i<props.photos;i++) {
-
+    let thumbs = [];
+    console.log(props.styles)
+    for (let i = 0; i < props.styles.length; i++) {
+      thumbs.push(props.styles[i].photos[0].thumbnail_url);
     }
-  });
+    setStyle(props.style);
+    setThumbnails(thumbs);
+  }, [props]);
 
+  function updateIndex(e) {
+    props.changeIndex(parseInt(e.target.alt));
+  }
+  return (
+    <Grid container >
+      <Grid item>
+        <Typography>{'style > ' + style.name}</Typography>
+      </Grid>
+      <Grid item container justifyContent="space-evenly" alignItems="center">
+        {thumbnails.map((url, index) => {
+          console.log(index, props.styleIndex)
+          if (index === props.styleIndex) {
+            return(
+              <Grid item xs={3} key={index}>
+                <Badge color='primary'  badgeContent='' overlap='circular'>
+                  <Avatar alt={'' + index} src={url} className={classes.large} onClick={updateIndex}/>
+                </Badge>
+              </Grid>
+            )
+          } else {
+            return(
+              <Grid item xs={3} key={index}>
+                <Avatar alt={'' + index} src={url} className={classes.large} onClick={updateIndex}/>
+              </Grid>
+            )
+          }
+        })}
+      </Grid>
+    </Grid>
+  );
 
 }
 
@@ -31,16 +68,17 @@ function Overview(props) {
   const [pid, setPID] = useState(props.productId);
   const [style, setStyle] = useState({});
   const [styleIndex, setStyleIndex] = useState(0);
-  const [styles, setStyles] = useState([{photos:{url:''}}]);
+  const [styles, setStyles] = useState([{photos:[{url:''}]}]);
   const [productInfo, setProductInfo] = useState({});
   const [stylePhotos, setPhotos] = useState([{url:''}]);
   useEffect(() => {
     setStyle(styles[styleIndex]);
-    setPhotos([styles[styleIndex].photos]);
-  }, [styleIndex])
+    setPhotos([...styles[styleIndex].photos]);
+  }, [styleIndex, styles])
   useEffect(() => {
     getProductStyles(pid)
     .then((response) => {
+
       setStyles(response.data.results);
       setStyle(response.data.results[styleIndex]);
       setPhotos([...response.data.results[styleIndex].photos]);
@@ -53,6 +91,9 @@ function Overview(props) {
     .catch((err) => {console.log('info', err)});
   }, [pid])
 
+  function changeIndex(index) {
+    setStyleIndex(index);
+  }
 
   return(
     <div>
@@ -62,10 +103,11 @@ function Overview(props) {
           spacing={3}
           padding={3}
         >
-          <Grid item xs={12} sm={8} container justifyContent="center">
+          <Grid item xs={12} sm={8} container justifyContent="center" >
           <Paper >
-            {/* this is my image gall */}
-            <img src={stylePhotos[stylePhotos.length-1].url} height='100%'/>
+            {/* this is my image gall */
+            console.log(styleIndex)}
+            <img src={stylePhotos[0].url} height='auto' width='auto'/>
           </Paper>
           </Grid>
           <Grid item xs={12} sm={4} container direction="column">
@@ -78,6 +120,7 @@ function Overview(props) {
             {/* price */}
             <Typography variant='subtitle1'>${productInfo.default_price}</Typography>
             {/* style selector */}
+            <StyleSelect styleIndex={styleIndex} style={style} styles={styles} changeIndex={(e) => {changeIndex(e)}}/>
             {/*  */}
             {/* add to cart */}
             </Paper>

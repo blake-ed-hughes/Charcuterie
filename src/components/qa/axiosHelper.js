@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import API_key from '/Users/pingpingxiao/Desktop/GitHub/FEC/src/config.js';
+import API_key from '../../config.js';
 
 
 function getQuestions(pid) {
