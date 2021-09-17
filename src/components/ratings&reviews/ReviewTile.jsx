@@ -15,6 +15,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
+import Avatar from '@material-ui/core/Avatar';
 import Link from '@mui/material/Link';
 import { FaRegCheckCircle } from "react-icons/fa";
 
@@ -67,12 +68,23 @@ function ReviewTile({ reviewData }) {
           </Paper>
         </Grid>
         <Grid item xs={12} >
-          <Paper className={classes.paper}>{reviewData.body}</Paper>
+          <Paper className={classes.paper}>
+            <Typography >
+              {reviewData.body}
+            </Typography>
+            <ImageList className={classes.imageList} cols={2.5}>
+              {reviewData.photos.map((item) => (
+                <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
+                  <img src={item.url} />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </Paper>
         </Grid>
         {reviewData.recommend && (
           <Grid item xs={12} >
             <Paper className={classes.paper}>
-              <Typography style={{textAlign: 'flex-start'}}>
+              <Typography style={{ textAlign: 'flex-start' }}>
                 <FaRegCheckCircle />
                 {'  I recommend this product'}
               </Typography>

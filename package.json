@@ -35,6 +35,6 @@
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
     "serve": "webpack serve",
-    "start": "live-server --entry-file=./dist"
+    "start": "live-server --open=./dist"
   }
 }
