@@ -58,7 +58,7 @@ export default function Questions({ question }) {
             report
           </p>
         </div>
-      </div> {console.log(answers)}
+      </div>
       {answers.map(answer => <Answers answer={answer} key={answer.id} />)}
     </div>
   );
