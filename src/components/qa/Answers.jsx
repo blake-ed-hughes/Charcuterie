@@ -2,6 +2,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,26 +31,17 @@ export default function Answers({ answer }) {
 
 
   return (
-    <div>
-      <div className={classes.alignAnswer} >
-        <p className={classes.bold}>A: {' '}</p>
-        <p className={classes.body}>{answer.body}</p>
-      </div>
 
-      <div className={classes.answerDetails}>
-        <p className={classes.answererInfo}>
-          by {answer.answerer_name} {' '}
-          {answer.date}
-        </p>
+    <div className={classes.root}>
+      <Grid container spacing={0}>
 
-        <p className={classes.answerHelpful}>
-          Helpful Yes (2)
-        </p>
-        <p className={classes.report}>
-          report
-        </p>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>A: {answer.body}</Paper>
+          <Paper className={classes.repot}>by {answer.answerer_name} {' '} {answer.date.slice(0, 10)} {' '}
+          Helpful Yes (2)</Paper>
+        </Grid>
 
-      </div>
-    </div >
+      </Grid>
+    </div>
   );
 }

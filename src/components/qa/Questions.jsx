@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   bold: {},
+  questionAndAnswers: {
+    border: "1px solid grey"
+  },
   questionBlock: {},
   helpful: {},
   questionHelpful: {},
@@ -41,25 +44,22 @@ export default function Questions({ question }) {
   }
 
   return (
-    <div>
-      <div className={classes.questionBlock}>
-        <div>
-          <p className={classes.bold}>Q: {' '}</p>
-          <p className={classes.bold}>{question.question_body}</p>
-        </div>
-        <div className={classes.helpful}>
+    <div className={classes.root}>
+      <Grid container spacing={0}>
 
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>Q: {question.question_body}</Paper>
+        </Grid>
 
-          <p className={classes.questionHelpful}>
-            Helpful <Yes />
-          </p>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>Helpful <Yes /> report</Paper>
+        </Grid>
 
-          <p className={classes.report}>
-            report
-          </p>
-        </div>
-      </div> {console.log(answers)}
-      {answers.map(answer => <Answers answer={answer} key={answer.id} />)}
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>{answers.map(answer => <Answers answer={answer} key={answer.id} />)}</Paper>
+        </Grid>
+
+      </Grid>
     </div>
   );
 }

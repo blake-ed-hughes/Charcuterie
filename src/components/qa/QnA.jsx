@@ -34,20 +34,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function QnA(props) {
+export default function QnA() {
   const classes = useStyles();
-  const [pid, setPID] = useState(props.productId);
+  // const [pid, setPID] = useState(props.productId);
   const [questions, setQuestions] = useState({});
   const [question, setQuestion] = useState({});
 
   useEffect(() => {
-    getQuestions(pid)
+    getQuestions(38326)
       .then((response) => {
         setQuestions(response.data.results);
         setQuestion(response.data.results[0]);
       })
       .catch((err) => { console.log('fail to get questions', err) });
-  }, [pid])
+  }, [38326])
 
   return (
     <div className={classes.root}>
