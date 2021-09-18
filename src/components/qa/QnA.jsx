@@ -39,12 +39,14 @@ export default function QnA() {
   // const [pid, setPID] = useState(props.productId);
   const [questions, setQuestions] = useState({});
   const [question, setQuestion] = useState({});
+  const [questionCount, setQuestionCount] = useState(4);
 
   useEffect(() => {
     getQuestions(38326)
       .then((response) => {
         setQuestions(response.data.results);
         setQuestion(response.data.results[0]);
+        setQuestionCount(response.data.results.slice(0,4));
       })
       .catch((err) => { console.log('fail to get questions', err) });
   }, [38326])
@@ -70,7 +72,7 @@ export default function QnA() {
             })}
           </div>
 
-          <Button onClick={() => setReviewCount(reviewCount + 1)} variant="outlined" color="primary" className={classes.moreQuestionsButton}>
+          <Button onClick={() => setQuestionCount(questionCount + 1)} variant="outlined" color="primary" className={classes.moreQuestionsButton}>
             MORE ANSWERED QUESTIONS
         </Button>
 
