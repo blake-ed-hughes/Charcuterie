@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 // import SearchBar from "material-ui-search-bar";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
 
 
 class Search extends React.Component {
@@ -27,6 +28,7 @@ class Search extends React.Component {
   render() {
     return (
       <Grid container spacing={3}>
+          <SearchIcon />
         <form onSubmit={this.handleSubmit}>
           <label>
             <input type="text" question="question" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />

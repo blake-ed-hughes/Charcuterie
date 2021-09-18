@@ -1,4 +1,3 @@
-// import React from 'react';
 import React from 'react';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -52,9 +51,9 @@ function ReviewTile({ reviewData }) {
       <Grid container style={{ borderBottom: "3px solid grey" }} spacing={1} padding={1}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            <Stack spacing={1}>
+            {/* <Stack spacing={1}> */}
               <Rating name="quarter-rating" defaultValue={starRating} precision={0.25} readOnly />
-            </Stack>
+            {/* </Stack> */}
           </Paper>
         </Grid>
         <Grid item xs={6} align={'right'}>

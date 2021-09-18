@@ -7,7 +7,7 @@ const Yes = () => {
   }
   return (
     <a>
-      <button onClick={increment}>Yes</button>
+      <button onClick={increment}><u>Yes</u></button>
       {counter}
     </a>
   );
