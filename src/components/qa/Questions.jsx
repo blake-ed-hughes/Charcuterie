@@ -47,12 +47,12 @@ export default function Questions({ question }) {
     <div className={classes.root}>
       <Grid container spacing={0}>
 
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>Q: {question.question_body}</Paper>
+        <Grid item xs={6}> {' '}
+          Q: {question.question_body}
         </Grid>
 
         <Grid item xs={6}>
-          <Paper className={classes.paper}>Helpful <Yes /> report</Paper>
+          Helpful <Yes /> report
         </Grid>
 
         <Grid item xs={12}>

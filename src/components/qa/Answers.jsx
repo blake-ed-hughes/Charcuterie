@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
   alignAnswer: {},
   bold: {},
   body: {},
-  report: {},
   answerHelpful: {},
   paper: {
     padding: theme.spacing(2),
@@ -36,9 +35,10 @@ export default function Answers({ answer }) {
       <Grid container spacing={0}>
 
         <Grid item xs={12}>
-          <Paper className={classes.paper}>A: {answer.body}</Paper>
-          <Paper className={classes.repot}>by {answer.answerer_name} {' '} {answer.date.slice(0, 10)} {' '}
-          Helpful Yes (2)</Paper>
+          <Paper className={classes.paper}>A: {answer.body}
+          <p>by {answer.answerer_name} {' '} {answer.date.slice(0, 10)} {' | '}
+          Helpful? <u>Yes</u> (2) {' | '} <u>Report</u> </p>
+          </Paper>
         </Grid>
 
       </Grid>
