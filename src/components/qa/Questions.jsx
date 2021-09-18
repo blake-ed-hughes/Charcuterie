@@ -58,8 +58,6 @@ export default function Questions({ question }) {
         <Grid item xs={12}>
           <Paper className={classes.paper}>{answers.map(answer => <Answers answer={answer} key={answer.id} />)}</Paper>
         </Grid>
-
-      </Grid>
     </div>
   );
 }

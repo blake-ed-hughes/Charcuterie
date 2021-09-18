@@ -78,7 +78,7 @@ function Ratings({ productId }) {
         console.log('Failure in getReviewsMeta axios call', err)
       });
 
-  }, [pid, sortList, reviewCount, totalReviewsCount])
+  }, [pid, sortList, reviewCount])
 
   return (
     <div className={classes.root}>
@@ -88,7 +88,6 @@ function Ratings({ productId }) {
         </Grid>
 
         <Grid item xs={4}>
-          {/* Breakdown */}
           <Paper className={classes.paper}>
             <Breakdown reviewsMetaData={reviewsMetaData} />
           </Paper>

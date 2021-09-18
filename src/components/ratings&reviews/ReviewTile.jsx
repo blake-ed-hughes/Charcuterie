@@ -1,4 +1,3 @@
-// import React from 'react';
 import React from 'react';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -15,6 +14,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
+import Avatar from '@material-ui/core/Avatar';
 import Link from '@mui/material/Link';
 import { FaRegCheckCircle } from "react-icons/fa";
 
@@ -51,9 +51,9 @@ function ReviewTile({ reviewData }) {
       <Grid container style={{ borderBottom: "3px solid grey" }} spacing={1} padding={1}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            <Stack spacing={1}>
+            {/* <Stack spacing={1}> */}
               <Rating name="quarter-rating" defaultValue={starRating} precision={0.25} readOnly />
-            </Stack>
+            {/* </Stack> */}
           </Paper>
         </Grid>
         <Grid item xs={6} align={'right'}>
@@ -67,12 +67,23 @@ function ReviewTile({ reviewData }) {
           </Paper>
         </Grid>
         <Grid item xs={12} >
-          <Paper className={classes.paper}>{reviewData.body}</Paper>
+          <Paper className={classes.paper}>
+            <Typography >
+              {reviewData.body}
+            </Typography>
+            <ImageList className={classes.imageList} cols={2.5}>
+              {reviewData.photos.map((item) => (
+                <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
+                  <img src={item.url} />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </Paper>
         </Grid>
         {reviewData.recommend && (
           <Grid item xs={12} >
             <Paper className={classes.paper}>
-              <Typography style={{textAlign: 'flex-start'}}>
+              <Typography style={{ textAlign: 'flex-start' }}>
                 <FaRegCheckCircle />
                 {'  I recommend this product'}
               </Typography>
