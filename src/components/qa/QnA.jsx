@@ -89,7 +89,7 @@ export default function QnA() {
 
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <Search />
+            <Search questions={questions} />
           </Paper>
 
           <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
