@@ -12,6 +12,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import Answers from './Answers.jsx';
 import Yes from './Yes.jsx';
+import AnswerModal from './AnswerModal.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,8 +56,12 @@ export default function Questions({ question }) {
           Q: {question.question_body}
         </Grid>
 
-        <Grid item xs={6}>
-          Helpful <Yes /> report
+        <Grid item xs={3}>
+          Helpful <Yes /> |
+        </Grid>
+
+        <Grid item xs={3}>
+          <AnswerModal />
         </Grid>
 
         <Grid item xs={12}>
