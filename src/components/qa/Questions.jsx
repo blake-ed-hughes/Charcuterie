@@ -5,6 +5,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import Answers from './Answers.jsx';
 import Yes from './Yes.jsx';
@@ -41,7 +45,7 @@ export default function Questions({ question }) {
   const transformAnswersObject = () => {
     const answersArr = Object.values(answerObj).map(answer => answer);
     setAnswers(answersArr);
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -56,7 +60,25 @@ export default function Questions({ question }) {
         </Grid>
 
         <Grid item xs={12}>
-          <Paper className={classes.paper}> {answers.map(answer => <Answers answer={answer} key={answer.id} />)} </Paper>
+          <Paper className={classes.paper}> {answers.slice(0, 2).map(answer => <Answers answer={answer} key={answer.id} />)}
+
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Load More Answers</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                {answers.slice(2).map(answer => <Answers answer={answer} key={answer.id} />)}
+                 </Typography>
+              </AccordionDetails>
+            </Accordion>
+
+          </Paper>
+
         </Grid>
 
       </Grid>

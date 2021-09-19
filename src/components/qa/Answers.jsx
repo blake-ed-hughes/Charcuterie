@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Answers({ answer }) {
-  console.log(answer);
   const classes = useStyles();
 
 
@@ -36,8 +35,9 @@ export default function Answers({ answer }) {
 
         <Grid item xs={12}>
           <Paper className={classes.paper}>A: {answer.body}
-          <p>by {answer.answerer_name} {' '} {answer.date.slice(0, 10)} {' | '}
-          Helpful? <u>Yes</u> (2) {' | '} <u>Report</u> </p>
+          <Typography>by {answer.answerer_name} {' '} {answer.date.slice(0, 10)} {' | '}
+          Helpful? <u>Yes</u> (2) {' | '} <u>Report</u>
+          </Typography>
           </Paper>
         </Grid>
 

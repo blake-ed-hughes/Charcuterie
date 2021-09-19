@@ -9,6 +9,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import Modal from '@material-ui/core/Modal';
+
 
 
 // components:
@@ -17,13 +20,24 @@ import Yes from './Yes.jsx';
 import Search from './Search.jsx';
 import { getQuestions, getAnswers } from './axiosHelper.js';
 import Questions from './Questions.jsx';
+import AddQuestionModal from "./QuestionModal.jsx";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  moreQuestionsButton: {},
-  addQuestionButton: {},
+  searchbar: {
+
+  },
+  button: {
+
+  },
+  list: {
+    'border-stlye': 'solid',
+  },
+  modal: {
+
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'start-flex',
@@ -37,19 +51,32 @@ const useStyles = makeStyles((theme) => ({
 export default function QnA() {
   const classes = useStyles();
   // const [pid, setPID] = useState(props.productId);
-  const [questions, setQuestions] = useState({});
+  const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState({});
   const [questionCount, setQuestionCount] = useState(4);
 
+  const moreAnsweredQuestions = () => {
+    console.log('inside moreAnsweredQuestions function');
+    console.log(questions);
+  }
+  const openModal = () => {
+    console.log('inside openModal function');
+    return (<QuestionModal />);
+  }
+
   useEffect(() => {
-    getQuestions(38326)
+    getQuestions(38321)
       .then((response) => {
         setQuestions(response.data.results);
         setQuestion(response.data.results[0]);
-        setQuestionCount(response.data.results.slice(0,4));
+        setQuestionCount(response.data.count);
+        if (response.data.results.length === 0) {
+          setQuestionCount(questionCount - 2);
+        }
       })
       .catch((err) => { console.log('fail to get questions', err) });
-  }, [38326])
+  }, [38321]);
+
 
   return (
     <div className={classes.root}>
@@ -64,21 +91,21 @@ export default function QnA() {
             <Search />
           </Paper>
 
-          <div className={classes.gridWrapper}>
-            {questions && questions.length && questions.map(question => {
+          <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
+
+            {questions && questions.length && questions.slice(0, 4).map((question, index) => {
               return (
-                <Questions question={question} key={question.question_id} />
+                <Questions className={classes.list} question={question} key={question.question_id} />
               )
             })}
-          </div>
+          </List>
 
-          <Button onClick={() => setQuestionCount(questionCount + 1)} variant="outlined" color="primary" className={classes.moreQuestionsButton}>
+
+          <Button onClick={() => moreAnsweredQuestions()} variant="outlined" color="primary" className={classes.moreQuestionsButton}>
             MORE ANSWERED QUESTIONS
         </Button>
 
-          <Button variant="outlined" color="secondary" className={classes.addQuestionButton}>
-            ADD A QUESTION +
-        </Button>
+          <AddQuestionModal />
         </Grid>
 
       </Grid>
