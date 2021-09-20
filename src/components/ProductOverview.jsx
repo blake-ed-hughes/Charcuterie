@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { getProduct, getProductStyles, postItemToCart } from './poAxios';
+import { getProduct, getProductStyles, postItemToCart, getRating } from './poAxios';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -22,6 +22,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import Divider from '@mui/material/Divider';
+import Rating from '@mui/material/Rating';
+import Link from '@mui/material/Link';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,8 +35,18 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: '95%'
   },
-  mainPhoto: {
-
+  galBar: {
+    height: '100px',
+    width: '100px'
+  },
+  selected: {
+    size: '30'
+  },
+  strike: {
+    'text-decoration': 'line-through'
+  },
+  sale: {
+    color: 'red'
   }
 }));
 
@@ -181,29 +194,44 @@ function Gallery(props) {
   }, [props]);
 
   function changeIndex(e) {
-    setIndex(parseInt(e.target.id));
+    console.log(e.target.alt)
+    setIndex(parseInt(e.target.alt));
   }
 
   function imgBar(firstIndex) {
     let htmlArr = [];
-    htmlArr.push(<img src={photos[firstIndex].thumbnail_url} height='auto' key={firstIndex} id={firstIndex} onClick={changeIndex} />);
-    if (photos.length > 2) {
-      htmlArr.push(<img src={photos[firstIndex + 1].thumbnail_url} height='auto' key={firstIndex + 1} id={firstIndex + 1} onClick={changeIndex} />);
-      htmlArr.push(<img src={photos[firstIndex + 2].thumbnail_url} height='auto' key={firstIndex + 2} id={firstIndex + 2} onClick={changeIndex} />);
-      htmlArr.push(<img src={photos[firstIndex + 3].thumbnail_url} height='auto' key={firstIndex + 3} id={firstIndex + 3} onClick={changeIndex} />);
+    let onScreen = 0;
+    while (onScreen < 4 && firstIndex + onScreen < photos.length) {
+      if (firstIndex + onScreen === mainPhotoIndex) {
+        htmlArr.push(
+          <Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen}/>,
+          <Divider variant="inset" color="secondary" key={-5}/>
+        );
+      } else {
+        htmlArr.push(<Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen} onClick={changeIndex} />)
+      }
+      onScreen++;
     }
-
     return htmlArr;
   }
-
   function backPhoto() {
     if (mainPhotoIndex > 0) {
       setIndex(mainPhotoIndex - 1);
+      if (mainPhotoIndex < photos.length - 3) {
+        setBarIndex(mainPhotoIndex - 1);
+      } else {
+        setBarIndex(photos.length - 4);
+      }
     }
   }
   function nextPhoto() {
     if (mainPhotoIndex < photos.length - 1) {
       setIndex(mainPhotoIndex + 1);
+    }
+    if (mainPhotoIndex < photos.length - 4) {
+      setBarIndex(mainPhotoIndex + 1);
+    } else {
+      setBarIndex(photos.length - 4);
     }
   }
   function lowerBarIndex() {
@@ -231,7 +259,7 @@ function Gallery(props) {
         <IconButton onClick={backPhoto}><ArrowBackIcon /></IconButton>
       </Grid>
       <Grid item xs={6} container alignItems="center">
-        <img src={photos[mainPhotoIndex].url} height='auto' width='100%' className={classes.mainPhoto}/>
+        <img src={photos[mainPhotoIndex].url} height='auto' width='100%' className={classes.mainPhoto} />
       </Grid>
       <Grid item xs={1}>
         {/* <IconButton>Fullscreen</IconButton>
@@ -243,6 +271,18 @@ function Gallery(props) {
   )
 }
 
+function Price(props) {
+  const classes = useStyles();
+  if(props.sale) {
+    return [
+    <Typography variant='subtitle1' className={classes.strike} key={0}>${props.price}</Typography>,
+    <Typography variant='subtitle1' className={classes.sale} key={1}>${props.sale}</Typography>
+    ]
+  } else {
+    return <Typography variant='subtitle1'>${props.price}</Typography>;
+  }
+}
+
 function Overview(props) {
   const classes = useStyles();
   const [pid, setPID] = useState(props.productId);
@@ -252,14 +292,25 @@ function Overview(props) {
   const [productInfo, setProductInfo] = useState({});
   const [stylePhotos, setPhotos] = useState([{ url: '', thumbnail_url: '' }, { url: '', thumbnail_url: '' }]);
   const [isExpanded, setExpand] = useState(false);
+  const [avgRating, setRating] = useState(0);
   useEffect(() => {
     setStyle(styles[styleIndex]);
     setPhotos([...styles[styleIndex].photos]);
   }, [styleIndex, styles])
   useEffect(() => {
+    getRating(pid)
+      .then(({data}) => {
+        let total = 0;
+        let numReviews = 0;
+        for (let key in data.ratings) {
+          total += parseInt(key) * data.ratings[key];
+          numReviews += parseInt(data.ratings[key]);
+        }
+        setRating(total/numReviews);
+      })
+      .catch(err=>{console.log('failed to get rating', err)})
     getProductStyles(pid)
       .then((response) => {
-
         setStyles(response.data.results);
         setStyle(response.data.results[styleIndex]);
         setPhotos([...response.data.results[styleIndex].photos]);
@@ -281,21 +332,20 @@ function Overview(props) {
   }
   if (isExpanded) {
     return (
-          <Grid container justifyContent="center" direction="row">
-            <Gallery photos={stylePhotos} />
-            <Grid item xs={1}>
-              <IconButton onClick={fullscreenToggle}><FullscreenExitIcon /></IconButton>
-            </Grid>
-          </Grid>
-        )
+      <Grid container justifyContent="center" direction="row">
+        <Gallery photos={stylePhotos} />
+        <Grid item xs={1}>
+          <IconButton onClick={fullscreenToggle}><FullscreenExitIcon /></IconButton>
+        </Grid>
+      </Grid>
+    )
   } else {
     return (
       <div>
         <Container maxWidth="xl">
           <Grid
             container
-            spacing={3}
-            padding={3}
+            spacing={1}
           >
             <Grid item xs={12} sm={8} container justifyContent="center" direction="row">
               <Gallery photos={stylePhotos} />
@@ -303,12 +353,22 @@ function Overview(props) {
                 <IconButton onClick={fullscreenToggle}><FullscreenIcon /></IconButton>
               </Grid>
             </Grid>
-            <Grid item xs={12} sm={4} spacing={10} container direction="column">
-              {/* reviews */}
+            <Grid item xs={12} sm={4}  container direction="column" alignItems="flex-start" justifyContent="flex-start">
+              <Grid item container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
+                <Grid item>
+                  <Rating name="quarter-rating" value={avgRating} readOnly precision={0.25} />
+                </Grid>
+                <Grid item>
+                  <Link href="#ratings" underline="always" color="textSecondary">
+                    {'Read all reviews'}
+                  </Link>
+                </Grid>
+              </Grid>
               <Typography variant='h6' color="textSecondary">{productInfo.category}</Typography>
               <Typography gutterBottom variant='h3'>{productInfo.name}</Typography>
               {/* price still needs sale update*/}
-              <Typography variant='subtitle1'>${productInfo.default_price}</Typography>
+              {/* <Typography variant='subtitle1'>${productInfo.default_price}</Typography> */}
+              <Price price={style.original_price} sale={style.sale_price}/>
               <StyleSelect styleIndex={styleIndex} style={style} styles={styles} changeIndex={(e) => { changeIndex(e) }} />
               <AddToCart style={style} />
             </Grid>

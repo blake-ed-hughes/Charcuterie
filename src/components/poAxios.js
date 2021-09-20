@@ -26,4 +26,13 @@ function postItemToCart (sku) {
   })
 }
 
-export {getProduct, getProductStyles, postItemToCart};
+function getRating (pid) {
+  return Axios({
+    method: 'get',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews/meta`,
+    params: {product_id: pid},
+    headers: {'Authorization': API_key}
+  })
+}
+
+export {getProduct, getProductStyles, postItemToCart, getRating};
