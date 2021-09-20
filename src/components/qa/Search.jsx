@@ -1,50 +1,44 @@
 import React from 'react';
 import { Button } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-// import SearchBar from "material-ui-search-bar";
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 
-class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {value: ''};
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+const Search = ({questions}) => {
+  const questionsArr = [];
+  for (var i = 0 ; i < questions.length; i++) {
+     questionsArr.push(questions[i].question_body);
   }
-
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-  }
-
-
-  render() {
-    return (
-      <Grid container spacing={3}>
-          <SearchIcon />
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            <input type="text" question="question" placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
-          </label>
-          <input type="submit" value="Search" />
-        </form>
-      </Grid>
-    );
-  }
-}
+  return (
+    <Grid container spacing={3}>
+      <SearchIcon />
+      <Autocomplete
+        disablePortal
+        id="combo-box-demo"
+        options={questionsArr}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Search For A Question" />}
+      />
+    </Grid>
+  );
+};
 
 export default Search;
 
 
-//       {questions && questions.length && questions.map(question => {
-//   return (
-//     <Question question={question} key={question.question_id} />
-// )
-// })}
+
+
+//      <form >
+{/* <label>
+<input
+  value={props.searchString}
+  type="text"
+  className="qa-search-bar"
+  placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
+</label>
+<input type="submit" value="Search" />
+</form> */}

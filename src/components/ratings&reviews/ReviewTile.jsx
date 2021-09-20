@@ -17,6 +17,20 @@ import ImageListItem from '@material-ui/core/ImageListItem';
 import Avatar from '@material-ui/core/Avatar';
 import Link from '@mui/material/Link';
 import { FaRegCheckCircle } from "react-icons/fa";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 'auto',
+  height: '90%',
+  bgcolor: 'transparent',
+  boxShadow: 24,
+
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +57,10 @@ function ReviewTile({ reviewData }) {
   const [noCount, setNoCount] = useState(0);
   const [vote, setVote] = useState(0);
   const [starRating, setStarRating] = useState(reviewData.rating);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
 
@@ -74,7 +92,12 @@ function ReviewTile({ reviewData }) {
             <ImageList className={classes.imageList} cols={2.5}>
               {reviewData.photos.map((item) => (
                 <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
-                  <img src={item.url} />
+                  <img src={item.url} onClick={handleOpen}/>
+                  <Modal open={open} onClose={handleClose}>
+                  <Box sx={style} >
+                  <img src={item.url} height='100%' width='auto' />
+                  </Box>
+                  </Modal>
                 </ImageListItem>
               ))}
             </ImageList>
