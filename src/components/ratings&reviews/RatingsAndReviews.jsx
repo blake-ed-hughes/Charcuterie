@@ -44,6 +44,7 @@ function Ratings({ productId }) {
   const [reviewCount, setReviewCount] = useState(2);
   const [totalReviewsCount, setTotalReviewsCount] = useState(0);
 
+
   const handleChange = (event) => {
     setSortList(event.target.value);
   };
@@ -103,7 +104,7 @@ function Ratings({ productId }) {
             <MenuItem value={'helpful'}>helpfulness</MenuItem>
           </Select>
 
-          <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
+          <List style={{ maxHeight: '95vh', overflow: 'auto' }}>
             {reviewsData.map((reviewData, index) =>
 
               <ReviewTile spacing={4} padding={4} key={index} reviewData={reviewData} />

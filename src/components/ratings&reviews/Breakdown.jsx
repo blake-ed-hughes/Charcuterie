@@ -1,5 +1,6 @@
 import React from 'react';
 import RatingBreakdown from './RatingBreakdown.jsx';
+import Characteristics from './Characteristics.jsx';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import { useState, useEffect } from 'react';
@@ -79,26 +80,27 @@ function Breakdown({ reviewsMetaData }) {
         <Grid item xs={12}>
 
           <Paper className={classes.paper} style={{ height: 70 }}>
-
             <Grid item xs={12} container spacing={1} >
 
-              <Grid style={{ textAlign: 'right' }} item xs={2} >
+              <Grid style={{ textAlign: 'right' }} item xs={2} padding={2} >
                 <Typography variant="h4" className={classes.bold}>{starAvgRating + ''}</Typography>
               </Grid>
               <Grid style={{ textAlign: 'center' }} item xs={8}>
                 <Rating name="quarter-rating" value={starAvgRating} precision={0.25} readOnly />
               </Grid>
+
               <Grid style={{ textAlign: 'left' }} item xs={12} style={{ height: 20 }}>
                 <Typography variant="caption" className={classes.bold}>{ratingSum}{' total reviews'}</Typography>
               </Grid>
+
             </Grid>
           </Paper>
 
         </Grid>
 
         <Grid item xs={12} >
-          <Paper className={classes.paper} style={{ height: 10 }}>
-            <Typography variant="caption">
+          <Paper className={classes.paper} >
+            <Typography variant="caption" style={{ height: 10 }}>
               {recPercent}{'% of reviewers recommend this product'}
             </Typography>
           </Paper>
@@ -111,7 +113,9 @@ function Breakdown({ reviewsMetaData }) {
         </Grid>
 
         <Grid item xs={12} >
-          <Paper className={classes.paper}>Characteristics</Paper>
+          <Paper className={classes.paper}>
+          <Characteristics characteristicData={reviewsMetaData.characteristics}/>
+            </Paper>
         </Grid>
 
       </Grid>
