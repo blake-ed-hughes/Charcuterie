@@ -37,7 +37,7 @@ export default function AnswerModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={classes.style}>
+        <Box className={classes.style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             We love your answer!
           </Typography>

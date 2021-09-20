@@ -76,9 +76,7 @@ export default function Questions({ question }) {
                 <Typography>Load More Answers</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
                 {answers.slice(2).map(answer => <Answers answer={answer} key={answer.id} />)}
-                 </Typography>
               </AccordionDetails>
             </Accordion>
 
