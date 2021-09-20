@@ -24,6 +24,7 @@ class App extends React.Component {
             <Questions productId={this.state.productId}/>
           </Grid>
           <Grid item xs container>
+            <span id='ratings'></span>
             <Ratings productId={this.state.productId}/>
           </Grid>
         </Grid>
