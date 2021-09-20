@@ -85,7 +85,6 @@ export default function Questions({ question }) {
           </Paper>
 
         </Grid>
-
       </Grid>
     </div>
   );
