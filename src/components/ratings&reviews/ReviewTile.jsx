@@ -47,6 +47,12 @@ const useStyles = makeStyles((theme) => ({
   },
   bold: {
     fontWeight: 600
+  },
+  hover: {
+    color: 'grey',
+    '&:hover': {
+      color: 'blue',
+    }
   }
 }));
 
@@ -57,6 +63,9 @@ function ReviewTile({ reviewData }) {
   const [noCount, setNoCount] = useState(0);
   const [vote, setVote] = useState(0);
   const [starRating, setStarRating] = useState(reviewData.rating);
+
+  const [voteStyle1, setVoteStyle1] = useState();
+  const [voteStyle2, setVoteStyle2] = useState();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -70,7 +79,7 @@ function ReviewTile({ reviewData }) {
 
     <div className={classes.root}>
 
-      <Grid container style={{ borderBottom: "3px solid grey" }} spacing={1} padding={1}>
+      <Grid container style={{ borderBottom: "4px solid #D3D3D3"}} spacing={1} padding={1}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
             {/* <Stack spacing={1}> */}
@@ -122,30 +131,41 @@ function ReviewTile({ reviewData }) {
         </Grid> */}
         <Grid item xs={12} >
           <Paper className={classes.paper}>{'Was this review helpful? '}
-            <Link component="button" underline="hover" color="black"
+
+            <Link className={classes.hover} style={voteStyle1} component="button" underline="always" color="inherit"
               onClick={() => {
                 if (yesCount === reviewData.helpfulness && vote < 1) {
                   setYesCount(yesCount + 1);
                   setVote(vote + 1);
+                  setVoteStyle1({
+                    color: 'blue',
+                    fontWeight: 800
+                  })
                 }
                 else if (yesCount === reviewData.helpfulness + 1) {
                   setYesCount(yesCount - 1);
                   setVote(vote - 1);
+                  setVoteStyle1()
                 }
               }}>
               {' Yes '}
             </Link>
             {'(' + yesCount + ') '}
 
-            <Link component="button" underline="hover" color="black"
+            <Link className={classes.hover} style={voteStyle2} component="button" underline="always" color="inherit"
               onClick={() => {
                 if (noCount === 0 && vote < 1) {
                   setNoCount(noCount + 1);
                   setVote(vote + 1);
+                  setVoteStyle2({
+                    color: 'blue',
+                    fontWeight: 800
+                  })
                 }
                 else if (noCount === 1) {
                   setNoCount(noCount - 1);
                   setVote(vote - 1);
+                  setVoteStyle2()
                 }
               }}>
               {' No '}

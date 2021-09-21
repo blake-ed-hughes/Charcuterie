@@ -34,7 +34,7 @@ const CustumSlider = withStyles({
     borderLeft: "10px solid transparent",
     borderRight: "10px solid transparent",
     borderRadius: "0px",
-    borderTop: "15px solid purple",
+    borderTop: "15px solid grey",
     marginTop: "0px"
   },
   track: {
