@@ -33,10 +33,11 @@ const useStyles = makeStyles({
     '&:hover': {
       backgroundColor: 'grey',
       color: '#fff',
+    }
   }
-}});
+});
 
-function RatingBreakdown({starRatings}) {
+function RatingBreakdown({ starRatings, starSort }) {
   const classes = useStyles();
 
   const [oneStar, setOneStar] = useState(0);
@@ -51,6 +52,17 @@ function RatingBreakdown({starRatings}) {
   const [fourCount, setFourCount] = useState(0);
   const [fiveCount, setFiveCount] = useState(0);
 
+  const [oneStarSort, setOneStarSort] = useState([]);
+  const [twoStarSort, setTwoStarSort] = useState([]);
+  const [threeStarSort, setThreeStarSort] = useState([]);
+  const [fourStarSort, setFourStarSort] = useState([]);
+  const [fiveStarSort, setFiveStarSort] = useState([]);
+
+  const [starStyle1, setStarStyle1] = useState();
+  const [starStyle2, setStarStyle2] = useState();
+  const [starStyle3, setStarStyle3] = useState();
+  const [starStyle4, setStarStyle4] = useState();
+  const [starStyle5, setStarStyle5] = useState();
 
   const perStar = () => {
 
@@ -80,11 +92,11 @@ function RatingBreakdown({starRatings}) {
       }
     }
 
-    setOneStar(Math.round((one/ valSum) * 100))
-    setTwoStar(Math.round((two/ valSum) * 100))
-    setThreeStar(Math.round((three/ valSum) * 100))
-    setFourStar(Math.round((four/ valSum) * 100))
-    setFiveStar(Math.round((five/ valSum) * 100))
+    setOneStar(Math.round((one / valSum) * 100))
+    setTwoStar(Math.round((two / valSum) * 100))
+    setThreeStar(Math.round((three / valSum) * 100))
+    setFourStar(Math.round((four / valSum) * 100))
+    setFiveStar(Math.round((five / valSum) * 100))
 
     setOneCount(one)
     setTwoCount(two)
@@ -95,17 +107,33 @@ function RatingBreakdown({starRatings}) {
   }
 
   useEffect(() => {
+    starSort(oneStarSort, twoStarSort, threeStarSort, fourStarSort, fiveStarSort);
+  }, [oneStarSort, twoStarSort, threeStarSort, fourStarSort, fiveStarSort]);
+
+  useEffect(() => {
     perStar()
   }, [starRatings]);
-
 
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
 
-        <Grid item xs={12} container className={classes.hover} >
+        <Grid item xs={12} container className={classes.hover} onClick={() => {
+          if (fiveStarSort.length === 0) {
+            setFiveStarSort([5])
+            setStarStyle5({
+              color: 'blue',
+              fontWeight: 800
+            });
+
+          } else {
+            setFiveStarSort([])
+            setStarStyle5();
+          }
+        }
+        } >
           <Grid item xs={3} align={'left'}>
-            <Typography variant="body2">{'5 Stars '}</Typography>
+            <Typography style={starStyle5} variant="body2">{'5 Stars '}</Typography>
           </Grid>
           <Grid item xs={8} >
             <BorderLinearProgress variant="determinate" value={fiveStar} />
@@ -115,9 +143,20 @@ function RatingBreakdown({starRatings}) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container className={classes.hover}>
+        <Grid item xs={12} container className={classes.hover} onClick={() => {
+          if (fourStarSort.length === 0) {
+            setFourStarSort([4])
+            setStarStyle4({
+              color: 'blue',
+              fontWeight: 800
+            });
+          } else {
+            setFourStarSort([])
+            setStarStyle4();
+          }
+        }}>
           <Grid item xs={3} align={'left'}>
-            <Typography variant="body2">{'4 Stars '}</Typography>
+            <Typography style={starStyle4} variant="body2">{'4 Stars '}</Typography>
           </Grid>
           <Grid item xs={8} >
             <BorderLinearProgress variant="determinate" value={fourStar} />
@@ -127,9 +166,20 @@ function RatingBreakdown({starRatings}) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container className={classes.hover}>
+        <Grid item xs={12} container className={classes.hover}  onClick={() => {
+          if (threeStarSort.length === 0) {
+            setThreeStarSort([3])
+            setStarStyle3({
+              color: 'blue',
+              fontWeight: 800
+            });
+          } else {
+            setThreeStarSort([])
+            setStarStyle3();
+          }
+        }}>
           <Grid item xs={3} align={'left'}>
-            <Typography variant="body2">{'3 Stars '}</Typography>
+            <Typography style={starStyle3} variant="body2">{'3 Stars '}</Typography>
           </Grid>
           <Grid item xs={8} >
             <BorderLinearProgress variant="determinate" value={threeStar} />
@@ -139,9 +189,20 @@ function RatingBreakdown({starRatings}) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container className={classes.hover}>
+        <Grid item xs={12} container className={classes.hover} onClick={() => {
+          if (twoStarSort.length === 0) {
+            setTwoStarSort([2])
+            setStarStyle2({
+              color: 'blue',
+              fontWeight: 800
+            });
+          } else {
+            setTwoStarSort([])
+            setStarStyle2();
+          }
+        }}>
           <Grid item xs={3} align={'left'}>
-            <Typography variant="body2">{'2 Stars '}</Typography>
+            <Typography style={starStyle2} variant="body2">{'2 Stars '}</Typography>
           </Grid>
           <Grid item xs={8} >
             <BorderLinearProgress variant="determinate" value={twoStar} />
@@ -151,9 +212,20 @@ function RatingBreakdown({starRatings}) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container className={classes.hover}>
+        <Grid item xs={12} container className={classes.hover} onClick={() => {
+          if (oneStarSort.length === 0) {
+            setOneStarSort([1])
+            setStarStyle1({
+              color: 'blue',
+              fontWeight: 800
+            });
+          } else {
+            setOneStarSort([])
+            setStarStyle1();
+          }
+        }}>
           <Grid item xs={3} align={'left'}>
-            <Typography variant="body2">{'1 Star '}</Typography>
+            <Typography style={starStyle1} variant="body2">{'1 Star '}</Typography>
           </Grid>
           <Grid item xs={8} >
             <BorderLinearProgress variant="determinate" value={oneStar} />
