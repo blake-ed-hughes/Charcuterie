@@ -200,7 +200,6 @@ function Gallery(props) {
   }, [props]);
 
   function changeIndex(e) {
-    console.log(e.target.alt)
     setIndex(parseInt(e.target.alt));
   }
 

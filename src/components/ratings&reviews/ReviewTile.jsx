@@ -62,6 +62,10 @@ function ReviewTile({ reviewData }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  useEffect(() => {
+    setStarRating(reviewData.rating)
+  }, [reviewData]);
+
   return (
 
     <div className={classes.root}>
@@ -70,7 +74,7 @@ function ReviewTile({ reviewData }) {
         <Grid item xs={6}>
           <Paper className={classes.paper}>
             {/* <Stack spacing={1}> */}
-              <Rating name="quarter-rating" defaultValue={starRating} precision={0.25} readOnly />
+              <Rating name="quarter-rating" value={starRating} precision={0.25} readOnly />
             {/* </Stack> */}
           </Paper>
         </Grid>

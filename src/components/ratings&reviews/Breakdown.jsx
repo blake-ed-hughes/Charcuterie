@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Breakdown({ reviewsMetaData }) {
+function Breakdown({ reviewsMetaData, starSort }) {
 
   const classes = useStyles();
 
@@ -108,7 +108,7 @@ function Breakdown({ reviewsMetaData }) {
 
         <Grid item xs={12} >
           <Paper className={classes.paper}>
-            <RatingBreakdown starRatings={reviewsMetaData.ratings}/>
+            <RatingBreakdown starRatings={reviewsMetaData.ratings} starSort={starSort}/>
             </Paper>
         </Grid>
 
