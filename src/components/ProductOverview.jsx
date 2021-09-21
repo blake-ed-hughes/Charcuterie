@@ -29,24 +29,30 @@ import Link from '@mui/material/Link';
 
 const useStyles = makeStyles((theme) => ({
   large: {
-    height: '75px',
-    width: '75px'
+    height: '5vmax',
+    width: '5vmax'
   },
   formControl: {
     minWidth: '95%'
   },
   galBar: {
-    height: '100px',
-    width: '100px'
+    height: '6vmax',
+    width: '6vmax'
   },
-  selected: {
-    size: '30'
+  selectedPhotoMark: {
+    width: '6vmax'
   },
   strike: {
     'text-decoration': 'line-through'
   },
   sale: {
     color: 'red'
+  },
+  description: {
+    'margin-top': '1vw'
+  },
+  descText: {
+    padding: '1vw'
   }
 }));
 
@@ -205,7 +211,7 @@ function Gallery(props) {
       if (firstIndex + onScreen === mainPhotoIndex) {
         htmlArr.push(
           <Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen}/>,
-          <Divider variant="inset" color="secondary" key={-5}/>
+          <Divider variant="inset" color="secondary" className={classes.selectedPhotoMark} key={-5}/>
         );
       } else {
         htmlArr.push(<Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen} onClick={changeIndex} />)
@@ -255,16 +261,12 @@ function Gallery(props) {
         </Stack>
       </Grid>
       <Grid item xs={1}>
-        {/**arrow button */}
         <IconButton onClick={backPhoto}><ArrowBackIcon /></IconButton>
       </Grid>
       <Grid item xs={6} container alignItems="center">
         <img src={photos[mainPhotoIndex].url} height='auto' width='100%' className={classes.mainPhoto} />
       </Grid>
       <Grid item xs={1}>
-        {/* <IconButton>Fullscreen</IconButton>
-        Need to make fullscreen function*/}
-        {/**arrow button */}
         <IconButton onClick={nextPhoto}><ArrowForwardIcon /></IconButton>
       </Grid>
     </Grid>
@@ -297,6 +299,9 @@ function Overview(props) {
     setStyle(styles[styleIndex]);
     setPhotos([...styles[styleIndex].photos]);
   }, [styleIndex, styles])
+  useEffect(() => {
+    setPID(props.productId);
+  }, [props])
   useEffect(() => {
     getRating(pid)
       .then(({data}) => {
@@ -341,19 +346,18 @@ function Overview(props) {
     )
   } else {
     return (
-      <div>
         <Container maxWidth="xl">
           <Grid
             container
             spacing={1}
           >
-            <Grid item xs={12} sm={8} container justifyContent="center" direction="row">
+            <Grid item xs={12} md={8} container justifyContent="center" direction="row">
               <Gallery photos={stylePhotos} />
               <Grid item xs={1}>
                 <IconButton onClick={fullscreenToggle}><FullscreenIcon /></IconButton>
               </Grid>
             </Grid>
-            <Grid item xs={12} sm={4}  container direction="column" alignItems="flex-start" justifyContent="flex-start">
+            <Grid item xs={12} md={4}  container direction="column" alignItems="flex-start" justifyContent="flex-start">
               <Grid item container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
                 <Grid item>
                   <Rating name="quarter-rating" value={avgRating} readOnly precision={0.25} />
@@ -371,13 +375,13 @@ function Overview(props) {
               <Price price={style.original_price} sale={style.sale_price}/>
               <StyleSelect styleIndex={styleIndex} style={style} styles={styles} changeIndex={(e) => { changeIndex(e) }} />
               <AddToCart style={style} />
+              <Paper elevation={1} className={classes.description}>
+                <Typography variant='subtitle2' className={classes.descText}>{productInfo.description}</Typography>
+              </Paper>
             </Grid>
           </Grid>
-          <Paper elevation={3}>
-            <Typography variant='subtitle2'>{productInfo.description}</Typography>
-          </Paper>
+
         </Container>
-      </div>
     )
   }
 }
