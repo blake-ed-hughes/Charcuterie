@@ -4,34 +4,42 @@ import API_key from '../config';
 function getProduct (pid) {
   return Axios({
     method: 'get',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/products/${pid}`,
-    headers: {'Authorization': API_key}
+    url: '/api',
+    params: {
+      urlExt: `products/${pid}`
+    }
   })
 }
 
 function getProductStyles (pid) {
   return Axios({
     method: 'get',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/products/${pid}/styles`,
-    headers: {'Authorization': API_key}
+    url: '/api',
+    params: {
+      urlExt: `products/${pid}/styles`
+    }
   })
 }
 
 function postItemToCart (sku) {
   return Axios({
     method: 'post',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/cart`,
-    data: {sku_id: sku},
-    headers: {'Authorization': API_key}
+    url: '/api',
+    params: {
+      urlExt: `cart`,
+    },
+    data: {sku_id: sku}
   })
+
 }
 
 function getRating (pid) {
   return Axios({
     method: 'get',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews/meta`,
-    params: {product_id: pid},
-    headers: {'Authorization': API_key}
+    url: '/api',
+    params: {
+      urlExt: `reviews/meta?product_id=${pid}`
+    }
   })
 }
 
