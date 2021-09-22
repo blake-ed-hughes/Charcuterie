@@ -29,8 +29,8 @@ import Link from '@mui/material/Link';
 
 const useStyles = makeStyles((theme) => ({
   large: {
-    height: '5vmax',
-    width: '5vmax'
+    height: '7vmin',
+    width: '7vmin'
   },
   formControl: {
     minWidth: '95%'
