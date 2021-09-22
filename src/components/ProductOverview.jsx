@@ -25,12 +25,13 @@ import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Divider from '@mui/material/Divider';
 import Rating from '@mui/material/Rating';
 import Link from '@mui/material/Link';
+import trackClick from './tracker';
 
 
 const useStyles = makeStyles((theme) => ({
   large: {
-    height: '5vmax',
-    width: '5vmax'
+    height: '7vmin',
+    width: '7vmin'
   },
   formControl: {
     minWidth: '95%'
@@ -83,14 +84,14 @@ function StyleSelect(props) {
             return (
               <Grid item xs={3} key={index}>
                 <Badge color='primary' badgeContent='' overlap='circular'>
-                  <Avatar alt={'' + index} src={url} className={classes.large} onClick={updateIndex} />
+                  <Avatar alt={'' + index} src={url} className={classes.large} id="style-select" onClick={(e)=>{trackClick(e, 'product-overview', updateIndex)}} />
                 </Badge>
               </Grid>
             )
           } else {
             return (
               <Grid item xs={3} key={index}>
-                <Avatar alt={'' + index} src={url} className={classes.large} onClick={updateIndex} />
+                <Avatar alt={'' + index} src={url} className={classes.large} id="style-select" onClick={(e)=>{trackClick(e, 'product-overview', updateIndex)}} />
               </Grid>
             )
           }

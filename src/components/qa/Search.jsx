@@ -24,7 +24,6 @@ const Search = ({question, questions, setQuestions, setQuestion, setClickBoolean
       if (questions[i].question_body === clickedQuestion) {
         setQuestions(questions[i]);
         setQuestion(questions[i]);
-        setClickBoolean(true);
       }
     }
 

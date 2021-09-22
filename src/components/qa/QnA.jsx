@@ -95,7 +95,7 @@ export default function QnA() {
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Search question={question} questions={questions} setQuestions={setQuestions} setQuestion={setQuestion} setClickBoolean={setClickBoolean} />
+              <Search question={question} questions={questions} setQuestions={setQuestions} setQuestion={setQuestion} />
             </Paper>
           </Grid>
 
@@ -130,3 +130,4 @@ export default function QnA() {
     </div >
   );
 }
+

@@ -58,7 +58,7 @@ export default function Questions({ question }) {
         </Grid>
 
         <Grid item xs={3}>
-          Helpful <Yes helpfulness={question.question_helpfulness}/> |
+          Helpful <Yes helpfulness={question.question_helpfulness}/>
         </Grid>
 
         <Grid item xs={3}>
