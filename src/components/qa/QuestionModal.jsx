@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     transform: 'translate(-50%, -50%)',
     width: 400,
     background: 'white',
-    border: '2px solid #000',
+    border: '1px solid #005',
     boxShadow: 24,
     p: 4,
   }
@@ -52,9 +52,8 @@ export default function AddQuestionModal() {
                 defaultValue=""
                 helperText="less than 50 words"
               />
-
-              <button>Submit</button>
             </div>
+            <button>Submit</button>
           </form>
 
         </Box>
