@@ -58,6 +58,8 @@ export default function QnA() {
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState({});
   const [questionCount, setQuestionCount] = useState(4);
+  const [isClicked, setClickBoolean] = useState(false);
+  const [pid, setPid] = useState();
 
   const moreAnsweredQuestions = () => {
     // setQuestion(response.data.results);
@@ -67,19 +69,21 @@ export default function QnA() {
     return (<QuestionModal />);
   }
 
+
   useEffect(() => {
     getQuestions(38321)
       .then((response) => {
         setQuestions(response.data.results);
-        setQuestion(response.data.results[0]);
         setQuestionCount(response.data.count);
-        if (response.data.results.length === 0) {
-          setQuestionCount(questionCount - 2);
-        }
       })
       .catch((err) => { console.log('fail to get questions', err) });
-  }, [38321]);
+  }, []);
 
+  useEffect(() => {
+    if (questions.length > 0) {
+      setQuestions([question]);
+    }
+  }, [question]);
 
   return (
     <div className={classes.root}>
@@ -91,25 +95,34 @@ export default function QnA() {
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Search questions={questions} setQuestions={setQuestions} />
+              <Search question={question} questions={questions} setQuestions={setQuestions} setQuestion={setQuestion} setClickBoolean={setClickBoolean} />
             </Paper>
           </Grid>
 
           <Grid item xs={12}>
-            <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
+            {questions.length > 0 && (
+              <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
 
-              {questions && questions.length && questions.slice(0, 4).map((question, index) => {
-                return (
-                  <Questions className={classes.list} question={question} key={question.question_id} />
-                )
-              })}
-            </List>
+                {questions.slice(0, 4).map((question, index) => {
 
-          <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
-            MORE ANSWERED QUESTIONS
+                  return (
+                    <Questions className={classes.list} question={question} key={question.question_id} />
+                  )
+                })}
+
+              </List>)}
+
+            {questions.length === 0 && (
+              <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
+                No question found...
+              </List>
+            )}
+
+            <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
+              MORE ANSWERED QUESTIONS
           </Button>
 
-          <AddQuestionModal />
+            <AddQuestionModal />
           </Grid>
 
         </Grid>

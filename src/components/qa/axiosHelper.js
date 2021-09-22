@@ -13,7 +13,7 @@ import API_key from '../../config';
 function getQuestions (pid) {
   return Axios({
     method: 'get',
-    url: '/qa',
+    url: '/api',
     params: {
       urlExt: `qa/questions/?product_id=${pid}`
     }

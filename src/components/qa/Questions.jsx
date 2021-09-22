@@ -14,6 +14,7 @@ import Answers from './Answers.jsx';
 import Yes from './Yes.jsx';
 import AnswerModal from './AnswerModal.jsx';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -57,7 +58,7 @@ export default function Questions({ question }) {
         </Grid>
 
         <Grid item xs={3}>
-          Helpful <Yes /> |
+          Helpful <Yes helpfulness={question.question_helpfulness}/> |
         </Grid>
 
         <Grid item xs={3}>

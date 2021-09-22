@@ -1,14 +1,17 @@
 import React, { useState } from "react";
+import Questions from './Questions.jsx';
 
-const Yes = () => {
-  const [counter, setCounter] = useState(0);
+
+const Yes = ({helpfulness}) => {
+  const [count, setHelpCount] = useState(helpfulness);
+
   const increment = () => {
-    setCounter(counter+1);
+    setHelpCount(count+1);
   }
   return (
     <a>
       <button onClick={increment}><u>Yes</u></button>
-      {counter}
+      {count}
     </a>
   );
 }
