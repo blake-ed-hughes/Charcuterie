@@ -30,6 +30,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { FaRegCheckCircle } from "react-icons/fa";
+import trackClick from '../tracker';
 
 const style = {
   position: 'absolute',

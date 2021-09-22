@@ -21,6 +21,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { ExpandMore } from '@material-ui/icons';
 import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import trackClick from '../tracker';
 
 
 const style = {
@@ -114,7 +115,11 @@ function ReviewTile({ reviewData }) {
                     </Grid>
                     {expanded && (
                       <Grid item xs={12} style={{ marginTop: '8px', color: 'grey' }}>
-                        <Link className={classes.hover} component="button" underline="always" color="inherit" onClick={handleExpanded}>{'Show More'}</Link>
+                        <Link className={classes.hover} component="button" underline="always" color="inherit"
+                        onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
+                          handleExpanded
+                        })
+                      }}>{'Show More'}</Link>
                       </Grid>
                     )}
                   </Grid>
@@ -129,7 +134,7 @@ function ReviewTile({ reviewData }) {
                 <ImageList className={classes.imageList} cols={2.5}>
                   {reviewData.photos.map((item) => (
                     <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
-                      <img src={item.url} onClick={handleOpen} />
+                      <img src={item.url} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {handleOpen})}} />
                       <Modal open={open} onClose={handleClose}>
                         <Box sx={style} >
                           <img src={item.url} height='100%' width='100%' />
@@ -152,7 +157,7 @@ function ReviewTile({ reviewData }) {
                 <ImageList className={classes.imageList} cols={2.5}>
                   {reviewData.photos.map((item) => (
                     <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
-                      <img src={item.url} onClick={handleOpen} />
+                      <img src={item.url} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {handleOpen})}} />
                       <Modal open={open} onClose={handleClose}>
                         <Box sx={style} >
                           <img src={item.url} height='100%' width='100%' />
@@ -185,7 +190,7 @@ function ReviewTile({ reviewData }) {
           <Paper className={classes.paper}>{'Was this review helpful? '}
 
             <Link className={classes.hover} style={voteStyle1} component="button" underline="always" color="inherit"
-              onClick={() => {
+              onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
                 if (yesCount === reviewData.helpfulness && vote < 1) {
                   setYesCount(yesCount + 1);
                   setVote(vote + 1);
@@ -199,13 +204,14 @@ function ReviewTile({ reviewData }) {
                   setVote(vote - 1);
                   setVoteStyle1()
                 }
+              })
               }}>
               {' Yes '}
             </Link>
             {'(' + yesCount + ') '}
 
             <Link className={classes.hover} style={voteStyle2} component="button" underline="always" color="inherit"
-              onClick={() => {
+              onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
                 if (noCount === 0 && vote < 1) {
                   setNoCount(noCount + 1);
                   setVote(vote + 1);
@@ -219,6 +225,7 @@ function ReviewTile({ reviewData }) {
                   setVote(vote - 1);
                   setVoteStyle2()
                 }
+              })
               }}>
               {' No '}
             </Link>
