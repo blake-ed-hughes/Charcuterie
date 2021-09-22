@@ -207,4 +207,3 @@ function Ratings({ productId }) {
 }
 
 export default Ratings;
-

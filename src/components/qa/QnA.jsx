@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
   searchbar: {
 
   },
-  button: {
-
+  formControl: {
+    minWidth: '50%'
   },
   list: {
     'border-stlye': 'solid',
@@ -60,7 +60,7 @@ export default function QnA() {
   const [questionCount, setQuestionCount] = useState(4);
 
   const moreAnsweredQuestions = () => {
-    setQuestion(response.data.results);
+    // setQuestion(response.data.results);
   }
   const openModal = () => {
     // console.log('inside openModal function');
@@ -105,7 +105,7 @@ export default function QnA() {
               })}
             </List>
 
-          <Button onClick={() => moreAnsweredQuestions()} variant="outlined" color="primary" className={classes.moreQuestionsButton}>
+          <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
             MORE ANSWERED QUESTIONS
           </Button>
 
