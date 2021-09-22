@@ -30,7 +30,7 @@ export default function AddQuestionModal() {
 
   return (
     <span>
-      <Button onClick={handleOpen}>ADD A QUESTION +</Button>
+      <Button spacing={1} variant="outlined" color="secondary" onClick={handleOpen}>ADD A QUESTION +</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -42,23 +42,21 @@ export default function AddQuestionModal() {
             What question do you have?
           </Typography>
 
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form className={classes.style} noValidate autoComplete="off">
-              <div>
-                <TextField required id="Nickname" label="Nickname" defaultValue="" />
-                <TextField required id="Email" label="Email" defaultValue="" />
-                <TextField
-                  id="helperText"
-                  label="What's Your Question?"
-                  defaultValue=""
-                  helperText="less than 50 words"
-                />
-                <Typography>
-                  <button>Submit</button>
-                </Typography>
-              </div>
-            </form>
-          </Typography>
+          <form className={classes.style} noValidate autoComplete="off">
+            <div>
+              <TextField required id="Nickname" label="Nickname" defaultValue="" />
+              <TextField required id="Email" label="Email" defaultValue="" />
+              <TextField
+                id="helperText"
+                label="What's Your Question?"
+                defaultValue=""
+                helperText="less than 50 words"
+              />
+
+              <button>Submit</button>
+            </div>
+          </form>
+
         </Box>
       </Modal>
     </span>
