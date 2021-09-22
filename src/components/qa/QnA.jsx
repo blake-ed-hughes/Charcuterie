@@ -60,20 +60,37 @@ export default function QnA() {
   const [questionCount, setQuestionCount] = useState(4);
   const [isClicked, setClickBoolean] = useState(false);
   const [pid, setPid] = useState();
+  const [buttonName, setButtonName] = useState('MORE ANSWERED QUESTIONS');
 
-  const moreAnsweredQuestions = () => {
-    // setQuestion(response.data.results);
-  }
   const openModal = () => {
     // console.log('inside openModal function');
     return (<QuestionModal />);
   }
+  const moreAnsweredQuestions = () => {
+    if(buttonName === 'MORE ANSWERED QUESTIONS') {
+      getQuestions(38321)
+      .then((response) => {
+        setQuestions(response.data.results);
+        setQuestionCount(response.data.count);
+      })
+      .catch((err) => { console.log('fail to get questions', err) });
 
+      setButtonName('GO BACK');
+    } else {
+      getQuestions(38321)
+      .then((response) => {
+        setQuestions(response.data.results.slice(0, 4));
+        setQuestionCount(response.data.count);
+      })
+      .catch((err) => { console.log('fail to get questions', err) });
+      setButtonName('MORE ANSWERED QUESTIONS');
+    }
+  }
 
   useEffect(() => {
     getQuestions(38321)
       .then((response) => {
-        setQuestions(response.data.results);
+        setQuestions(response.data.results.slice(0, 4));
         setQuestionCount(response.data.count);
       })
       .catch((err) => { console.log('fail to get questions', err) });
@@ -85,6 +102,10 @@ export default function QnA() {
       setQuestions([question]);
     }
   }, [question]);
+
+  // useEffect(() => {
+  //   moreAnsweredQuestions();
+  // }, [buttonName]);
 
   return (
     <div className={classes.root}>
@@ -104,7 +125,7 @@ export default function QnA() {
             {questions.length > 0 && (
               <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
 
-                {questions.slice(0, 4).map((question, index) => {
+                {questions.map((question, index) => {
 
                   return (
                     <Question className={classes.list} question={question} key={question.question_id} />
@@ -120,7 +141,7 @@ export default function QnA() {
             )}
 
             <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
-              MORE ANSWERED QUESTIONS
+              {buttonName}
           </Button>
 
             <AddQuestionModal />
