@@ -88,9 +88,7 @@ function ReviewTile({ reviewData }) {
       <Grid container style={{ borderBottom: "4px solid #D3D3D3" }} spacing={1} padding={1}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            {/* <Stack spacing={1}> */}
             <Rating name="quarter-rating" value={starRating} precision={0.25} readOnly />
-            {/* </Stack> */}
           </Paper>
         </Grid>
         <Grid item xs={6} align={'right'}>
