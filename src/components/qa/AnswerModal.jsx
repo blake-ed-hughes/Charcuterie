@@ -45,8 +45,8 @@ export default function AnswerModal() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <form className={classes.style} noValidate autoComplete="off">
               <div>
-                <TextField required id="firstName" label="First Name" defaultValue="" />
-                <TextField required id="lastName" label="Last Name" defaultValue="" />
+                <TextField required id="Nickname" label="Nickname" defaultValue="" />
+                <TextField required id="Email" label="Email" defaultValue="" />
                 <TextField
                   id="helperText"
                   label="Type answer here..."

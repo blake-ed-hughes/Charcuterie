@@ -33,3 +33,14 @@ app.post('/api', (req,res) => {
 app.listen(Port, () => {
   console.log('listening on port', Port);
 });
+
+//get questions
+app.get('/qa', (req,res) => {
+  auth.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/${req.query.urlExt}`)
+  .then((response) => {
+    res.status(response.status).send(response.data);
+  })
+  .catch((err) => {
+    res.status(500).end()
+  })
+})
