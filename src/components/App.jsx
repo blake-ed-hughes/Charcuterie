@@ -21,7 +21,10 @@ class App extends React.Component {
     Axios({
       method: 'get',
       url: '/',
-      params: {urlExt: `products/${pid}`}
+      params: {urlExt: `products/${pid}`},
+      headers: {
+        'x-no-compression': true
+      }
     })
     .then((response) => {
       if(response.data) {
