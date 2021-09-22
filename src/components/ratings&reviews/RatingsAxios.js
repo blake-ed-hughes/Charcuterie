@@ -9,10 +9,10 @@ function getReviews (pid, sortList, reviewCount) {
   })
 }
 
-function getAllReviews (pid, sortList) {
+function getAllReviews (pid, sortList, totalReviewsCount) {
   return Axios({
     method: 'get',
-    url:'https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews?product_id=' + pid + '&sort=' + sortList,
+    url:'https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews?product_id=' + pid + '&sort=' + sortList + '&count=' + totalReviewsCount,
     headers: {'Authorization': API_key}
   })
 }

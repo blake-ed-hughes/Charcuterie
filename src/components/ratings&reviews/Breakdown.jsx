@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Breakdown({ reviewsMetaData, starSort }) {
+function Breakdown({ reviewsMetaData, starSort, setTotalReviewsCount }) {
 
   const classes = useStyles();
 
@@ -48,6 +48,7 @@ function Breakdown({ reviewsMetaData, starSort }) {
     averageRating = Math.round((keySum / valSum) * 10) / 10;
     setStarAvgRating(averageRating);
     setRatingSum(valSum);
+    setTotalReviewsCount(valSum);
   }
 
   const getRecPercent = () => {

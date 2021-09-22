@@ -22,8 +22,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  moreReviewsButton: {},
-  addReviewButton: {},
   paper: {
     padding: theme.spacing(2),
     textAlign: 'start-flex',
@@ -31,10 +29,17 @@ const useStyles = makeStyles((theme) => ({
   },
   gridWrapper: {
     border: "1px solid grey"
+  },
+  formControl: {
+    minWidth: '50%'
+  },
+  bold: {
+    fontWeight: 800
   }
 }));
 
 function Ratings({ productId }) {
+
   const classes = useStyles();
 
   const [pid, setProductId] = useState(productId);
@@ -50,6 +55,7 @@ function Ratings({ productId }) {
   const handleChange = (event) => {
     setSortList(event.target.value);
   };
+
 
   const starSort = (one, two, three, four, five) => {
     // create a starSortedArray variable
@@ -69,6 +75,7 @@ function Ratings({ productId }) {
     setStarSortResult(sorted);
   };
 
+
   useEffect(() => {
     if (starSortResult.length > 0) {
       setReviewsData(starSortResult);
@@ -87,13 +94,19 @@ function Ratings({ productId }) {
           console.log('Failure in getReviews axios call', err)
         });
     }
+  }, [pid, sortList, reviewCount, starSortResult])
 
-    getAllReviews(pid, sortList)
+
+    useEffect(() => {
+
+    getAllReviews(pid, sortList, totalReviewsCount)
       .then((response) => {
-        setTotalReviewsCount(response.data.count);
         setTotalReviewsData(response.data.results);
         if (response.data.results.length === 0) {
           setReviewCount(reviewCount - 2);
+        }
+        if (response.data.results.length !== 0) {
+          setReviewCount(2);
         }
       })
       .catch((err) => {
@@ -108,7 +121,7 @@ function Ratings({ productId }) {
         console.log('Failure in getReviewsMeta axios call', err)
       });
 
-  }, [pid, sortList, reviewCount, starSortResult])
+  }, [pid, sortList, starSortResult, totalReviewsCount])
 
 
   return (
@@ -117,19 +130,21 @@ function Ratings({ productId }) {
       <Container maxWidth="xl">
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>Ratings & Reviews</Paper>
+            <Paper className={classes.paper}>
+              <Typography className={classes.bold} variant="h5" display="inline">{'Ratings & Reviews'}</Typography>
+            </Paper>
           </Grid>
 
           <Grid item xs={4}>
-            <Paper className={classes.paper}>
-              <Breakdown reviewsMetaData={reviewsMetaData} starSort={starSort} />
+            <Paper className={classes.paper} >
+              <Breakdown reviewsMetaData={reviewsMetaData} starSort={starSort} setTotalReviewsCount={setTotalReviewsCount} />
             </Paper>
           </Grid>
 
 
           <Grid item xs={8}>
-
-              <Typography variant="body2" display="inline">{'Showing ' + reviewCount + ' of ' + totalReviewsCount + ' reviews, sorted by '}</Typography>
+            <Paper className={classes.paper}>
+              <Typography variant="body1" display="inline">{'Showing ' + reviewCount + ' of ' + totalReviewsCount + ' reviews, sorted by '}</Typography>
 
               {starSortResult.length === 0 && (
                 <Select
@@ -143,31 +158,45 @@ function Ratings({ productId }) {
               )}
 
               {starSortResult.length !== 0 && (
-                <Link variant="body1" underline="always" color="inherit" display="inline" >{' star count '}</Link>
+                <Link variant="body1" style={{color: 'black'}} color="inherit" display="inline" >{' star count '}</Link>
               )}
+              <Grid item xs={12} container >
+                <Paper className={classes.paper}  padding={5} style={{marginBottom: '16px'}}>
+                  <List style={{ maxHeight: '66vh', maxWidth: '100%', overflow: 'auto' }}>
+                    {reviewsData.map((reviewData, index) =>
 
-            <List style={{ maxHeight: '78vh', overflow: 'auto' }}>
-              {reviewsData.map((reviewData, index) =>
+                      <ReviewTile spacing={4} padding={4} key={index} reviewData={reviewData} />
 
-                <ReviewTile spacing={4} padding={4} key={index} reviewData={reviewData} />
+                    )}
+                  </List>
+                </Paper>
+              </Grid>
 
-              )}
-            </List>
-
-            {reviewCount < totalReviewsCount && (
-              <Button onClick={() => {
-                if (starSortResult.length === 0) {
-                  setReviewCount(reviewCount + 1)
-                }
-              }
-              }
-                variant="outlined" color="primary" className={classes.moreReviewsButton}>
-                More Reviews
-              </Button>
-            )}
-            <Button variant="outlined" color="secondary" className={classes.addReviewButton}>
-              Add Review +
-            </Button>
+              <Grid item container justifyContent='flex-start'>
+                {reviewCount < totalReviewsCount && (
+                  <Grid item xs={3}>
+                  <Button  variant="contained" className={classes.formControl} spacing={1} onClick={() => {
+                    if (starSortResult.length === 0) {
+                      if ((reviewCount + 2) > totalReviewsCount) {
+                        setReviewCount(reviewCount + 1)
+                      } else {
+                        setReviewCount(reviewCount + 2)
+                      }
+                    }
+                  }
+                  }
+                   color="primary">
+                    More Reviews
+                  </Button>
+                  </Grid>
+                )}
+                <Grid item xs={3}>
+                <Button  variant="contained" className={classes.formControl} spacing={1} color="secondary">
+                  Add Review +
+                </Button>
+                </Grid>
+              </Grid>
+            </Paper>
           </Grid>
 
         </Grid>

@@ -235,6 +235,51 @@ function RatingBreakdown({ starRatings, starSort }) {
           </Grid>
         </Grid>
 
+        { (oneStarSort.length > 0|| twoStarSort.length > 0 || threeStarSort.length > 0 || fourStarSort.length > 0 || fiveStarSort.length > 0) && (
+        <Grid item xs={12} align={'left'}>
+           <Grid item xs={12} align={'left'}>
+           <Link variant="caption" style={{fontWeight: '800', color: 'blue'}} underline='always'
+            onClick={() => {
+              setFiveStarSort([])
+              setStarStyle5();
+              setFourStarSort([])
+              setStarStyle4();
+              setThreeStarSort([])
+              setStarStyle3();
+              setTwoStarSort([])
+              setStarStyle2();
+              setOneStarSort([])
+              setStarStyle1();
+            }}>{'remove all filters'}</Link>
+           </Grid>
+          { (fiveStarSort.length > 0) && (
+           <Grid item xs={12} align={'left'}>
+           <Typography variant="caption">{'showing 5 stars'}</Typography>
+           </Grid>
+           )}
+           { (fourStarSort.length > 0) && (
+           <Grid item xs={12} align={'left'}>
+           <Typography variant="caption">{'showing 4 stars'}</Typography>
+           </Grid>
+           )}
+           { (threeStarSort.length > 0) && (
+           <Grid item xs={12} align={'left'}>
+           <Typography variant="caption">{'showing 3 stars'}</Typography>
+           </Grid>
+           )}
+           { (twoStarSort.length > 0) && (
+           <Grid item xs={12} align={'left'}>
+           <Typography variant="caption">{'showing 2 stars'}</Typography>
+           </Grid>
+           )}
+           { (oneStarSort.length > 0) && (
+           <Grid item xs={12} align={'left'}>
+           <Typography variant="caption">{'showing 1 stars'}</Typography>
+           </Grid>
+           )}
+          </Grid>
+        )}
+
       </Grid>
     </div>
   );
