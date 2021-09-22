@@ -39,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   modal: {
 
   },
+  title: {
+
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'start-flex',
@@ -57,11 +60,10 @@ export default function QnA() {
   const [questionCount, setQuestionCount] = useState(4);
 
   const moreAnsweredQuestions = () => {
-    console.log('inside moreAnsweredQuestions function');
-    console.log(questions);
+    setQuestion(response.data.results);
   }
   const openModal = () => {
-    console.log('inside openModal function');
+    // console.log('inside openModal function');
     return (<QuestionModal />);
   }
 
@@ -81,35 +83,37 @@ export default function QnA() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
+      <Container maxWidth="xl">
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}><h2>Questions & Answers</h2></Paper>
+          </Grid>
 
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>Questions & Answers</Paper>
-        </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <Search questions={questions} setQuestions={setQuestions} />
+            </Paper>
+          </Grid>
 
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <Search questions={questions} />
-          </Paper>
+          <Grid item xs={12}>
+            <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
 
-          <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
-
-            {questions && questions.length && questions.slice(0, 4).map((question, index) => {
-              return (
-                <Questions className={classes.list} question={question} key={question.question_id} />
-              )
-            })}
-          </List>
-
+              {questions && questions.length && questions.slice(0, 4).map((question, index) => {
+                return (
+                  <Questions className={classes.list} question={question} key={question.question_id} />
+                )
+              })}
+            </List>
 
           <Button onClick={() => moreAnsweredQuestions()} variant="outlined" color="primary" className={classes.moreQuestionsButton}>
             MORE ANSWERED QUESTIONS
-        </Button>
+          </Button>
 
           <AddQuestionModal />
-        </Grid>
+          </Grid>
 
-      </Grid>
+        </Grid>
+      </Container>
     </div >
   );
 }
