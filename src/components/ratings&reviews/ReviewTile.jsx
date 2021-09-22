@@ -19,6 +19,9 @@ import Link from '@mui/material/Link';
 import { FaRegCheckCircle } from "react-icons/fa";
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { ExpandMore } from '@material-ui/icons';
+import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+
 
 const style = {
   position: 'absolute',
@@ -47,6 +50,12 @@ const useStyles = makeStyles((theme) => ({
   },
   bold: {
     fontWeight: 600
+  },
+  hover: {
+    color: 'grey',
+    '&:hover': {
+      color: 'blue',
+    }
   }
 }));
 
@@ -58,23 +67,29 @@ function ReviewTile({ reviewData }) {
   const [vote, setVote] = useState(0);
   const [starRating, setStarRating] = useState(reviewData.rating);
 
+  const [voteStyle1, setVoteStyle1] = useState();
+  const [voteStyle2, setVoteStyle2] = useState();
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [expanded, setExpanded] = useState(true);
+  const handleExpanded = () => setExpanded(false);
+
   useEffect(() => {
     setStarRating(reviewData.rating)
-  }, [reviewData]);
+  }, [reviewData, expanded]);
 
   return (
 
     <div className={classes.root}>
 
-      <Grid container style={{ borderBottom: "3px solid grey" }} spacing={1} padding={1}>
+      <Grid container style={{ borderBottom: "4px solid #D3D3D3" }} spacing={1} padding={1}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
             {/* <Stack spacing={1}> */}
-              <Rating name="quarter-rating" value={starRating} precision={0.25} readOnly />
+            <Rating name="quarter-rating" value={starRating} precision={0.25} readOnly />
             {/* </Stack> */}
           </Paper>
         </Grid>
@@ -88,25 +103,71 @@ function ReviewTile({ reviewData }) {
             </Typography>
           </Paper>
         </Grid>
-        <Grid item xs={12} >
-          <Paper className={classes.paper}>
-            <Typography >
-              {reviewData.body}
-            </Typography>
-            <ImageList className={classes.imageList} cols={2.5}>
-              {reviewData.photos.map((item) => (
-                <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
-                  <img src={item.url} onClick={handleOpen}/>
-                  <Modal open={open} onClose={handleClose}>
-                  <Box sx={style} >
-                  <img src={item.url} height='100%' width='auto' />
-                  </Box>
-                  </Modal>
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </Paper>
-        </Grid>
+
+
+        {reviewData.body.length > 250 && (
+          <Grid item xs={12} >
+              <Accordion justifyContent='flex-start'>
+                <AccordionSummary>
+
+                  <Grid item xs={12} >
+                    <Grid item xs={12} >
+                      <Typography style={{ color: 'grey' }}>{reviewData.body.slice(0, 251) + '...'} </Typography>
+                    </Grid>
+                    {expanded && (
+                      <Grid item xs={12} style={{ marginTop: '8px', color: 'grey' }}>
+                        <Link className={classes.hover} component="button" underline="always" color="inherit" onClick={handleExpanded}>{'Show More'}</Link>
+                      </Grid>
+                    )}
+                  </Grid>
+
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography style={{ color: 'grey' }}>{reviewData.body.slice(251)}</Typography>
+                </AccordionDetails>
+              </Accordion>
+
+              <Grid item container style={{ marginTop: '14px' }} xs={12} >
+                <ImageList className={classes.imageList} cols={2.5}>
+                  {reviewData.photos.map((item) => (
+                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
+                      <img src={item.url} onClick={handleOpen} />
+                      <Modal open={open} onClose={handleClose}>
+                        <Box sx={style} >
+                          <img src={item.url} height='100%' width='100%' />
+                        </Box>
+                      </Modal>
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+                </Grid>
+                </Grid>
+        )}
+
+        {reviewData.body.length <= 250 && (
+          <Grid item xs={12} >
+            <Paper className={classes.paper}>
+              <Typography>{reviewData.body}</Typography>
+
+
+              <Grid item container style={{ marginTop: '14px' }} xs={12} >
+                <ImageList className={classes.imageList} cols={2.5}>
+                  {reviewData.photos.map((item) => (
+                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
+                      <img src={item.url} onClick={handleOpen} />
+                      <Modal open={open} onClose={handleClose}>
+                        <Box sx={style} >
+                          <img src={item.url} height='100%' width='100%' />
+                        </Box>
+                      </Modal>
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              </Grid>
+
+            </Paper>
+          </Grid>
+        )}
         {reviewData.recommend && (
           <Grid item xs={12} >
             <Paper className={classes.paper}>
@@ -117,35 +178,48 @@ function ReviewTile({ reviewData }) {
             </Paper>
           </Grid>
         )}
-        {/* <Grid item xs={12} >
-          <Paper className={classes.paper}>Staff Response: {reviewData.response}</Paper>
-        </Grid> */}
+        {reviewData.response && (
+          <Grid item xs={12} >
+            <Paper className={classes.paper} style={{ backgroundColor: '#D3D3D3' }}>{'Response: "\n"' + reviewData.response}</Paper>
+          </Grid>
+        )}
         <Grid item xs={12} >
           <Paper className={classes.paper}>{'Was this review helpful? '}
-            <Link component="button" underline="hover" color="black"
+
+            <Link className={classes.hover} style={voteStyle1} component="button" underline="always" color="inherit"
               onClick={() => {
                 if (yesCount === reviewData.helpfulness && vote < 1) {
                   setYesCount(yesCount + 1);
                   setVote(vote + 1);
+                  setVoteStyle1({
+                    color: 'blue',
+                    fontWeight: 800
+                  })
                 }
                 else if (yesCount === reviewData.helpfulness + 1) {
                   setYesCount(yesCount - 1);
                   setVote(vote - 1);
+                  setVoteStyle1()
                 }
               }}>
               {' Yes '}
             </Link>
             {'(' + yesCount + ') '}
 
-            <Link component="button" underline="hover" color="black"
+            <Link className={classes.hover} style={voteStyle2} component="button" underline="always" color="inherit"
               onClick={() => {
                 if (noCount === 0 && vote < 1) {
                   setNoCount(noCount + 1);
                   setVote(vote + 1);
+                  setVoteStyle2({
+                    color: 'blue',
+                    fontWeight: 800
+                  })
                 }
                 else if (noCount === 1) {
                   setNoCount(noCount - 1);
                   setVote(vote - 1);
+                  setVoteStyle2()
                 }
               }}>
               {' No '}

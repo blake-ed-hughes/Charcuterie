@@ -8,11 +8,17 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 
 
-const Search = ({questions}) => {
+const Search = ({questions, setQuestions}) => {
   const questionsArr = [];
   for (var i = 0 ; i < questions.length; i++) {
      questionsArr.push(questions[i].question_body);
   }
+
+  // handleSearch(event) {
+  //   // questions = the clicked question
+  //   setQuestions(event.target.value);
+  // }
+
   return (
     <Grid container spacing={3}>
       <SearchIcon />
@@ -22,6 +28,7 @@ const Search = ({questions}) => {
         options={questionsArr}
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Search For A Question" />}
+        // onChange={handleSearch}
       />
     </Grid>
   );
