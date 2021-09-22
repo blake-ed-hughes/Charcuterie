@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Questions({ question }) {
+export default function Question({ question }) {
 
   const classes = useStyles();
   const [answerObj, setAnswerObj] = useState(question.answers);

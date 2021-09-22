@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Questions from './Questions.jsx';
+import Question from './Question.jsx';
 
 
 const Yes = ({helpfulness}) => {

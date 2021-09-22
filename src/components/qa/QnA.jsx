@@ -19,7 +19,7 @@ import Paper from '@material-ui/core/Paper';
 import Yes from './Yes.jsx';
 import Search from './Search.jsx';
 import { getQuestions, getAnswers } from './axiosHelper.js';
-import Questions from './Questions.jsx';
+import Question from './Question.jsx';
 import AddQuestionModal from "./QuestionModal.jsx";
 
 
@@ -80,6 +80,7 @@ export default function QnA() {
   }, []);
 
   useEffect(() => {
+    console.log(question);
     if (questions.length > 0) {
       setQuestions([question]);
     }
@@ -95,7 +96,7 @@ export default function QnA() {
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Search question={question} questions={questions} setQuestions={setQuestions} setQuestion={setQuestion} />
+              <Search questions={questions} setQuestions={setQuestions} setQuestion={setQuestion} />
             </Paper>
           </Grid>
 
@@ -106,7 +107,7 @@ export default function QnA() {
                 {questions.slice(0, 4).map((question, index) => {
 
                   return (
-                    <Questions className={classes.list} question={question} key={question.question_id} />
+                    <Question className={classes.list} question={question} key={question.question_id} />
                   )
                 })}
 
