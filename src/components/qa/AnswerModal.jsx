@@ -30,7 +30,7 @@ export default function AnswerModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Add Answer</Button>
+      <Button spacing={1} color="secondary" onClick={handleOpen}>Add Answer</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -42,23 +42,22 @@ export default function AnswerModal() {
             We love your answer!
           </Typography>
 
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <form className={classes.style} noValidate autoComplete="off">
-              <div>
-                <TextField required id="Nickname" label="Nickname" defaultValue="" />
-                <TextField required id="Email" label="Email" defaultValue="" />
-                <TextField
-                  id="helperText"
-                  label="Type answer here..."
-                  defaultValue=""
-                  helperText="less than 50 words"
-                />
-                <Typography>
-                  <button>Submit</button>
-                </Typography>
-              </div>
-            </form>
-          </Typography>
+          <form className={classes.style} noValidate autoComplete="off">
+            <div>
+              <TextField required id="Nickname" label="Nickname" defaultValue="" />
+              <TextField required id="Email" label="Email" defaultValue="" />
+              <TextField
+                id="helperText"
+                label="Type answer here..."
+                defaultValue=""
+                helperText="less than 50 words"
+              />
+
+              <button>Submit</button>
+
+            </div>
+          </form>
+
         </Box>
       </Modal>
     </div>
