@@ -39,7 +39,6 @@ function postItemToCart (sku) {
       'x-no-compression': true
     }
   })
-
 }
 
 function getRating (pid) {
