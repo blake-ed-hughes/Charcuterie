@@ -29,7 +29,7 @@ export default function AddQuestionModal() {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <span>
       <Button onClick={handleOpen}>ADD A QUESTION +</Button>
       <Modal
         open={open}
@@ -45,8 +45,8 @@ export default function AddQuestionModal() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <form className={classes.style} noValidate autoComplete="off">
               <div>
-                <TextField required id="firstName" label="First Name" defaultValue="" />
-                <TextField required id="lastName" label="Last Name" defaultValue="" />
+                <TextField required id="Nickname" label="Nickname" defaultValue="" />
+                <TextField required id="Email" label="Email" defaultValue="" />
                 <TextField
                   id="helperText"
                   label="What's Your Question?"
@@ -61,6 +61,6 @@ export default function AddQuestionModal() {
           </Typography>
         </Box>
       </Modal>
-    </div>
+    </span>
   );
 }
