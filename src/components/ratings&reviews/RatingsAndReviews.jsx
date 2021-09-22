@@ -172,7 +172,7 @@ function Ratings({ productId }) {
                 </Paper>
               </Grid>
 
-              <Grid item container justifyContent='flex-start'>
+              <Grid item container justifycontent='flex-start'>
                 {reviewCount < totalReviewsCount && (
                   <Grid item xs={3}>
                   <Button  variant="contained" className={classes.formControl} spacing={1} onClick={() => {

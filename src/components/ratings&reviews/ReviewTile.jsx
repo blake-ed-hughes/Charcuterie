@@ -107,7 +107,7 @@ function ReviewTile({ reviewData }) {
 
         {reviewData.body.length > 250 && (
           <Grid item xs={12} >
-              <Accordion justifyContent='flex-start'>
+              <Accordion justifycontent='flex-start'>
                 <AccordionSummary>
 
                   <Grid item xs={12} >
