@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Ratings({ productId }) {
+
   const classes = useStyles();
 
   const [pid, setProductId] = useState(productId);
@@ -54,6 +55,7 @@ function Ratings({ productId }) {
   const handleChange = (event) => {
     setSortList(event.target.value);
   };
+
 
   const starSort = (one, two, three, four, five) => {
     // create a starSortedArray variable
@@ -73,6 +75,7 @@ function Ratings({ productId }) {
     setStarSortResult(sorted);
   };
 
+
   useEffect(() => {
     if (starSortResult.length > 0) {
       setReviewsData(starSortResult);
@@ -91,13 +94,19 @@ function Ratings({ productId }) {
           console.log('Failure in getReviews axios call', err)
         });
     }
+  }, [pid, sortList, reviewCount, starSortResult])
 
-    getAllReviews(pid, sortList)
+
+    useEffect(() => {
+
+    getAllReviews(pid, sortList, totalReviewsCount)
       .then((response) => {
-        setTotalReviewsCount(response.data.count);
         setTotalReviewsData(response.data.results);
         if (response.data.results.length === 0) {
           setReviewCount(reviewCount - 2);
+        }
+        if (response.data.results.length !== 0) {
+          setReviewCount(2);
         }
       })
       .catch((err) => {
@@ -112,7 +121,7 @@ function Ratings({ productId }) {
         console.log('Failure in getReviewsMeta axios call', err)
       });
 
-  }, [pid, sortList, reviewCount, starSortResult])
+  }, [pid, sortList, starSortResult, totalReviewsCount])
 
 
   return (
@@ -128,7 +137,7 @@ function Ratings({ productId }) {
 
           <Grid item xs={4}>
             <Paper className={classes.paper} >
-              <Breakdown reviewsMetaData={reviewsMetaData} starSort={starSort} />
+              <Breakdown reviewsMetaData={reviewsMetaData} starSort={starSort} setTotalReviewsCount={setTotalReviewsCount} />
             </Paper>
           </Grid>
 
@@ -168,7 +177,11 @@ function Ratings({ productId }) {
                   <Grid item xs={3}>
                   <Button  variant="contained" className={classes.formControl} spacing={1} onClick={() => {
                     if (starSortResult.length === 0) {
-                      setReviewCount(reviewCount + 1)
+                      if ((reviewCount + 2) > totalReviewsCount) {
+                        setReviewCount(reviewCount + 1)
+                      } else {
+                        setReviewCount(reviewCount + 2)
+                      }
                     }
                   }
                   }

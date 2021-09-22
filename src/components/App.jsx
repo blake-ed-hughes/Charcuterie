@@ -5,7 +5,7 @@ import Ratings from './ratings&reviews/RatingsAndReviews.jsx';
 import Header from './Header.jsx';
 import Grid from '@material-ui/core/Grid';
 import Axios from 'axios';
-import API_key from '../config';
+// import API_key from '../config';
 
 
 class App extends React.Component {
