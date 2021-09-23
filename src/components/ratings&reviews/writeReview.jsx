@@ -33,8 +33,8 @@ import trackClick from '../tracker';
 import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
-
-
+import Overview from '../ProductOverview.jsx'
+import { useContext } from 'react';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -72,22 +72,11 @@ function WriteReview() {
   const handleClose = () => setOpen(false);
 
 
-  // onclick for add review > open modal
-
-  // set up modal structure with title and name of product
-  // (pass down state to get both)
-
-  // create a review form
-
-  // title them as so with astrisks for mandatory inputs
-
-  // radio buttons for stars?
+  // name of product (pass down state to get)
 
   // radio button recommendation
 
   // radio button characteristics
-
-  // text inputs for all else
 
   // form submission should be conditional
 
@@ -120,7 +109,8 @@ function WriteReview() {
               <Typography style={{ textAlign: 'center', marginTop: '16px' }} variant="h6">{"Write Your Review"} </Typography>
             </Grid>
             <Grid item xs={12} >
-              <Typography style={{ textAlign: 'center' }} variant="body2">{"About the "}</Typography>
+              <Typography style={{ textAlign: 'center' }} variant="body2">{"About the " + " Camo Onesie"}</Typography>
+              {/* productInfo.name */}
             </Grid>
           </Grid>
 
@@ -190,12 +180,12 @@ function WriteReview() {
                 id="outlined-photos"
                 label="Photo url"
                 defaultValue="Photo_url, Photo_url"
-                helperText="Add up 5 urls"
+                helperText="Add up 5 (comma seperatated) urls"
               />
             </Grid>
 
             <Grid container spacing={2} item xs={12} justifyContent={'center'} style={{ margin: '16px' }}>
-              <Button variant="contained" color="secondary">Submit Review</Button>
+              <Button variant="contained" color="secondary" onClick={handleClose}>Submit Review</Button>
             </Grid>
           </Grid>
 
