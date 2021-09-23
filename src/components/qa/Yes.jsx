@@ -9,10 +9,10 @@ const Yes = ({helpfulness}) => {
     setHelpCount(count+1);
   }
   return (
-    <a>
-      <button onClick={increment}><u>Yes</u></button>
-      {count}
-    </a>
+    <em>
+      <sup onClick={increment}>Yes{' '}{count}
+      </sup>
+    </em>
   );
 }
 

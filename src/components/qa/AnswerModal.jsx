@@ -29,7 +29,7 @@ export default function AnswerModal() {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <span>
       <Button spacing={1} color="secondary" onClick={handleOpen}>Add Answer</Button>
       <Modal
         open={open}
@@ -61,6 +61,6 @@ export default function AnswerModal() {
 
         </Box>
       </Modal>
-    </div>
+    </span>
   );
 };
