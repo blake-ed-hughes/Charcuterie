@@ -97,7 +97,7 @@ export default function QnA() {
   }, []);
 
   useEffect(() => {
-    console.log(question);
+    // console.log(question);
     if (questions.length > 0) {
       setQuestions([question]);
     }

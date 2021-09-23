@@ -16,6 +16,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Link from '@mui/material/Link';
 import trackClick from '../tracker';
+import WriteReview from './WriteReview.jsx';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +56,6 @@ function Ratings({ productId }) {
   const handleChange = (event) => {
     setSortList(event.target.value);
   };
-
 
   const starSort = (one, two, three, four, five) => {
     // create a starSortedArray variable
@@ -192,9 +192,7 @@ function Ratings({ productId }) {
                   </Grid>
                 )}
                 <Grid item xs={3}>
-                <Button  variant="contained" className={classes.formControl} spacing={1} color="secondary">
-                  Add Review +
-                </Button>
+                <WriteReview/>
                 </Grid>
               </Grid>
             </Paper>

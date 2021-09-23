@@ -133,8 +133,10 @@ function ReviewTile({ reviewData }) {
               <Grid item container style={{ marginTop: '14px' }} xs={12} >
                 <ImageList className={classes.imageList} cols={2.5}>
                   {reviewData.photos.map((item) => (
-                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
-                      <img src={item.url} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {handleOpen})}} />
+                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
+                      handleOpen
+                    })}}>
+                      <img src={item.url} onClick={handleOpen} />
                       <Modal open={open} onClose={handleClose}>
                         <Box sx={style} >
                           <img src={item.url} height='100%' width='100%' />
@@ -156,8 +158,10 @@ function ReviewTile({ reviewData }) {
               <Grid item container style={{ marginTop: '14px' }} xs={12} >
                 <ImageList className={classes.imageList} cols={2.5}>
                   {reviewData.photos.map((item) => (
-                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
-                      <img src={item.url} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {handleOpen})}} />
+                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
+                      handleOpen
+                    })}}>
+                      <img src={item.url} onClick={handleOpen} />
                       <Modal open={open} onClose={handleClose}>
                         <Box sx={style} >
                           <img src={item.url} height='100%' width='100%' />

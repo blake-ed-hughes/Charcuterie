@@ -27,24 +27,17 @@ import Button from '@mui/material/Button';
 import Select from '@material-ui/core/Select';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { FaRegCheckCircle } from "react-icons/fa";
 import trackClick from '../tracker';
+import TextField from '@mui/material/TextField';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 'auto',
-  height: '90%',
-  bgcolor: 'transparent',
-  boxShadow: 24,
 
-};
 
-onst useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -56,63 +49,155 @@ onst useStyles = makeStyles((theme) => ({
   bold: {
     fontWeight: 600
   },
+  style: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '50%',
+    height: '90%',
+    background: 'white',
+    boxShadow: 24,
+    border: '4px solid black',
+    p: 4
+  }
 
 }));
 
-function WriteReview () {
+function WriteReview() {
   const classes = useStyles();
 
-// onclick for add review > open modal
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-// set up modal structure with title and name of product
-// (pass down state to get both)
+
+  // onclick for add review > open modal
+
+  // set up modal structure with title and name of product
+  // (pass down state to get both)
 
   // create a review form
 
   // title them as so with astrisks for mandatory inputs
 
-   // radio buttons for stars?
+  // radio buttons for stars?
 
-   // radio button recommendation
+  // radio button recommendation
 
-   // radio button characteristics
+  // radio button characteristics
 
-   // text inputs for all else
+  // text inputs for all else
 
   // form submission should be conditional
 
-    // upon submit send post request with all params
+  // upon submit send post request with all params
 
 
   return (
     <div>
 
+      <Button variant="contained" className={classes.formControl} spacing={1} color="secondary" onClick={handleOpen} >
+        Add Review +
+      </Button>
+
+
       <Modal
         open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box className={classes.style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            WRITE SOMETHING
-          </Typography>
+        onClose={handleClose} >
+        <Box
+          component="form"
+          sx={{
+            '& .MuiTextField-root': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+          className={classes.style}
+          style={{ maxHeight: '100%', maxWidth: '100%', overflow: 'auto' }}>
 
-          <form className={classes.style} noValidate autoComplete="off">
-            <div>
-              <TextField required id="Nickname" label="Nickname" defaultValue="" />
-              <TextField required id="Email" label="Email" defaultValue="" />
+          <Grid container spacing={2} item xs={12} justifyContent={'center'}>
+            <Grid item xs={12} >
+              <Typography style={{ textAlign: 'center', marginTop: '16px' }} variant="h6">{"Write Your Review"} </Typography>
+            </Grid>
+            <Grid item xs={12} >
+              <Typography style={{ textAlign: 'center' }} variant="body2">{"About the "}</Typography>
+            </Grid>
+          </Grid>
+
+
+          <Grid container spacing={2} item xs={12} style={{ marginTop: '16px' }} justifyContent={'center'}>
+
+            <Grid item container justifyContent={'center'} xs={12} >
+
+            <Typography style={{ textAlign: 'center', color: 'grey' }} variant="caption">{"Overall rating: "}</Typography>
+              <Rating name="quarter-rating" defaultValue={1} />
+
+            </Grid>
+
+            <Grid item container justifyContent={'center'} xs={12} >
+            </Grid>
+
+            <Grid item container justifyContent={'center'} xs={6} >
               <TextField
-                id="helperText"
-                label="Type answer here..."
-                defaultValue=""
-                helperText="less than 50 words"
+                color="secondary"
+                fullWidth
+                required
+                id="outlined-nickname"
+                label="Nickname"
+                defaultValue="Example: jackson11!"
               />
+            </Grid>
+            <Grid item container justifyContent={'center'} xs={6} >
+              <TextField
+                color="secondary"
+                fullWidth
+                required
+                id="outlined-email"
+                label="Email"
+                defaultValue="Example: jackson11@email.com"
+                helperText="For authentication reasons, you will not be emailed"
+              />
+            </Grid>
+            <Grid item container justifyContent={'center'} xs={6} >
+              <TextField
+                color="secondary"
+                multiline
+                rows={4}
+                fullWidth
+                id="outlined-Review summary"
+                label="Review summary"
+                defaultValue="Example: Best purchase ever!"
+                helperText="Up to 60 characters"
+              />
+            </Grid>
+            <Grid item container justifyContent={'center'} xs={6} >
+              <TextField
+                required
+                multiline
+                rows={4}
+                color="secondary"
+                fullWidth
+                id="outlined-Review body"
+                label="Review body"
+                defaultValue="Why did you like the product or not?"
+                helperText="Up to 1000 characters"
+              />
+            </Grid>
+            <Grid item container justifyContent={'center'} xs={6} >
+              <TextField
+                color="secondary"
+                fullWidth
+                id="outlined-photos"
+                label="Photo url"
+                defaultValue="Photo_url, Photo_url"
+                helperText="Add up 5 urls"
+              />
+            </Grid>
 
-              <button>Submit</button>
-
-            </div>
-          </form>
+            <Grid container spacing={2} item xs={12} justifyContent={'center'} style={{ margin: '16px' }}>
+              <Button variant="contained" color="secondary">Submit Review</Button>
+            </Grid>
+          </Grid>
 
         </Box>
       </Modal>
