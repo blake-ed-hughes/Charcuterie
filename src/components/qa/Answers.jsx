@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Yes from './Yes.jsx';
+import Report from './Report.jsx';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Answers({ answer }) {
   const classes = useStyles();
-
   return (
 
     <div className={classes.root}>
@@ -37,7 +37,7 @@ export default function Answers({ answer }) {
         <Grid item xs={12}>
           <Paper className={classes.paper}>A: {answer.body}
           <Typography>by {answer.answerer_name} {' '} {answer.date.slice(0, 10)} {' | '}
-          Helpful? <Yes helpfulness={answer.helpfulness}/> {' | '} <u>Report</u>
+          Helpful? <Yes helpfulness={answer.helpfulness}/> {' | '} <Report />
           </Typography>
           </Paper>
         </Grid>
