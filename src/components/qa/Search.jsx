@@ -7,17 +7,24 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 
-
-const Search = ({questions, setQuestions}) => {
+const Search = ({questions, setQuestions, setQuestion}) => {
   const questionsArr = [];
+
   for (var i = 0 ; i < questions.length; i++) {
      questionsArr.push(questions[i].question_body);
   }
 
-  // handleSearch(event) {
-  //   // questions = the clicked question
-  //   setQuestions(event.target.value);
-  // }
+  const handleSearch = (event) => {
+    // questions = the clicked question
+    var clickedQuestion = event.target.innerHTML;
+    // setQuestions();
+    for (var i = 0; i < questions.length; i++) {
+      if (questions[i].question_body === clickedQuestion) {
+        setQuestion(questions[i]);
+      }
+    }
+
+  }
 
   return (
     <Grid container spacing={3}>
@@ -28,7 +35,7 @@ const Search = ({questions, setQuestions}) => {
         options={questionsArr}
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Search For A Question" />}
-        // onChange={handleSearch}
+        onChange={handleSearch}
       />
     </Grid>
   );
@@ -38,14 +45,3 @@ export default Search;
 
 
 
-
-//      <form >
-{/* <label>
-<input
-  value={props.searchString}
-  type="text"
-  className="qa-search-bar"
-  placeholder="HAVE A QUESTION? SEARCH FOR ANSWERS..." />
-</label>
-<input type="submit" value="Search" />
-</form> */}
