@@ -84,7 +84,7 @@ function StyleSelect(props) {
             return (
               <Grid item xs={3} key={index}>
                 <Badge color='primary' badgeContent='' overlap='circular'>
-                  <Avatar alt={'' + index} src={url} className={classes.large} id="style-select" onClick={(e)=>{trackClick(e, 'product-overview', updateIndex)}} />
+                  <Avatar alt={'' + index} src={url} className={classes.large} id="style-select" onClick={(e)=>{trackClick(e, 'product-overview', updateIndex)}}/>
                 </Badge>
               </Grid>
             )
@@ -179,10 +179,10 @@ function AddToCart(props) {
       </Grid>
       <Grid item container justifyContent='space-between'>
         <Grid item xs={10}>
-          <Button onClick={addskuToCart} variant="contained" className={classes.formControl}>Add To Cart</Button>
+          <Button onClick={(e)=>{trackClick(e, 'product-overview', addskuToCart)}} variant="contained" className={classes.formControl}>Add To Cart</Button>
         </Grid>
         <Grid item xs={2}>
-          <Button onClick={() => { console.log('added to favorites') }} variant="contained" className={classes.formControl}>fav</Button>
+          <Button onClick={(e)=>{trackClick(e, 'product-overview', () => { console.log('added to favorites') })}} variant="contained" className={classes.formControl}>fav</Button>
         </Grid>
       </Grid>
     </Grid>
@@ -214,7 +214,7 @@ function Gallery(props) {
           <Divider variant="inset" color="secondary" className={classes.selectedPhotoMark} key={-5}/>
         );
       } else {
-        htmlArr.push(<Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen} onClick={changeIndex} />)
+        htmlArr.push(<Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen} onClick={(e)=>{trackClick(e, 'product-overview', changeIndex)}} />)
       }
       onScreen++;
     }
@@ -255,19 +255,19 @@ function Gallery(props) {
     <Grid item container alignItems="center" justifyContent="space-between" xs={10}>
       <Grid item xs={2}>
         <Stack spacing={3}>
-          <IconButton onClick={lowerBarIndex}><KeyboardArrowUpIcon /></IconButton>
+          <IconButton onClick={(e)=>{trackClick(e, 'product-overview', lowerBarIndex)}}><KeyboardArrowUpIcon /></IconButton>
           {imgBar(barIndex)}
-          <IconButton onClick={raiseBarIndex}><KeyboardArrowDownIcon /></IconButton>
+          <IconButton onClick={(e)=>{trackClick(e, 'product-overview', raiseBarIndex)}}><KeyboardArrowDownIcon /></IconButton>
         </Stack>
       </Grid>
       <Grid item xs={1}>
-        <IconButton onClick={backPhoto}><ArrowBackIcon /></IconButton>
+        <IconButton onClick={(e)=>{trackClick(e, 'product-overview', backPhoto)}}><ArrowBackIcon /></IconButton>
       </Grid>
       <Grid item xs={6} container alignItems="center">
         <img src={photos[mainPhotoIndex].url} height='auto' width='100%' className={classes.mainPhoto} />
       </Grid>
       <Grid item xs={1}>
-        <IconButton onClick={nextPhoto}><ArrowForwardIcon /></IconButton>
+        <IconButton onClick={(e)=>{trackClick(e, 'product-overview', nextPhoto)}}><ArrowForwardIcon /></IconButton>
       </Grid>
     </Grid>
   )
@@ -340,7 +340,7 @@ function Overview(props) {
       <Grid container justifyContent="center" direction="row">
         <Gallery photos={stylePhotos} />
         <Grid item xs={1}>
-          <IconButton onClick={fullscreenToggle}><FullscreenExitIcon /></IconButton>
+          <IconButton onClick={(e)=>{trackClick(e, 'product-overview', fullscreenToggle)}}><FullscreenExitIcon /></IconButton>
         </Grid>
       </Grid>
     )
@@ -354,7 +354,7 @@ function Overview(props) {
             <Grid item xs={12} md={8} container justifyContent="center" direction="row">
               <Gallery photos={stylePhotos} />
               <Grid item xs={1}>
-                <IconButton onClick={fullscreenToggle}><FullscreenIcon /></IconButton>
+                <IconButton onClick={(e)=>{trackClick(e, 'product-overview', fullscreenToggle)}}><FullscreenIcon /></IconButton>
               </Grid>
             </Grid>
             <Grid item xs={12} md={4}  container direction="column" alignItems="flex-start" justifyContent="flex-start">
