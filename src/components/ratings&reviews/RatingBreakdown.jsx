@@ -7,6 +7,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import Link from '@mui/material/Link';
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { useState, useEffect } from 'react';
+import trackClick from '../tracker';
 
 const BorderLinearProgress = withStyles((theme) => ({
   root: {
@@ -118,7 +119,7 @@ function RatingBreakdown({ starRatings, starSort }) {
     <div className={classes.root}>
       <Grid container spacing={1}>
 
-        <Grid item xs={12} container className={classes.hover} onClick={() => {
+        <Grid item xs={12} container className={classes.hover} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
           if (fiveStarSort.length === 0) {
             setFiveStarSort([5])
             setStarStyle5({
@@ -130,8 +131,8 @@ function RatingBreakdown({ starRatings, starSort }) {
             setFiveStarSort([])
             setStarStyle5();
           }
-        }
-        } >
+        })
+        }} >
           <Grid item xs={3} align={'left'}>
             <Typography style={starStyle5} variant="body2">{'5 Stars '}</Typography>
           </Grid>
@@ -143,7 +144,7 @@ function RatingBreakdown({ starRatings, starSort }) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container className={classes.hover} onClick={() => {
+        <Grid item xs={12} container className={classes.hover} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
           if (fourStarSort.length === 0) {
             setFourStarSort([4])
             setStarStyle4({
@@ -154,6 +155,7 @@ function RatingBreakdown({ starRatings, starSort }) {
             setFourStarSort([])
             setStarStyle4();
           }
+        })
         }}>
           <Grid item xs={3} align={'left'}>
             <Typography style={starStyle4} variant="body2">{'4 Stars '}</Typography>
@@ -166,7 +168,7 @@ function RatingBreakdown({ starRatings, starSort }) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container className={classes.hover}  onClick={() => {
+        <Grid item xs={12} container className={classes.hover}  onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
           if (threeStarSort.length === 0) {
             setThreeStarSort([3])
             setStarStyle3({
@@ -177,6 +179,7 @@ function RatingBreakdown({ starRatings, starSort }) {
             setThreeStarSort([])
             setStarStyle3();
           }
+        })
         }}>
           <Grid item xs={3} align={'left'}>
             <Typography style={starStyle3} variant="body2">{'3 Stars '}</Typography>
@@ -189,7 +192,7 @@ function RatingBreakdown({ starRatings, starSort }) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container className={classes.hover} onClick={() => {
+        <Grid item xs={12} container className={classes.hover} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
           if (twoStarSort.length === 0) {
             setTwoStarSort([2])
             setStarStyle2({
@@ -200,6 +203,7 @@ function RatingBreakdown({ starRatings, starSort }) {
             setTwoStarSort([])
             setStarStyle2();
           }
+        })
         }}>
           <Grid item xs={3} align={'left'}>
             <Typography style={starStyle2} variant="body2">{'2 Stars '}</Typography>
@@ -212,7 +216,7 @@ function RatingBreakdown({ starRatings, starSort }) {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} container className={classes.hover} onClick={() => {
+        <Grid item xs={12} container className={classes.hover} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
           if (oneStarSort.length === 0) {
             setOneStarSort([1])
             setStarStyle1({
@@ -223,6 +227,7 @@ function RatingBreakdown({ starRatings, starSort }) {
             setOneStarSort([])
             setStarStyle1();
           }
+        })
         }}>
           <Grid item xs={3} align={'left'}>
             <Typography style={starStyle1} variant="body2">{'1 Star '}</Typography>
@@ -239,7 +244,7 @@ function RatingBreakdown({ starRatings, starSort }) {
         <Grid item xs={12} align={'left'}>
            <Grid item xs={12} align={'left'}>
            <Link variant="caption" style={{fontWeight: '800', color: 'blue'}} underline='always'
-            onClick={() => {
+           onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
               setFiveStarSort([])
               setStarStyle5();
               setFourStarSort([])
@@ -250,6 +255,7 @@ function RatingBreakdown({ starRatings, starSort }) {
               setStarStyle2();
               setOneStarSort([])
               setStarStyle1();
+            })
             }}>{'remove all filters'}</Link>
            </Grid>
           { (fiveStarSort.length > 0) && (

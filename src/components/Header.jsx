@@ -19,13 +19,13 @@ function Header(props) {
 
   return (
     <header>
-      <Container maxWidth="xl" >
+      <Container maxWidth="xl" style={{backgroundColor: '#D3D3D3', borderBottom: "10px solid black"}}>
         <Grid container justifyContent="space-between" alignItems="flex-end">
           <Grid item>
-            <h1>The Charcuterie Board</h1>
-            <h3>Styles so fine you might want some cheese with that wine.</h3>
+            <h1 style={{color:'blue'}} >Charcuterie</h1>
+            <h4 style={{color:'black'}}>Styles so fine you'll want cheese with your wine.</h4>
           </Grid>
-          <Grid item>
+          <Grid item style={{marginBottom: '8px'}} >
             <FormControl margin='normal'>
               <InputLabel htmlFor="search-Pid">Search Product Id</InputLabel>
               <Input id="search-Pid" aria-describedby="search" value={searchVal} onChange={(e)=>{setSearchVal(e.target.value)}} endAdornment={

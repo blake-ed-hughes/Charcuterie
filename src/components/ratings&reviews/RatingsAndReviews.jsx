@@ -15,7 +15,8 @@ import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Link from '@mui/material/Link';
-
+import trackClick from '../tracker';
+import WriteReview from './WriteReview.jsx';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,7 +56,6 @@ function Ratings({ productId }) {
   const handleChange = (event) => {
     setSortList(event.target.value);
   };
-
 
   const starSort = (one, two, three, four, five) => {
     // create a starSortedArray variable
@@ -172,10 +172,10 @@ function Ratings({ productId }) {
                 </Paper>
               </Grid>
 
-              <Grid item container justifyContent='flex-start'>
+              <Grid item container justifycontent='flex-start'>
                 {reviewCount < totalReviewsCount && (
                   <Grid item xs={3}>
-                  <Button  variant="contained" className={classes.formControl} spacing={1} onClick={() => {
+                  <Button  variant="contained" className={classes.formControl} spacing={1}  onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
                     if (starSortResult.length === 0) {
                       if ((reviewCount + 2) > totalReviewsCount) {
                         setReviewCount(reviewCount + 1)
@@ -184,6 +184,7 @@ function Ratings({ productId }) {
                       }
                     }
                   }
+                )}
                   }
                    color="primary">
                     More Reviews
@@ -191,9 +192,7 @@ function Ratings({ productId }) {
                   </Grid>
                 )}
                 <Grid item xs={3}>
-                <Button  variant="contained" className={classes.formControl} spacing={1} color="secondary">
-                  Add Review +
-                </Button>
+                <WriteReview/>
                 </Grid>
               </Grid>
             </Paper>

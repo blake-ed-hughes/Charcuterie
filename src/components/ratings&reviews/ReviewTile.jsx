@@ -21,6 +21,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { ExpandMore } from '@material-ui/icons';
 import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
+import trackClick from '../tracker';
 
 
 const style = {
@@ -88,9 +89,7 @@ function ReviewTile({ reviewData }) {
       <Grid container style={{ borderBottom: "4px solid #D3D3D3" }} spacing={1} padding={1}>
         <Grid item xs={6}>
           <Paper className={classes.paper}>
-            {/* <Stack spacing={1}> */}
             <Rating name="quarter-rating" value={starRating} precision={0.25} readOnly />
-            {/* </Stack> */}
           </Paper>
         </Grid>
         <Grid item xs={6} align={'right'}>
@@ -107,7 +106,7 @@ function ReviewTile({ reviewData }) {
 
         {reviewData.body.length > 250 && (
           <Grid item xs={12} >
-              <Accordion justifyContent='flex-start'>
+              <Accordion justifycontent='flex-start'>
                 <AccordionSummary>
 
                   <Grid item xs={12} >
@@ -116,7 +115,11 @@ function ReviewTile({ reviewData }) {
                     </Grid>
                     {expanded && (
                       <Grid item xs={12} style={{ marginTop: '8px', color: 'grey' }}>
-                        <Link className={classes.hover} component="button" underline="always" color="inherit" onClick={handleExpanded}>{'Show More'}</Link>
+                        <Link className={classes.hover} component="button" underline="always" color="inherit"
+                        onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
+                          handleExpanded
+                        })
+                      }}>{'Show More'}</Link>
                       </Grid>
                     )}
                   </Grid>
@@ -130,7 +133,9 @@ function ReviewTile({ reviewData }) {
               <Grid item container style={{ marginTop: '14px' }} xs={12} >
                 <ImageList className={classes.imageList} cols={2.5}>
                   {reviewData.photos.map((item) => (
-                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
+                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
+                      handleOpen
+                    })}}>
                       <img src={item.url} onClick={handleOpen} />
                       <Modal open={open} onClose={handleClose}>
                         <Box sx={style} >
@@ -153,7 +158,9 @@ function ReviewTile({ reviewData }) {
               <Grid item container style={{ marginTop: '14px' }} xs={12} >
                 <ImageList className={classes.imageList} cols={2.5}>
                   {reviewData.photos.map((item) => (
-                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id}>
+                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
+                      handleOpen
+                    })}}>
                       <img src={item.url} onClick={handleOpen} />
                       <Modal open={open} onClose={handleClose}>
                         <Box sx={style} >
@@ -187,7 +194,7 @@ function ReviewTile({ reviewData }) {
           <Paper className={classes.paper}>{'Was this review helpful? '}
 
             <Link className={classes.hover} style={voteStyle1} component="button" underline="always" color="inherit"
-              onClick={() => {
+              onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
                 if (yesCount === reviewData.helpfulness && vote < 1) {
                   setYesCount(yesCount + 1);
                   setVote(vote + 1);
@@ -201,13 +208,14 @@ function ReviewTile({ reviewData }) {
                   setVote(vote - 1);
                   setVoteStyle1()
                 }
+              })
               }}>
               {' Yes '}
             </Link>
             {'(' + yesCount + ') '}
 
             <Link className={classes.hover} style={voteStyle2} component="button" underline="always" color="inherit"
-              onClick={() => {
+              onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
                 if (noCount === 0 && vote < 1) {
                   setNoCount(noCount + 1);
                   setVote(vote + 1);
@@ -221,6 +229,7 @@ function ReviewTile({ reviewData }) {
                   setVote(vote - 1);
                   setVoteStyle2()
                 }
+              })
               }}>
               {' No '}
             </Link>

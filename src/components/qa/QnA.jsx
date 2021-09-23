@@ -19,7 +19,7 @@ import Paper from '@material-ui/core/Paper';
 import Yes from './Yes.jsx';
 import Search from './Search.jsx';
 import { getQuestions, getAnswers } from './axiosHelper.js';
-import Questions from './Questions.jsx';
+import Question from './Question.jsx';
 import AddQuestionModal from "./QuestionModal.jsx";
 
 
@@ -58,28 +58,53 @@ export default function QnA() {
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState({});
   const [questionCount, setQuestionCount] = useState(4);
+  const [isClicked, setClickBoolean] = useState(false);
+  const [pid, setPid] = useState();
+  const [buttonName, setButtonName] = useState('MORE ANSWERED QUESTIONS');
 
-  const moreAnsweredQuestions = () => {
-    // setQuestion(response.data.results);
-  }
   const openModal = () => {
     // console.log('inside openModal function');
     return (<QuestionModal />);
+  }
+  const moreAnsweredQuestions = () => {
+    if(buttonName === 'MORE ANSWERED QUESTIONS') {
+      getQuestions(38321)
+      .then((response) => {
+        setQuestions(response.data.results);
+        setQuestionCount(response.data.count);
+      })
+      .catch((err) => { console.log('fail to get questions', err) });
+
+      setButtonName('GO BACK');
+    } else {
+      getQuestions(38321)
+      .then((response) => {
+        setQuestions(response.data.results.slice(0, 4));
+        setQuestionCount(response.data.count);
+      })
+      .catch((err) => { console.log('fail to get questions', err) });
+      setButtonName('MORE ANSWERED QUESTIONS');
+    }
   }
 
   useEffect(() => {
     getQuestions(38321)
       .then((response) => {
-        setQuestions(response.data.results);
-        setQuestion(response.data.results[0]);
+        setQuestions(response.data.results.slice(0, 4));
         setQuestionCount(response.data.count);
-        if (response.data.results.length === 0) {
-          setQuestionCount(questionCount - 2);
-        }
       })
       .catch((err) => { console.log('fail to get questions', err) });
-  }, [38321]);
+  }, []);
 
+  useEffect(() => {
+    if (questions.length > 0) {
+      setQuestions([question]);
+    }
+  }, [question]);
+
+  // useEffect(() => {
+  //   moreAnsweredQuestions();
+  // }, [buttonName]);
 
   return (
     <div className={classes.root}>
@@ -91,25 +116,34 @@ export default function QnA() {
 
           <Grid item xs={12}>
             <Paper className={classes.paper}>
-              <Search questions={questions} setQuestions={setQuestions} />
+              <Search questions={questions} setQuestions={setQuestions} setQuestion={setQuestion} />
             </Paper>
           </Grid>
 
           <Grid item xs={12}>
-            <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
+            {questions.length > 0 && (
+              <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
 
-              {questions && questions.length && questions.slice(0, 4).map((question, index) => {
-                return (
-                  <Questions className={classes.list} question={question} key={question.question_id} />
-                )
-              })}
-            </List>
+                {questions.map((question, index) => {
 
-          <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
-            MORE ANSWERED QUESTIONS
+                  return (
+                    <Question className={classes.list} question={question} key={question.question_id} />
+                  )
+                })}
+
+              </List>)}
+
+            {questions.length === 0 && (
+              <List style={{ maxHeight: '50vh', overflow: 'auto' }}>
+                No question found...
+              </List>
+            )}
+
+            <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
+              {buttonName}
           </Button>
 
-          <AddQuestionModal />
+            <AddQuestionModal />
           </Grid>
 
         </Grid>
@@ -117,3 +151,4 @@ export default function QnA() {
     </div >
   );
 }
+

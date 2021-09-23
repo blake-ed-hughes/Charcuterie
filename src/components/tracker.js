@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 export default function trackClick (event, module, callback) {
-  console.log(event)
+  // console.log(event)
   let body = {
     element: event.target.parentNode.id,
     widget: module,
@@ -21,7 +21,7 @@ export default function trackClick (event, module, callback) {
     }
   })
   .then((response) => {
-    console.log('successfully tracked click!');
+    // console.log('successfully tracked click!');
   })
   .catch((err) => {console.log('Failed to post tracking info', err)})
 

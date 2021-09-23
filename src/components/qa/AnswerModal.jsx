@@ -52,8 +52,9 @@ export default function AnswerModal() {
                 defaultValue=""
                 helperText="less than 50 words"
               />
-
-              <button>Submit</button>
+              <div>
+                <button>Submit</button>
+              </div>
 
             </div>
           </form>
