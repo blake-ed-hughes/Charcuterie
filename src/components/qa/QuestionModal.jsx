@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #005',
     boxShadow: 24,
     p: 4,
+    color: "grey"
   }
 }));
 
@@ -27,6 +28,11 @@ export default function AddQuestionModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('submit clicked');
+  }
 
   return (
     <span>
@@ -42,10 +48,24 @@ export default function AddQuestionModal() {
             What question do you have?
           </Typography>
 
-          <form className={classes.style} noValidate autoComplete="off">
+          <form className={classes.style} onSubmit={handleSubmit}>
+
+            <h2>What's Your Question?</h2>
+
             <div>
               <TextField required id="Nickname" label="Nickname" defaultValue="" />
+            </div>
+
+            <div>
               <TextField required id="Email" label="Email" defaultValue="" />
+            </div>
+
+            <div>
+              <Typography variant="h6" component="h6">Want to upload an image?</Typography>
+            <input type="file" />
+            </div>
+
+            <div>
               <TextField
                 id="helperText"
                 label="What's Your Question?"
@@ -53,7 +73,9 @@ export default function AddQuestionModal() {
                 helperText="less than 50 words"
               />
             </div>
-            <button>Submit</button>
+
+            <button type="submit">Submit</button>
+
           </form>
 
         </Box>
