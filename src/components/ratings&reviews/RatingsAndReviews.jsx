@@ -75,6 +75,9 @@ function Ratings({ productId }) {
     setStarSortResult(sorted);
   };
 
+  useEffect(() => {
+    setProductId(productId)
+  }, [productId])
 
   useEffect(() => {
     if (starSortResult.length > 0) {

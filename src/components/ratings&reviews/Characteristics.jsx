@@ -59,6 +59,8 @@ function Characteristics({ characteristicData }) {
   const [fit, setFit] = useState(0);
   const [quality, setQuality] = useState(0);
   const [length, setLength] = useState(0);
+  const [size, setSize] = useState(0);
+  const [width, setWidth] = useState(0);
 
   const perChar = () => {
 
@@ -66,6 +68,11 @@ function Characteristics({ characteristicData }) {
     var fitVal = 0;
     var qualityVal = 0;
     var lengthVal = 0;
+    var sizeVal = 0;
+    var widthVal = 0;
+
+
+
 
     for (var key in characteristicData) {
       if (key === "Comfort") {
@@ -80,12 +87,20 @@ function Characteristics({ characteristicData }) {
       if (key === "Length") {
         lengthVal = characteristicData[key].value;
       }
+      if (key === "Size") {
+        sizeVal = characteristicData[key].value;
+      }
+      if (key === "Width") {
+        widthVal = characteristicData[key].value;
+      }
     }
 
     setComfort(parseFloat(comfortVal).toFixed(2) * 10);
     setFit(parseFloat(fitVal).toFixed(2) * 10);
     setQuality(parseFloat(qualityVal).toFixed(2) * 10);
     setLength(parseFloat(lengthVal).toFixed(2) * 10);
+    setSize(parseFloat(sizeVal).toFixed(2) * 10);
+    setWidth(parseFloat(widthVal).toFixed(2) * 10);
   }
 
   useEffect(() => {
@@ -176,6 +191,48 @@ function Characteristics({ characteristicData }) {
             </Grid>
             <Grid item xs={6} align={'right'} >
               <Typography variant="caption" style={{ height: 10 }}>{'Excellent '}</Typography>
+            </Grid>
+
+          </Grid>
+        )}
+
+        {size > 0 && (
+          <Grid item xs={12} container >
+
+            <Grid item xs={12} align={'left'}>
+              <Typography variant="body2" style={{ height: 12 }} >{' Size '}</Typography>
+            </Grid>
+            <Grid item xs={12} style={{ height: 24 }}  >
+              <div className={classes.margin}>
+                <CustumSlider value={size} color="primary" step={25} marks min={0} max={100} style={{ height: 8 }} readOnly />
+              </div>
+            </Grid>
+            <Grid item xs={6} align={'left'} >
+              <Typography variant="caption" style={{ height: 10 }}>{' Too small'}</Typography>
+            </Grid>
+            <Grid item xs={6} align={'right'} >
+              <Typography variant="caption" style={{ height: 10 }}>{'Too big '}</Typography>
+            </Grid>
+
+          </Grid>
+        )}
+
+        {width > 0 && (
+          <Grid item xs={12} container >
+
+            <Grid item xs={12} align={'left'}>
+              <Typography variant="body2" style={{ height: 12 }} >{' Width '}</Typography>
+            </Grid>
+            <Grid item xs={12} style={{ height: 24 }}  >
+              <div className={classes.margin}>
+                <CustumSlider value={width} color="primary" step={25} marks min={0} max={100} style={{ height: 8 }} readOnly />
+              </div>
+            </Grid>
+            <Grid item xs={6} align={'left'} >
+              <Typography variant="caption" style={{ height: 10 }}>{' Too narrow'}</Typography>
+            </Grid>
+            <Grid item xs={6} align={'right'} >
+              <Typography variant="caption" style={{ height: 10 }}>{'Too wide '}</Typography>
             </Grid>
 
           </Grid>
