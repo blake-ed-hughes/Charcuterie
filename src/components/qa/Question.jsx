@@ -27,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
   helpful: {},
   questionHelpful: {},
   report: {},
+  loadAnswers: {
+    padding:theme.spacing(-2),
+    color: "grey",
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'start-flex',
@@ -53,16 +57,14 @@ export default function Question({ question }) {
     <div className={classes.root}>
       <Grid container spacing={0}>
 
-        <Grid item xs={6}> {' '}
-          Q: {question.question_body}
+        <Grid item xs={8}> {' '}
+          <h3>Q: {question.question_body}</h3>
         </Grid>
 
-        <Grid item xs={3}>
-          Helpful <Yes helpfulness={question.question_helpfulness}/>
-        </Grid>
-
-        <Grid item xs={3}>
-          <AnswerModal />
+        <Grid item xs={4}>
+        Helpful
+        <Yes helpfulness={question.question_helpfulness}/>
+        <AnswerModal />
         </Grid>
 
         <Grid item xs={12}>
@@ -74,7 +76,7 @@ export default function Question({ question }) {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography>Load More Answers</Typography>
+                <Typography className={classes.loadAnswers}>Load More Answers</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 {answers.slice(2).map(answer => <Answers answer={answer} key={answer.id} />)}
