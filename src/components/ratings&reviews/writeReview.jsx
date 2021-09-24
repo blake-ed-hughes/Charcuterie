@@ -35,6 +35,8 @@ import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import Overview from '../ProductOverview.jsx'
 import { useContext } from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -71,7 +73,14 @@ function WriteReview() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
+  // const card = (
+  //   <CardContent>
+  //     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+  //     Overall rating:
+  //     </Typography>
+  //     <Rating name="quarter-rating" defaultValue={1} />
+  //   </CardContent>
+  // );
   // name of product (pass down state to get)
 
   // radio button recommendation
@@ -99,7 +108,7 @@ function WriteReview() {
           sx={{
             '& .MuiTextField-root': { m: 1, width: '25ch' },
           }}
-          noValidate
+          validate
           autoComplete="off"
           className={classes.style}
           style={{ maxHeight: '100%', maxWidth: '100%', overflow: 'auto' }}>
@@ -115,16 +124,26 @@ function WriteReview() {
           </Grid>
 
 
-          <Grid container spacing={2} item xs={12} style={{ marginTop: '16px' }} justifyContent={'center'}>
+          <Grid container spacing={2} item xs={12} style={{marginTop: '24px', }} justifyContent={'center'}>
 
-            <Grid item container justifyContent={'center'} xs={12} >
+            <Grid container justifyContent={'center'} style={{marginTop:'24px'}} item xs={6}>
 
-            <Typography style={{ textAlign: 'center', color: 'grey' }} variant="caption">{"Overall rating: "}</Typography>
-              <Rating name="quarter-rating" defaultValue={1} />
+
+              <Paper variant="outlined" style={{border: '1px solid #C0C0C0', minWidth: '80%'}}>
+                <Grid item xs={12} >
+                  <Typography style={{ textAlign: 'center', color: 'grey' }} sx={{ fontSize: 14 }} color="grey" gutterBottom variant="caption">{"  Overall rating:  "}</Typography>
+                </Grid>
+
+                <Grid item xs={12} >
+                  <Rating name="quarter-rating" defaultValue={1} />
+                </Grid>
+              </Paper>
+
 
             </Grid>
 
-            <Grid item container justifyContent={'center'} xs={12} >
+            <Grid item xs={6} container justifyContent={'center'} style={{marginTop:'24px'}} >
+
             </Grid>
 
             <Grid item container justifyContent={'center'} xs={6} >
