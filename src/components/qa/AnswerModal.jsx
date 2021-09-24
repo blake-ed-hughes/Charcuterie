@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -27,10 +28,11 @@ export default function AnswerModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [submitButton, setSubmitButton] = useState("Submit");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submit clicked');
+    setSubmitButton("We Have Received Your Answer!");
   }
 
   return (
@@ -64,9 +66,8 @@ export default function AnswerModal() {
             </div>
 
             <div>
-              <button type="submit">Submit</button>
+              <button type="submit">{submitButton}</button>
             </div>
-
 
           </form>
 
