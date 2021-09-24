@@ -23,9 +23,12 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import Link from '@mui/material/Link';
 import trackClick from './tracker';
+import InnerImageZoom from 'react-inner-image-zoom';
+import './innerzoom.css';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     width: '7vmin'
   },
   formControl: {
-    minWidth: '95%'
+    minWidth: '100%'
   },
   galBar: {
     height: '6vmax',
@@ -49,11 +52,15 @@ const useStyles = makeStyles((theme) => ({
   sale: {
     color: 'red'
   },
-  description: {
+  productInfoComponent: {
     'margin-top': '1vw'
   },
   descText: {
     padding: '1vw'
+  },
+  buttonBox: {
+    height: '4vmax',
+    width: '6vmax'
   }
 }));
 
@@ -84,14 +91,14 @@ function StyleSelect(props) {
             return (
               <Grid item xs={3} key={index}>
                 <Badge color='primary' badgeContent='' overlap='circular'>
-                  <Avatar alt={'' + index} src={url} className={classes.large} id="style-select" onClick={(e)=>{trackClick(e, 'product-overview', updateIndex)}}/>
+                  <Avatar alt={'' + index} src={url} className={classes.large} id="style-select" onClick={(e) => { trackClick(e, 'product-overview', updateIndex) }} />
                 </Badge>
               </Grid>
             )
           } else {
             return (
               <Grid item xs={3} key={index}>
-                <Avatar alt={'' + index} src={url} className={classes.large} id="style-select" onClick={(e)=>{trackClick(e, 'product-overview', updateIndex)}} />
+                <Avatar alt={'' + index} src={url} className={classes.large} id="style-select" onClick={(e) => { trackClick(e, 'product-overview', updateIndex) }} />
               </Grid>
             )
           }
@@ -108,6 +115,14 @@ function AddToCart(props) {
   const [sizes, setSizes] = useState([{ sku: '', size: '', quantity: '' }]);
   const [quantity, setQuantity] = useState('');
   const [skuQty, setSkuQty] = useState(undefined);
+  const sizeStrings = {
+    XS: 'X-Small',
+    S: 'Small',
+    M: 'Medium',
+    L: 'Large',
+    XL: 'X-Large',
+    XXL: 'XX-Large'
+  }
   useEffect(() => {
     setSize('');
     let skus = [];
@@ -125,14 +140,17 @@ function AddToCart(props) {
     setQuantity(e.target.value);
   }
   function quantitySelectBuilder(qty) {
-    if (qty) {
-      let list = []
+    if (qty > 0) {
+      let list = [];
+      if (qty > 15) {
+        qty = 15;
+      }
       for (let i = 1; i <= qty; i++) {
         list.push(<MenuItem value={i} key={i - 1}>{i}</MenuItem>);
       }
       return (list);
     } else {
-      return <MenuItem value='out'>OUT OF STOCK</MenuItem>;
+      return <MenuItem value='out'><em>OUT OF STOCK</em></MenuItem>;
     }
   }
   function addskuToCart() {
@@ -145,7 +163,7 @@ function AddToCart(props) {
     console.log(`added ${i} items with sku ${size}`)
   }
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} className={classes.productInfoComponent}>
       <Grid item container>
         <Grid item xs={8} >
           <FormControl className={classes.formControl}>
@@ -154,35 +172,26 @@ function AddToCart(props) {
               value={size}
               onChange={handleSizeChange}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {sizes.map((sizeObj, index) => <MenuItem value={sizeObj.sku} key={index}>{sizeObj.size}</MenuItem>)}
+              {sizes.map((sizeObj, index) => <MenuItem value={sizeObj.sku} key={index}>{sizeStrings[sizeObj.size]}</MenuItem>)}
             </Select>
           </FormControl>
         </Grid>
         <Grid item xs={4}>
-          <FormControl className={classes.formControl}>
+          <FormControl className={classes.formControl} disabled={size === ''}>
             <InputLabel >Quantity</InputLabel>
             <Select
               id="qty_select"
               value={quantity}
               onChange={handleQuantityChange}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
               {quantitySelectBuilder(skuQty)}
             </Select>
           </FormControl>
         </Grid>
       </Grid>
-      <Grid item container justifyContent='space-between'>
-        <Grid item xs={10}>
-          <Button onClick={(e)=>{trackClick(e, 'product-overview', addskuToCart)}} variant="contained" className={classes.formControl}>Add To Cart</Button>
-        </Grid>
-        <Grid item xs={2}>
-          <Button onClick={(e)=>{trackClick(e, 'product-overview', () => { console.log('added to favorites') })}} variant="contained" className={classes.formControl}>fav</Button>
+      <Grid item container justifyContent='center'>
+        <Grid item xs={12}>
+          <Button onClick={(e) => { trackClick(e, 'product-overview', addskuToCart) }} variant="contained" className={classes.formControl} disabled={quantity === ''}>Add To Cart</Button>
         </Grid>
       </Grid>
     </Grid>
@@ -210,16 +219,17 @@ function Gallery(props) {
     while (onScreen < 4 && firstIndex + onScreen < photos.length) {
       if (firstIndex + onScreen === mainPhotoIndex) {
         htmlArr.push(
-          <Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen}/>,
-          <Divider variant="inset" color="secondary" className={classes.selectedPhotoMark} key={-5}/>
+          <Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen} />,
+          <Divider variant="inset" color="secondary" className={classes.selectedPhotoMark} key={-5} />
         );
       } else {
-        htmlArr.push(<Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen} onClick={(e)=>{trackClick(e, 'product-overview', changeIndex)}} />)
+        htmlArr.push(<Avatar src={photos[firstIndex + onScreen].thumbnail_url} variant="square" className={classes.galBar} alt={firstIndex + onScreen + ''} key={firstIndex + onScreen} onClick={(e) => { trackClick(e, 'product-overview', changeIndex) }} />)
       }
       onScreen++;
     }
     return htmlArr;
   }
+
   function backPhoto() {
     if (mainPhotoIndex > 0) {
       setIndex(mainPhotoIndex - 1);
@@ -230,6 +240,7 @@ function Gallery(props) {
       }
     }
   }
+
   function nextPhoto() {
     if (mainPhotoIndex < photos.length - 1) {
       setIndex(mainPhotoIndex + 1);
@@ -240,11 +251,13 @@ function Gallery(props) {
       setBarIndex(photos.length - 4);
     }
   }
+
   function lowerBarIndex() {
     if (barIndex > 0) {
       setBarIndex(barIndex - 1);
     }
   }
+
   function raiseBarIndex() {
     if (barIndex < photos.length - 4) {
       setBarIndex(barIndex + 1);
@@ -254,20 +267,33 @@ function Gallery(props) {
   return (
     <Grid item container alignItems="center" justifyContent="space-between" xs={10}>
       <Grid item xs={2}>
-        <Stack spacing={3}>
-          <IconButton onClick={(e)=>{trackClick(e, 'product-overview', lowerBarIndex)}}><KeyboardArrowUpIcon /></IconButton>
-          {imgBar(barIndex)}
-          <IconButton onClick={(e)=>{trackClick(e, 'product-overview', raiseBarIndex)}}><KeyboardArrowDownIcon /></IconButton>
-        </Stack>
+        <Grid container spacing={3} direction='column'>
+          <Grid item xs={1}>
+            {barIndex > 0 && <IconButton className={classes.buttonBox} onClick={(e) => { trackClick(e, 'product-overview', lowerBarIndex) }}><KeyboardArrowUpIcon /></IconButton>}
+            {barIndex <= 0 && <Box className={classes.buttonBox}></Box>}
+          </Grid>
+          <Grid item xs={10}>
+            <Stack spacing={3}>
+              {imgBar(barIndex)}
+            </Stack>
+          </Grid>
+          <Grid item xs={1}>
+            {barIndex < photos.length - 4 && <IconButton className={classes.buttonBox} onClick={(e) => { trackClick(e, 'product-overview', raiseBarIndex) }}><KeyboardArrowDownIcon /></IconButton>}
+            {barIndex >= photos.length - 4 && <Box className={classes.buttonBox}></Box>}
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item xs={1}>
-        <IconButton onClick={(e)=>{trackClick(e, 'product-overview', backPhoto)}}><ArrowBackIcon /></IconButton>
+        {mainPhotoIndex > 0 && <IconButton className={classes.buttonBox} onClick={(e) => { trackClick(e, 'product-overview', backPhoto) }}><ArrowBackIcon /></IconButton>}
+        {mainPhotoIndex <= 0 && <Box className={classes.buttonBox}></Box>}
       </Grid>
       <Grid item xs={6} container alignItems="center">
-        <img src={photos[mainPhotoIndex].url} height='auto' width='100%' className={classes.mainPhoto} />
+      <InnerImageZoom src={photos[mainPhotoIndex].url} zoomScale={3}/>
+        {/* <img src={photos[mainPhotoIndex].url} height='auto' width='100%'/> */}
       </Grid>
       <Grid item xs={1}>
-        <IconButton onClick={(e)=>{trackClick(e, 'product-overview', nextPhoto)}}><ArrowForwardIcon /></IconButton>
+        {mainPhotoIndex < photos.length - 1 && <IconButton className={classes.buttonBox} onClick={(e) => { trackClick(e, 'product-overview', nextPhoto) }}><ArrowForwardIcon /></IconButton>}
+        {mainPhotoIndex >= photos.length - 1 && <Box className={classes.buttonBox}></Box>}
       </Grid>
     </Grid>
   )
@@ -275,10 +301,10 @@ function Gallery(props) {
 
 function Price(props) {
   const classes = useStyles();
-  if(props.sale) {
+  if (props.sale) {
     return [
-    <Typography variant='subtitle1' className={classes.strike} key={0}>${props.price}</Typography>,
-    <Typography variant='subtitle1' className={classes.sale} key={1}>${props.sale}</Typography>
+      <Typography variant='subtitle1' className={classes.strike} key={0}>${props.price}</Typography>,
+      <Typography variant='subtitle1' className={classes.sale} key={1}>${props.sale}</Typography>
     ]
   } else {
     return <Typography variant='subtitle1'>${props.price}</Typography>;
@@ -295,6 +321,7 @@ function Overview(props) {
   const [stylePhotos, setPhotos] = useState([{ url: '', thumbnail_url: '' }, { url: '', thumbnail_url: '' }]);
   const [isExpanded, setExpand] = useState(false);
   const [avgRating, setRating] = useState(0);
+  const [numOfReviews, setNumOfReviews] = useState(0);
   useEffect(() => {
     setStyle(styles[styleIndex]);
     setPhotos([...styles[styleIndex].photos]);
@@ -304,16 +331,17 @@ function Overview(props) {
   }, [props])
   useEffect(() => {
     getRating(pid)
-      .then(({data}) => {
+      .then(({ data }) => {
         let total = 0;
         let numReviews = 0;
         for (let key in data.ratings) {
           total += parseInt(key) * data.ratings[key];
           numReviews += parseInt(data.ratings[key]);
         }
-        setRating(total/numReviews);
+        setNumOfReviews(numReviews);
+        setRating(total / numReviews);
       })
-      .catch(err=>{console.log('failed to get rating', err)})
+      .catch(err => { console.log('failed to get rating', err) })
     getProductStyles(pid)
       .then((response) => {
         setStyles(response.data.results);
@@ -340,48 +368,48 @@ function Overview(props) {
       <Grid container justifyContent="center" direction="row">
         <Gallery photos={stylePhotos} />
         <Grid item xs={1}>
-          <IconButton onClick={(e)=>{trackClick(e, 'product-overview', fullscreenToggle)}}><FullscreenExitIcon /></IconButton>
+          <IconButton onClick={(e) => { trackClick(e, 'product-overview', fullscreenToggle) }}><FullscreenExitIcon /></IconButton>
         </Grid>
       </Grid>
     )
   } else {
     return (
-        <Container maxWidth="xl">
-          <Grid
-            container
-            spacing={1}
-          >
-            <Grid item xs={12} md={8} container justifyContent="center" direction="row">
-              <Gallery photos={stylePhotos} />
-              <Grid item xs={1}>
-                <IconButton onClick={(e)=>{trackClick(e, 'product-overview', fullscreenToggle)}}><FullscreenIcon /></IconButton>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} md={4}  container direction="column" alignItems="flex-start" justifyContent="flex-start">
-              <Grid item container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
-                <Grid item>
-                  <Rating name="quarter-rating" value={avgRating} readOnly precision={0.25} />
-                </Grid>
-                <Grid item>
-                  <Link href="#ratings" underline="always" color="textSecondary">
-                    {'Read all reviews'}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Typography variant='h6' color="textSecondary">{productInfo.category}</Typography>
-              <Typography gutterBottom variant='h3'>{productInfo.name}</Typography>
-              {/* price still needs sale update*/}
-              {/* <Typography variant='subtitle1'>${productInfo.default_price}</Typography> */}
-              <Price price={style.original_price} sale={style.sale_price}/>
-              <StyleSelect styleIndex={styleIndex} style={style} styles={styles} changeIndex={(e) => { changeIndex(e) }} />
-              <AddToCart style={style} />
-              <Paper elevation={1} className={classes.description}>
-                <Typography variant='subtitle2' className={classes.descText}>{productInfo.description}</Typography>
-              </Paper>
+      <Container maxWidth="xl">
+        <Grid
+          container
+          spacing={1}
+        >
+          <Grid item xs={12} md={8} container justifyContent="center" direction="row">
+            <Gallery photos={stylePhotos} />
+            <Grid item xs={1}>
+              <IconButton onClick={(e) => { trackClick(e, 'product-overview', fullscreenToggle) }}><FullscreenIcon /></IconButton>
             </Grid>
           </Grid>
+          <Grid item xs={12} md={4} container direction="column" alignItems="flex-start" justifyContent="flex-start">
+            <Grid item container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
+              <Grid item>
+                <Rating name="quarter-rating" value={avgRating} readOnly precision={0.25} />
+              </Grid>
+              <Grid item>
+                <Link href="#ratings" underline="always" color="textSecondary">
+                  {`Read all ${numOfReviews} reviews`}
+                </Link>
+              </Grid>
+            </Grid>
+            <Typography variant='h6' color="textSecondary">{productInfo.category}</Typography>
+            <Typography gutterBottom variant='h3'>{productInfo.name}</Typography>
+            {/* price still needs sale update*/}
+            {/* <Typography variant='subtitle1'>${productInfo.default_price}</Typography> */}
+            <Price price={style.original_price} sale={style.sale_price} />
+            <StyleSelect styleIndex={styleIndex} style={style} styles={styles} changeIndex={(e) => { changeIndex(e) }} />
+            <AddToCart style={style} />
+            <Paper elevation={1} className={classes.productInfoComponent}>
+              <Typography variant='subtitle2' className={classes.descText}>{productInfo.description}</Typography>
+            </Paper>
+          </Grid>
+        </Grid>
 
-        </Container>
+      </Container>
     )
   }
 }
