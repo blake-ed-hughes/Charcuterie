@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
 
   },
+  bold: {
+    fontWeight: 800
+  },
   paper: {
     padding: theme.spacing(2),
     textAlign: 'start-flex',
@@ -67,22 +70,22 @@ export default function QnA() {
     return (<QuestionModal />);
   }
   const moreAnsweredQuestions = () => {
-    if(buttonName === 'MORE ANSWERED QUESTIONS') {
+    if (buttonName === 'MORE ANSWERED QUESTIONS') {
       getQuestions(38321)
-      .then((response) => {
-        setQuestions(response.data.results);
-        setQuestionCount(response.data.count);
-      })
-      .catch((err) => { console.log('fail to get questions', err) });
+        .then((response) => {
+          setQuestions(response.data.results);
+          setQuestionCount(response.data.count);
+        })
+        .catch((err) => { console.log('fail to get questions', err) });
 
       setButtonName('GO BACK');
     } else {
       getQuestions(38321)
-      .then((response) => {
-        setQuestions(response.data.results.slice(0, 4));
-        setQuestionCount(response.data.count);
-      })
-      .catch((err) => { console.log('fail to get questions', err) });
+        .then((response) => {
+          setQuestions(response.data.results.slice(0, 4));
+          setQuestionCount(response.data.count);
+        })
+        .catch((err) => { console.log('fail to get questions', err) });
       setButtonName('MORE ANSWERED QUESTIONS');
     }
   }
@@ -111,7 +114,9 @@ export default function QnA() {
       <Container maxWidth="xl">
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}><h2>Questions & Answers</h2></Paper>
+            <Paper className={classes.paper}>
+              <Typography className={classes.bold} variant="h5" display="inline">{'Questions & Answers'}</Typography>
+            </Paper>
           </Grid>
 
           <Grid item xs={12}>
@@ -141,7 +146,7 @@ export default function QnA() {
 
             <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
               {buttonName}
-          </Button>
+            </Button>
 
             <AddQuestionModal />
           </Grid>

@@ -4,15 +4,19 @@ import Question from './Question.jsx';
 
 const Report = () => {
   const [reported, setReport] = useState(false);
+  const [buttonText, setButtonText] = useState("Report");
 
-  const changeReportStatus = () => {
+
+  const changeReportStatus = (e) => {
+
     setReport(true);
+    setButtonText("Reported");
+
   }
   return (
-    <a>
-      <button onClick={changeReportStatus}><u>Report</u></button>
-      {reported}
-    </a>
+
+    <button onClick={changeReportStatus}>{buttonText}</button>
+
   );
 }
 
