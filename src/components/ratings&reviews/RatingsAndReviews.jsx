@@ -9,15 +9,12 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Link from '@mui/material/Link';
 import trackClick from '../tracker';
 import WriteReview from './WriteReview.jsx';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -136,7 +133,9 @@ function Ratings({ productId, productName }) {
 
     <div className={classes.root}>
       <Container maxWidth="xl">
+
         <Grid container spacing={2}>
+
           <Grid item xs={12}>
             <Paper elevation={12} className={classes.paper}>
               <Typography className={classes.bold} variant="h5" display="inline">{'Ratings & Reviews'}</Typography>
@@ -149,11 +148,9 @@ function Ratings({ productId, productName }) {
             </Paper>
           </Grid>
 
-
           <Grid item xs={8}>
             <Paper elevation={6} className={classes.paper}>
               <Typography variant="body1" display="inline">{'Showing ' + reviewCount + ' of ' + totalReviewsCount + ' reviews, sorted by '}</Typography>
-
               {starSortResult.length === 0 && (
                 <Select
                   value={sortList}
@@ -164,10 +161,10 @@ function Ratings({ productId, productName }) {
                   <MenuItem variant="body2" value={'helpful'}>helpfulness</MenuItem>
                 </Select>
               )}
-
               {starSortResult.length !== 0 && (
                 <Link variant="body1" style={{color: 'black'}} color="inherit" display="inline" >{' star count '}</Link>
               )}
+
               <Grid item xs={12} container >
                 <Paper elevation={12} className={classes.paper}  padding={5} style={{marginBottom: '12px'}}>
                   <List style={{ maxHeight: '66vh', maxWidth: '100%', overflow: 'auto' }}>
@@ -199,14 +196,17 @@ function Ratings({ productId, productName }) {
                   </Button>
                   </Grid>
                 )}
+
                 <Grid item xs={3}>
-                <WriteReview name={prodName} pid={pid}/>
+                <WriteReview name={prodName} pid={pid} characteristics={reviewsMetaData.characteristics}/>
                 </Grid>
+
               </Grid>
             </Paper>
           </Grid>
 
         </Grid>
+
       </Container>
     </div>
 

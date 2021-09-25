@@ -25,8 +25,8 @@ function getReviewsMeta (pid) {
   })
 }
 
+
 export {getReviews, getAllReviews, getReviewsMeta};
 
-// example api request
-
+//                  -----------------example api request--------------
 //https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews?product_id=38322&page=1&count=2&sort=helpful

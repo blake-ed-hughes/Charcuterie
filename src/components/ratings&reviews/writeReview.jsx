@@ -5,11 +5,9 @@ import Paper from '@material-ui/core/Paper';
 import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Select from '@material-ui/core/Select';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { makeStyles } from '@material-ui/core/styles';
-import { FaRegCheckCircle } from "react-icons/fa";
 import trackClick from '../tracker';
 import TextField from '@mui/material/TextField';
 import Rating from '@mui/material/Rating';
@@ -18,7 +16,9 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { useRadioGroup } from '@mui/material/RadioGroup';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
+import { useRadioGroup } from '@mui/material/RadioGroup'
 import { useFormControl } from '@mui/material/FormControl';
 import Axios from 'axios';
 import API_key from '../../config';
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function WriteReview({name, pid}) {
+function WriteReview({ name, pid, characteristics }) {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -59,7 +59,7 @@ function WriteReview({name, pid}) {
   const handleClose = () => setOpen(false);
 
 
-  // yes / no radio button ---------------------------------------
+  // yes / no radio button color -------------------------
   const [selectedValue, setSelectedValue] = useState('a');
 
   const handleColorChange = (event) => {
@@ -73,76 +73,147 @@ function WriteReview({name, pid}) {
   //   name: 'row-radio-buttons-recommendation-group',
   //   inputProps: { 'aria-label': item },
   // });
-  // -------------------------------------------------------------
 
+  // product name ----------------------------------------
   const [productName, setProductName] = useState('');
 
   useEffect(() => {
     setProductName(name);
-  },[name])
+  }, [name])
 
-  // --------------------------------------------------------------
+  // star input value-------------------------------------
+  const [starInput, setStarInput] = useState({
+    rating: 1
+  })
 
+  const handleStarChange = e => {
+    setStarInput({
+      ...starInput,
+      [e.target.name]: Number(e.target.value),
+    })
+  }
+
+  // form input value-------------------------------------
   const [formInput, setFormInput] = useState({
     product_id: pid,
-    rating: 0,
     summary: "example: Best purchase ever!",
-    recommend: true,
     body: "Why did you like the product or not?",
-    recommend: null,
     name: "example: McLovin_69",
     email: "example: prestige_worldwide@gmail.com",
     photos: '["photo_url", "photo_url", "photo_url", "photo_url", "photo_url"]',
   });
 
-  console.log('formInput-->', formInput);
 
-  // "characteristics":{ "128429": 5, "128430": 5 }
-
-  const [radioInput, setRadioInput] = useState({
-    characteristics:{
-      size: "none",
-      width: "none",
-      comfort: "none",
-      quality: "none",
-      lengths: "none",
-      fit: "none"
-    }
-  });
-
-  // const handleFormChange = (key, value, charKey) => {
-  //   if (key === 'characteristics') {
-  //     setReview({ ...review, [key]: { ...review[key], [charKey]: value } });
-  //   } else {
-  //     setReview({ ...review, [key]: value });
-  //   }
-  // };
-
-  // rating value comes in as string and need to be a number
-
-  // look into yup as validator
-
-  const handleChange = e => {
+  const handleFormChange = e => {
     setFormInput({
       ...formInput,
       [e.target.name]: e.target.value,
     })
   }
 
-  function postNewReview (pid, handleClose) {
-    return Axios({
-      method: 'post',
-      url:'https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews/meta?product_id=' + pid,
-      data: formInput,
-      headers: {'Authorization': API_key}
+  // star recommendation value--------------------------
+  const [recInput, setRecInput] = useState({
+    recommend: "true"
+  });
+
+  const handleRecChange = e => {
+    setRecInput({
+      ...recInput,
+      [e.target.name]: e.target.value === "true",
     })
-    .then(resultOfSuccessfulPostRequest => {
-      handleClose()
-    })
-    .catch((error) => {
-      console.log('FAILED to send post form data --> ', error);
-    });
   }
+
+  // characteristics input value-------------------------
+
+/*  "Fit": {
+      "id": 128432,
+      "value": "3.0000000000000000"
+  },
+  "Length": {
+      "id": 128433,
+      "value": "3.0000000000000000"
+  },
+  "Comfort": {
+      "id": 128434,
+      "value": "3.0000000000000000"
+  },
+  "Quality": {
+      "id": 128435,
+      "value": "3.0000000000000000"
+*/
+
+  const [radioInput, setRadioInput] = useState({
+    characteristics: {}
+  });
+
+  const handleRadioChange = e => {
+    setRadioInput({
+      ...radioInput,
+      [e.target.name]: Number(e.target.value),
+    })
+  }
+
+  const StyledFormControlLabel = styled((props) => <FormControlLabel {...props} />)(
+    ({ theme, checked }) => ({
+      '.MuiFormControlLabel-label': checked && {
+        color: theme.palette.primary.main,
+      },
+    }),
+  );
+
+  function MyFormControlLabel(props) {
+    const radioGroup = useRadioGroup();
+
+    let checked = false;
+
+    if (radioGroup) {
+      checked = radioGroup.value === props.value;
+    }
+
+    return <StyledFormControlLabel checked={checked} {...props} />;
+  }
+
+  MyFormControlLabel.propTypes = {
+    value: PropTypes.any,
+  };
+
+  //----------------------------------------------
+  // look into "yup" as validator
+  //----------------------------------------------
+
+  const [postInput, setPostInput] = useState({});
+
+  useEffect(() => {
+    setPostInput(
+      {
+      ...radioInput,
+      ...recInput,
+      ...formInput,
+      ...starInput
+    }
+    )
+  }, [radioInput, recInput, formInput, starInput]);
+
+  // console.log('postInput-->', postInput);
+
+  // post request--------------------------------------
+
+  // function postNewReview (pid, handleClose) {
+  //   return Axios({
+  //     method: 'post',
+  //     url:'https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews/meta?product_id=' + pid,
+  //     data: THIS WILL BE YOUR COMBINED INPUTS,
+  //     headers: {'Authorization': API_key}
+  //   })
+  //   .then(resultOfSuccessfulPostRequest => {
+
+  //     console.log("Posted New Review Successfully!")
+  //     handleClose()
+  //   })
+  //   .catch((error) => {
+  //     console.log('FAILED to send post form data --> ', error);
+  //   });
+  // }
 
   return (
     <div>
@@ -179,14 +250,14 @@ function WriteReview({name, pid}) {
           <Grid container spacing={2} item xs={12} style={{ marginTop: '24px', }} justifyContent={'center'}>
 
             <Grid container justifyContent={'center'} style={{ marginTop: '24px', marginBottom: '24px' }} item xs={6}>
-              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%'}}>
+              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%' }}>
 
                 <Grid item xs={12} >
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '6px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"  Overall rating*  "}</Typography>
                 </Grid>
 
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <Rating name="rating" value={formInput.rating} onChange={handleChange} size="large" />
+                  <Rating name="rating" value={formInput.rating} onChange={handleStarChange} size="large" />
                 </Grid>
               </Paper>
 
@@ -194,43 +265,43 @@ function WriteReview({name, pid}) {
             </Grid>
 
             <Grid item xs={6} container justifyContent={'center'} style={{ marginTop: '24px', marginBottom: '24px' }} >
-              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%'}}>
+              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%' }}>
                 <Grid item xs={12} >
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Do you recommend this product?*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl component="fieldset">
-                    <RadioGroup name="recommend" value={formInput.recommend} onChange={handleChange, handleColorChange} row aria-label="recommendation" name="row-radio-buttons-recommendation-group">
-                      <FormControlLabel value={true} control={<Radio color="success" />} label="Yes" />
-                      <FormControlLabel value={false} control={<Radio color="secondary" />} label="No" />
-                    </RadioGroup>
-                  </FormControl>
+
+                  <RadioGroup name="recommend" defaultValue="Yes" onChange={handleRecChange}>
+                    <MyFormControlLabel value="true" label="Yes" control={<Radio color="success"/>} />
+                    <MyFormControlLabel value="false" label="No" control={<Radio color="secondary"/>} />
+                  </RadioGroup>
+
                 </Grid>
               </Paper>
             </Grid>
 
             <Grid item container justifyContent={'center'} xs={6} >
               <TextField
-                style={{width: '85%'}}
+                style={{ width: '85%' }}
                 color="secondary"
                 required
                 id="outlined-nickname"
                 label="Nickname"
                 name="name"
                 value={formInput.name}
-                onChange={handleChange}
+                onChange={handleFormChange}
               />
             </Grid>
             <Grid item container justifyContent={'center'} xs={6} >
               <TextField
                 color="secondary"
-                style={{width: '85%'}}
+                style={{ width: '85%' }}
                 required
                 id="outlined-email"
                 label="Email"
                 name="email"
                 value={formInput.email}
-                onChange={handleChange}
+                onChange={handleFormChange}
                 helperText="For authentication reasons, you will not be emailed"
               />
             </Grid>
@@ -239,12 +310,12 @@ function WriteReview({name, pid}) {
                 color="secondary"
                 multiline
                 rows={4}
-                style={{width: '85%'}}
+                style={{ width: '85%' }}
                 id="outlined-Review summary"
                 label="Review summary"
                 name="summary"
                 value={formInput.summary}
-                onChange={handleChange}
+                onChange={handleFormChange}
                 helperText="Up to 60 characters"
               />
             </Grid>
@@ -254,12 +325,12 @@ function WriteReview({name, pid}) {
                 multiline
                 rows={4}
                 color="secondary"
-                style={{width: '85%'}}
+                style={{ width: '85%' }}
                 id="outlined-Review body"
                 label="Review body"
                 name="body"
                 value={formInput.body}
-                onChange={handleChange}
+                onChange={handleFormChange}
                 helperText="Up to 1000 characters"
               />
             </Grid>
@@ -268,70 +339,72 @@ function WriteReview({name, pid}) {
                 multiline
                 rows={5}
                 color="secondary"
-                style={{width: '85%'}}
+                style={{ width: '85%' }}
                 id="outlined-photos"
                 label="Photo urls"
                 name="photos"
                 value={formInput.photos}
-                onChange={handleChange}
+                onChange={handleFormChange}
                 helperText="Add up 5 ['comma', 'seperatated'] urls"
               />
             </Grid>
 
             {/* {  && ( */}
-            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px'}} >
-              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%'}}>
+            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px' }} >
+              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%' }}>
                 <Grid item xs={12} >
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Size*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.size" value={'none'} onChange={handleChange} component="fieldset">
-                    <RadioGroup row aria-label="size" name="row-radio-buttons-characteristics-Size">
+
+                  <FormControl name="characteristics.size" value={'none'} onChange={handleRadioChange} component="fieldset">
+                    <RadioGroup row aria-label="size" name="characteristics.size">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={1} control={<Radio/>} label="A size too small" />
+                        <MyFormControlLabel value="1" control={<Radio />} label="A size too small" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={2} control={<Radio/>} label="½ a size too small" />
+                        <MyFormControlLabel value="2" control={<Radio />} label="½ a size too small" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={3} control={<Radio/>} label="Perfect" />
+                        <MyFormControlLabel value="3" control={<Radio />} label="Perfect" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={4} control={<Radio/>} label="½ a size too big" />
+                        <MyFormControlLabel value="4" control={<Radio />} label="½ a size too big" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={5} control={<Radio/>} label="A size too big" />
+                        <MyFormControlLabel value="5" control={<Radio />} label="A size too big" />
                       </Grid>
                     </RadioGroup>
                   </FormControl>
+
                 </Grid>
               </Paper>
             </Grid>
             {/* )} */}
 
             {/* {  && ( */}
-            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px'}}>
-              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%'}}>
+            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px' }}>
+              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%' }}>
                 <Grid item xs={12} >
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Width*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.width" value={'none'} onChange={handleChange} component="fieldset">
-                    <RadioGroup row aria-label="Width" name="row-radio-buttons-characteristics-Width">
+                  <FormControl name="characteristics.width" value={'none'} onChange={handleRadioChange} component="fieldset">
+                    <RadioGroup row aria-label="Width" name="characteristics.width">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={1} control={<Radio/>} label="Too narrow" />
+                        <MyFormControlLabel value="1" control={<Radio />} label="Too narrow" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={2} control={<Radio/>} label="Slightly narrow" />
+                        <MyFormControlLabel value="2" control={<Radio />} label="Slightly narrow" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={3} control={<Radio/>} label="Perfect" />
+                        <MyFormControlLabel value="3" control={<Radio />} label="Perfect" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={4} control={<Radio/>} label="Slightly wide" />
+                        <MyFormControlLabel value="4" control={<Radio />} label="Slightly wide" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={5} control={<Radio/>} label="Too wide" />
+                        <MyFormControlLabel value="5" control={<Radio />} label="Too wide" />
                       </Grid>
                     </RadioGroup>
                   </FormControl>
@@ -341,28 +414,28 @@ function WriteReview({name, pid}) {
             {/* )} */}
 
             {/* {  && ( */}
-            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px'}}>
-              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%'}}>
+            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px' }}>
+              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%' }}>
                 <Grid item xs={12} >
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Comfort*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.comfort" value={'none'} onChange={handleChange} component="fieldset">
-                    <RadioGroup row aria-label="Comfort" name="row-radio-buttons-characteristics-Comfort">
+                  <FormControl name="characteristics.comfort" value={'none'} onChange={handleRadioChange} component="fieldset">
+                    <RadioGroup row aria-label="Comfort" name="characteristics.comfort">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={1} control={<Radio/>} label="Uncomfortable" />
+                        <MyFormControlLabel value="1" control={<Radio />} label="Uncomfortable" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={2} control={<Radio/>} label="Slightly uncomfortable" />
+                        <MyFormControlLabel value="2" control={<Radio />} label="Slightly uncomfortable" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={3} control={<Radio/>} label="Ok" />
+                        <MyFormControlLabel value="3" control={<Radio />} label="Ok" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={4} control={<Radio/>} label="Comfortable" />
+                        <MyFormControlLabel value="4" control={<Radio />} label="Comfortable" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={5} control={<Radio/>} label="Perfect" />
+                        <MyFormControlLabel value="5" control={<Radio />} label="Perfect" />
                       </Grid>
                     </RadioGroup>
                   </FormControl>
@@ -372,28 +445,28 @@ function WriteReview({name, pid}) {
             {/* )} */}
 
             {/* {  && ( */}
-            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px'}}>
-              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%'}}>
+            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px' }}>
+              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%' }}>
                 <Grid item xs={12} >
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Quality*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.quality" value={'none'} onChange={handleChange} component="fieldset">
-                    <RadioGroup row aria-label="Quality" name="row-radio-buttons-characteristics-Quality">
+                  <FormControl name="characteristics.quality" value={'none'} onChange={handleRadioChange} component="fieldset">
+                    <RadioGroup row aria-label="Quality" name="characteristics.quality">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={1} control={<Radio/>} label="Poor" />
+                        <MyFormControlLabel value="1" control={<Radio />} label="Poor" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={2} control={<Radio/>} label="Below average" />
+                        <MyFormControlLabel value="2" control={<Radio />} label="Below average" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={3} control={<Radio/>} label="What I expected" />
+                        <MyFormControlLabel value="3" control={<Radio />} label="What I expected" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={4} control={<Radio/>} label="Pretty great" />
+                        <MyFormControlLabel value="4" control={<Radio />} label="Pretty great" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={5} control={<Radio/>} label="Perfect" />
+                        <MyFormControlLabel value="5" control={<Radio />} label="Perfect" />
                       </Grid>
                     </RadioGroup>
                   </FormControl>
@@ -403,28 +476,28 @@ function WriteReview({name, pid}) {
             {/* )} */}
 
             {/* {  && ( */}
-            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px'}}>
-              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%'}}>
+            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px' }}>
+              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%' }}>
                 <Grid item xs={12} >
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Length*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.lengths" value={'none'} onChange={handleChange} component="fieldset">
-                    <RadioGroup row aria-label="Length" name="row-radio-buttons-characteristics-Length">
+                  <FormControl name="characteristics.lengths" value={'none'} onChange={handleRadioChange} component="fieldset">
+                    <RadioGroup row aria-label="Length" name="characteristics.lengths">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={1} control={<Radio/>} label="Runs Short" />
+                        <MyFormControlLabel value="1" control={<Radio />} label="Runs Short" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={2} control={<Radio/>} label="Runs slightly short" />
+                        <MyFormControlLabel value="2" control={<Radio />} label="Runs slightly short" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={3} control={<Radio/>} label="Perfect" />
+                        <MyFormControlLabel value="3" control={<Radio />} label="Perfect" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={4} control={<Radio/>} label="Runs slightly long" />
+                        <MyFormControlLabel value="4" control={<Radio />} label="Runs slightly long" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={5} control={<Radio/>} label="Runs long" />
+                        <MyFormControlLabel value="5" control={<Radio />} label="Runs long" />
                       </Grid>
                     </RadioGroup>
                   </FormControl>
@@ -434,28 +507,28 @@ function WriteReview({name, pid}) {
             {/* )} */}
 
             {/* {  && ( */}
-            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px'}}>
-              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%'}}>
+            <Grid item container justifyContent={'center'} xs={6} style={{ marginBottom: '24px' }}>
+              <Paper variant="outlined" style={{ border: '1px solid #C0C0C0', width: '85%' }}>
                 <Grid item xs={12} >
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Fit*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.fit" value={'none'} onChange={handleChange} component="fieldset">
-                    <RadioGroup row aria-label="Fit" name="row-radio-buttons-characteristics-Fit">
+                  <FormControl name="characteristics.fit" value={'none'} onChange={handleRadioChange} component="fieldset">
+                    <RadioGroup row aria-label="Fit" name="characteristics.fit">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={1} control={<Radio/>} label="Runs tight" />
+                        <MyFormControlLabel value="1" control={<Radio />} label="Runs tight" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={2} control={<Radio/>} label="Runs slightly tight" />
+                        <MyFormControlLabel value="2" control={<Radio />} label="Runs slightly tight" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={3} control={<Radio/>} label="Perfect" />
+                        <MyFormControlLabel value="3" control={<Radio />} label="Perfect" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={4} control={<Radio/>} label="Runs slightly loose" />
+                        <MyFormControlLabel value="4" control={<Radio />} label="Runs slightly loose" />
                       </Grid>
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
-                        <FormControlLabel value={5} control={<Radio/>} label="Runs loose" />
+                        <MyFormControlLabel value="5" control={<Radio />} label="Runs loose" />
                       </Grid>
                     </RadioGroup>
                   </FormControl>
@@ -465,7 +538,8 @@ function WriteReview({name, pid}) {
             {/* )} */}
 
             <Grid container spacing={2} item xs={12} justifyContent={'center'} style={{ margin: '16px' }}>
-              <Button variant="contained" color="secondary" onClick={postNewReview}>Submit Review</Button>
+              <Button variant="contained" color="secondary" onClick={handleClose}>Submit Review</Button>
+              {/* onClick={postNewReview} */}
             </Grid>
           </Grid>
 

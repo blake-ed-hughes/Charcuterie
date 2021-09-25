@@ -1,6 +1,5 @@
 import React from 'react';
 import Rating from '@mui/material/Rating';
-import Stack from '@mui/material/Stack';
 import dateFormat from 'dateformat';
 import { getReviews } from './RatingsAxios';
 import { useState, useEffect } from 'react';
@@ -9,18 +8,12 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
-import Avatar from '@material-ui/core/Avatar';
 import Link from '@mui/material/Link';
 import { FaRegCheckCircle } from "react-icons/fa";
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
-import { ExpandMore } from '@material-ui/icons';
-import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import trackClick from '../tracker';
 import ReviewPhoto from './ReviewPhoto.jsx';
 
@@ -91,13 +84,13 @@ function ReviewTile({ reviewData }) {
 
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>
-          {/* elevation={0} */}
+            {/* elevation={0} */}
             <Rating name="quarter-rating" value={starRating} precision={0.25} readOnly />
           </Paper>
         </Grid>
-        <Grid item xs={9}  align={'right'}>
+        <Grid item xs={9} align={'right'}>
           <Paper elevation={0} className={classes.paper} >
-          <Typography style={{marginTop: '6px' }}>{reviewData.reviewer_name + ', ' + dateFormat(reviewData.date, "mmmm dS, yyyy")}</Typography>
+            <Typography style={{ marginTop: '6px' }}>{reviewData.reviewer_name + ', ' + dateFormat(reviewData.date, "mmmm dS, yyyy")}</Typography>
           </Paper>
         </Grid>
         <Grid item xs={12} >
@@ -110,6 +103,7 @@ function ReviewTile({ reviewData }) {
 
         <Grid item xs={12} >
           <Paper elevation={0} className={classes.paper}>
+
             <Grid item xs={12} >
               <Grid item xs={12} >
                 {reviewData.body.length < 251 && (
@@ -119,7 +113,6 @@ function ReviewTile({ reviewData }) {
                   <Typography style={{ color: 'grey' }}>{reviewBody + '...'} </Typography>
                 )}
               </Grid>
-
               {reviewData.body.length > 250 && (
                 <Grid item xs={12} style={{ marginTop: '8px', color: 'grey' }}>
                   {linkClick && (
@@ -139,11 +132,12 @@ function ReviewTile({ reviewData }) {
               <ImageList className={classes.imageList} cols={2.5}>
                 {reviewData.photos.map((photo) => (
                   <ImageListItem style={{ width: 100, height: 100 }}>
-                  <ReviewPhoto photo={photo} key={photo.url}/>
+                    <ReviewPhoto photo={photo} key={photo.url} />
                   </ImageListItem>
                 ))}
               </ImageList>
             </Grid>
+
           </Paper>
         </Grid>
 
@@ -156,21 +150,10 @@ function ReviewTile({ reviewData }) {
                   {'  I recommend this product'}
                 </Typography>
               </Grid>
-
-              {/* <Grid container item xs={12} >
-                <Grid item xs={1} >
-                  <FaRegCheckCircle style={{ justifyContent: 'center', alignSelf: 'center' }} />
-                </Grid>
-                <Grid item xs={11} >
-                  <Typography style={{ textAlign: 'flex-start' }}>
-                    {'  I recommend this product'}
-                  </Typography>
-                </Grid>
-              </Grid> */}
-
             </Paper>
           </Grid>
         )}
+
         {reviewData.response && (
           <Grid item xs={12} >
             <Paper elevation={0} className={classes.paper} style={{ backgroundColor: '#D3D3D3' }}>{'Response: "\n"' + reviewData.response}</Paper>
@@ -223,8 +206,10 @@ function ReviewTile({ reviewData }) {
               {' No '}
             </Link>
             {'(' + noCount + ')'}
+
           </Paper>
         </Grid>
+
       </Grid>
 
     </div>
