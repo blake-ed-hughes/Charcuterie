@@ -18,7 +18,7 @@ import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 import Yes from './Yes.jsx';
 import Search from './Search.jsx';
-import { getQuestions, getAnswers } from './axiosHelper.js';
+import { getQuestions } from './axiosHelper.js';
 import Question from './Question.jsx';
 import AddQuestionModal from "./QuestionModal.jsx";
 
@@ -66,7 +66,6 @@ export default function QnA() {
   const [buttonName, setButtonName] = useState('MORE ANSWERED QUESTIONS');
 
   const openModal = () => {
-    // console.log('inside openModal function');
     return (<QuestionModal />);
   }
   const moreAnsweredQuestions = () => {
@@ -144,11 +143,22 @@ export default function QnA() {
               </List>
             )}
 
-            <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
-              {buttonName}
-            </Button>
+            <Grid item container>
 
-            <AddQuestionModal />
+              <Grid item xs={3}>
+                <Button variant="contained" className={classes.formControl} spacing={1} color="primary" onClick={() => moreAnsweredQuestions()} >
+                  {buttonName}
+                </Button>
+              </Grid>
+
+
+              <Grid item xs={3}>
+                <AddQuestionModal />
+              </Grid>
+
+            </Grid>
+
+
           </Grid>
 
         </Grid>
