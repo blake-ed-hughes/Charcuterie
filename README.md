@@ -114,7 +114,7 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    npm install
    ```
-3. Duplicate copy config_copy.js and to config.js
+3. Duplicate copy config_copy.js to config.js
 4. Set Api key within config.js
    ```JS
    const API_key = 'Your API key goes here';
