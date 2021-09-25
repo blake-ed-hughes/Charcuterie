@@ -74,6 +74,7 @@ function WriteReview({name, pid}) {
   //   inputProps: { 'aria-label': item },
   // });
   // -------------------------------------------------------------
+
   const [productName, setProductName] = useState('');
 
   useEffect(() => {
@@ -81,6 +82,7 @@ function WriteReview({name, pid}) {
   },[name])
 
   // --------------------------------------------------------------
+
   const [formInput, setFormInput] = useState({
     product_id: pid,
     rating: 0,
@@ -91,6 +93,13 @@ function WriteReview({name, pid}) {
     name: "example: McLovin_69",
     email: "example: prestige_worldwide@gmail.com",
     photos: '["photo_url", "photo_url", "photo_url", "photo_url", "photo_url"]',
+  });
+
+  console.log('formInput-->', formInput);
+
+  // "characteristics":{ "128429": 5, "128430": 5 }
+
+  const [radioInput, setRadioInput] = useState({
     characteristics:{
       size: "none",
       width: "none",
@@ -100,10 +109,6 @@ function WriteReview({name, pid}) {
       fit: "none"
     }
   });
-
-  console.log('formInput-->', formInput);
-
-  // "characteristics":{ "128429": 5, "128430": 5 }
 
   // const handleFormChange = (key, value, charKey) => {
   //   if (key === 'characteristics') {
@@ -280,7 +285,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Size*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.size" value={formInput.characteristics.size} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.size" value={'none'} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="size" name="row-radio-buttons-characteristics-Size">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="A size too small" />
@@ -311,7 +316,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Width*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.width" value={formInput.characteristics.width} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.width" value={'none'} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Width" name="row-radio-buttons-characteristics-Width">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Too narrow" />
@@ -342,7 +347,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Comfort*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.comfort" value={formInput.characteristics.comfort} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.comfort" value={'none'} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Comfort" name="row-radio-buttons-characteristics-Comfort">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Uncomfortable" />
@@ -373,7 +378,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Quality*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.quality" value={formInput.characteristics.quality} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.quality" value={'none'} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Quality" name="row-radio-buttons-characteristics-Quality">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Poor" />
@@ -404,7 +409,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Length*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.lengths" value={formInput.characteristics.lengths} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.lengths" value={'none'} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Length" name="row-radio-buttons-characteristics-Length">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Runs Short" />
@@ -435,7 +440,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Fit*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl name="characteristics.fit" value={formInput.characteristics.fit} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.fit" value={'none'} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Fit" name="row-radio-buttons-characteristics-Fit">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Runs tight" />
