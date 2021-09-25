@@ -56,6 +56,7 @@ function WriteReview({name, pid}) {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
 
   // yes / no radio button ---------------------------------------
@@ -65,13 +66,13 @@ function WriteReview({name, pid}) {
     setSelectedValue(event.target.value);
   };
 
-  const controlProps = (item) => ({
-    checked: selectedValue === item,
-    onChange: handleColorChange,
-    value: item,
-    name: 'row-radio-buttons-recommendation-group',
-    inputProps: { 'aria-label': item },
-  });
+  // const controlProps = (item) => ({
+  //   checked: selectedValue === item,
+  //   onChange: handleColorChange,
+  //   value: item,
+  //   name: 'row-radio-buttons-recommendation-group',
+  //   inputProps: { 'aria-label': item },
+  // });
   // -------------------------------------------------------------
   const [productName, setProductName] = useState('');
 
@@ -82,13 +83,14 @@ function WriteReview({name, pid}) {
   // --------------------------------------------------------------
   const [formInput, setFormInput] = useState({
     product_id: pid,
-    rating: 1,
+    rating: 0,
     summary: "example: Best purchase ever!",
     recommend: true,
     body: "Why did you like the product or not?",
+    recommend: null,
     name: "example: McLovin_69",
     email: "example: prestige_worldwide@gmail.com",
-    photos: [],
+    photos: '["photo_url", "photo_url", "photo_url", "photo_url", "photo_url"]',
     characteristics:{
       size: "none",
       width: "none",
@@ -99,30 +101,43 @@ function WriteReview({name, pid}) {
     }
   });
 
+  console.log('formInput-->', formInput);
 
   // "characteristics":{ "128429": 5, "128430": 5 }
 
-  // const handleChange = e => {
-  //   setFormInput({
-  //     // ...formInput,
-  //     [e.target.name]: e.target.value,
-  //   })
-  // }
+  // const handleFormChange = (key, value, charKey) => {
+  //   if (key === 'characteristics') {
+  //     setReview({ ...review, [key]: { ...review[key], [charKey]: value } });
+  //   } else {
+  //     setReview({ ...review, [key]: value });
+  //   }
+  // };
 
-  // function postNewReview (pid) {
-  //   return Axios({
-  //     method: 'post',
-  //     url:'https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews/meta?product_id=' + pid,
-  //     data: formInput,
-  //     headers: {'Authorization': API_key}
-  //   })
-  //   .then(resultOfSuccessfulPostRequest => {
-  //   const handleClose = () => setOpen(false);
-  //   })
-  //   .catch((error) => {
-  //     console.log('FAILED to send post form data --> ', error);
-  //   });
-  // }
+  // rating value comes in as string and need to be a number
+
+  // look into yup as validator
+
+  const handleChange = e => {
+    setFormInput({
+      ...formInput,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  function postNewReview (pid, handleClose) {
+    return Axios({
+      method: 'post',
+      url:'https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/reviews/meta?product_id=' + pid,
+      data: formInput,
+      headers: {'Authorization': API_key}
+    })
+    .then(resultOfSuccessfulPostRequest => {
+      handleClose()
+    })
+    .catch((error) => {
+      console.log('FAILED to send post form data --> ', error);
+    });
+  }
 
   return (
     <div>
@@ -166,7 +181,7 @@ function WriteReview({name, pid}) {
                 </Grid>
 
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <Rating name="quarter-rating" value={formInput.rating} onChange={handleChange} size="large" />
+                  <Rating name="rating" value={formInput.rating} onChange={handleChange} size="large" />
                 </Grid>
               </Paper>
 
@@ -180,9 +195,9 @@ function WriteReview({name, pid}) {
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
                   <FormControl component="fieldset">
-                    <RadioGroup value={formInput.recommend} onChange={handleChange} row aria-label="recommendation" name="row-radio-buttons-recommendation-group">
-                      <FormControlLabel value={true} control={<Radio {...controlProps('a')} color="success" />} label="Yes" />
-                      <FormControlLabel value={false} control={<Radio {...controlProps('b')} color="secondary" />} label="No" />
+                    <RadioGroup name="recommend" value={formInput.recommend} onChange={handleChange, handleColorChange} row aria-label="recommendation" name="row-radio-buttons-recommendation-group">
+                      <FormControlLabel value={true} control={<Radio color="success" />} label="Yes" />
+                      <FormControlLabel value={false} control={<Radio color="secondary" />} label="No" />
                     </RadioGroup>
                   </FormControl>
                 </Grid>
@@ -196,6 +211,7 @@ function WriteReview({name, pid}) {
                 required
                 id="outlined-nickname"
                 label="Nickname"
+                name="name"
                 value={formInput.name}
                 onChange={handleChange}
               />
@@ -207,6 +223,7 @@ function WriteReview({name, pid}) {
                 required
                 id="outlined-email"
                 label="Email"
+                name="email"
                 value={formInput.email}
                 onChange={handleChange}
                 helperText="For authentication reasons, you will not be emailed"
@@ -220,6 +237,7 @@ function WriteReview({name, pid}) {
                 style={{width: '85%'}}
                 id="outlined-Review summary"
                 label="Review summary"
+                name="summary"
                 value={formInput.summary}
                 onChange={handleChange}
                 helperText="Up to 60 characters"
@@ -234,6 +252,7 @@ function WriteReview({name, pid}) {
                 style={{width: '85%'}}
                 id="outlined-Review body"
                 label="Review body"
+                name="body"
                 value={formInput.body}
                 onChange={handleChange}
                 helperText="Up to 1000 characters"
@@ -247,6 +266,7 @@ function WriteReview({name, pid}) {
                 style={{width: '85%'}}
                 id="outlined-photos"
                 label="Photo urls"
+                name="photos"
                 value={formInput.photos}
                 onChange={handleChange}
                 helperText="Add up 5 ['comma', 'seperatated'] urls"
@@ -260,7 +280,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Size*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl value={formInput.characteristics.size} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.size" value={formInput.characteristics.size} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="size" name="row-radio-buttons-characteristics-Size">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="A size too small" />
@@ -291,7 +311,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Width*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl value={formInput.characteristics.width} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.width" value={formInput.characteristics.width} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Width" name="row-radio-buttons-characteristics-Width">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Too narrow" />
@@ -322,7 +342,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Comfort*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl value={formInput.characteristics.comfort} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.comfort" value={formInput.characteristics.comfort} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Comfort" name="row-radio-buttons-characteristics-Comfort">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Uncomfortable" />
@@ -353,7 +373,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Quality*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl value={formInput.characteristics.quality} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.quality" value={formInput.characteristics.quality} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Quality" name="row-radio-buttons-characteristics-Quality">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Poor" />
@@ -384,7 +404,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Length*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl value={formInput.characteristics.lengths} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.lengths" value={formInput.characteristics.lengths} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Length" name="row-radio-buttons-characteristics-Length">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Runs Short" />
@@ -415,7 +435,7 @@ function WriteReview({name, pid}) {
                   <Typography style={{ textAlign: 'center', color: 'grey', marginLeft: '12px' }} sx={{ fontSize: 12 }} color="grey" gutterBottom variant="caption">{"Fit*"}</Typography>
                 </Grid>
                 <Grid container justifyContent={'center'} item xs={12} >
-                  <FormControl value={formInput.characteristics.fit} onChange={handleChange} component="fieldset">
+                  <FormControl name="characteristics.fit" value={formInput.characteristics.fit} onChange={handleChange} component="fieldset">
                     <RadioGroup row aria-label="Fit" name="row-radio-buttons-characteristics-Fit">
                       <Grid container style={{ marginLeft: '12px' }} item xs={12} >
                         <FormControlLabel value={1} control={<Radio/>} label="Runs tight" />
@@ -440,7 +460,7 @@ function WriteReview({name, pid}) {
             {/* )} */}
 
             <Grid container spacing={2} item xs={12} justifyContent={'center'} style={{ margin: '16px' }}>
-              <Button variant="contained" color="secondary" onClick={handleClose}>Submit Review</Button>
+              <Button variant="contained" color="secondary" onClick={postNewReview}>Submit Review</Button>
             </Grid>
           </Grid>
 

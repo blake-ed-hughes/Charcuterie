@@ -22,7 +22,7 @@ import Box from '@mui/material/Box';
 import { ExpandMore } from '@material-ui/icons';
 import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import trackClick from '../tracker';
-
+import ReviewPhoto from './ReviewPhoto.jsx';
 
 const style = {
   position: 'absolute',
@@ -137,18 +137,9 @@ function ReviewTile({ reviewData }) {
 
             <Grid item container style={{ marginTop: '14px' }} xs={12} >
               <ImageList className={classes.imageList} cols={2.5}>
-                {reviewData.photos.map((item) => (
-                  <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id} onClick={(e) => {
-                    trackClick(e, 'ratings-and-reviews', () => {
-                      handleOpen
-                    })
-                  }}>
-                    <img src={item.url} onClick={handleOpen} />
-                    <Modal open={open} onClose={handleClose}>
-                      <Box sx={style} >
-                        <img src={item.url} height='100%' width='100%'/>
-                      </Box>
-                    </Modal>
+                {reviewData.photos.map((photo) => (
+                  <ImageListItem style={{ width: 100, height: 100 }}>
+                  <ReviewPhoto photo={photo} key={photo.url}/>
                   </ImageListItem>
                 ))}
               </ImageList>
