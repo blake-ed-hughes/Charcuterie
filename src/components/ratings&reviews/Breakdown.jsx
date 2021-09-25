@@ -30,8 +30,6 @@ function Breakdown({ reviewsMetaData, starSort, setTotalReviewsCount }) {
 
   const classes = useStyles();
 
-  // average rating/ star rating
-
   const [starAvgRating, setStarAvgRating] = useState(0);
   const [ratingSum, setRatingSum] = useState(0);
   const [recPercent, setRecPercent] = useState(0);
@@ -52,7 +50,6 @@ function Breakdown({ reviewsMetaData, starSort, setTotalReviewsCount }) {
   }
 
   const getRecPercent = () => {
-    //get percentage
     var recsObj = reviewsMetaData.recommended;
     var valSum = 0;
     var recs = 0;
