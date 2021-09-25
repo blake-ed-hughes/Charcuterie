@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -27,6 +28,12 @@ export default function AnswerModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [submitButton, setSubmitButton] = useState("Submit");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitButton("We Have Received Your Answer!");
+  }
 
   return (
     <span>
@@ -38,25 +45,30 @@ export default function AnswerModal() {
         aria-describedby="modal-modal-description"
       >
         <Box className={classes.style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            We love your answer!
-          </Typography>
 
-          <form className={classes.style} noValidate autoComplete="off">
+          <form className={classes.style} onSubmit={handleSubmit}>
+            <h2>We Love Your Answer</h2>
             <div>
               <TextField required id="Nickname" label="Nickname" defaultValue="" />
+            </div>
+
+            <div>
               <TextField required id="Email" label="Email" defaultValue="" />
+            </div>
+
+            <div>
               <TextField
                 id="helperText"
                 label="Type answer here..."
                 defaultValue=""
                 helperText="less than 50 words"
               />
-              <div>
-                <button>Submit</button>
-              </div>
-
             </div>
+
+            <div>
+              <button type="submit">{submitButton}</button>
+            </div>
+
           </form>
 
         </Box>
