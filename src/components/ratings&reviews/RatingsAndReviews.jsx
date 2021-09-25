@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Link from '@mui/material/Link';
 import trackClick from '../tracker';
-import WriteReview from './WriteReview.jsx';
+import WriteReview from './writeReview.jsx';
 
 const useStyles = makeStyles((theme) => ({
   root: {
