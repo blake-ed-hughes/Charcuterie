@@ -28,19 +28,15 @@ $ npm start
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <h3 align="center">project_title</h3>
+  <h2 align="center">Project Catwalk (The Charcuterie Board)</h2>
+  <h4 align="center">Hack Reactor Frontend Capstone</h4>
 
   <p align="center">
-    project_description
+    Project Catwalk is a Front End Capstone in which we will redesign an outdated website. Based on a supplied Business Requirement Document and Visual Design Doc.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Team-Asiago/FEC"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
   </p>
 </p>
 
