@@ -22,14 +22,14 @@ import Box from '@mui/material/Box';
 import { ExpandMore } from '@material-ui/icons';
 import { Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import trackClick from '../tracker';
-
+import ReviewPhoto from './ReviewPhoto.jsx';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 'auto',
+  maxWidth: '75%',
   height: '90%',
   bgcolor: 'transparent',
   boxShadow: 24,
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'flex-start',
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondary
   },
   imageList: {
     flexWrap: 'nowrap',
@@ -75,161 +75,150 @@ function ReviewTile({ reviewData }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [expanded, setExpanded] = useState(true);
-  const handleExpanded = () => setExpanded(false);
+  const [reviewBody, setReviewBody] = useState();
+  const [linkClick, setLinkClick] = useState(true);
 
   useEffect(() => {
     setStarRating(reviewData.rating)
-  }, [reviewData, expanded]);
+    setReviewBody(reviewData.body.slice(0, 251))
+  }, [reviewData]);
 
   return (
 
     <div className={classes.root}>
 
-      <Grid container style={{ borderBottom: "4px solid #D3D3D3" }} spacing={1} padding={1}>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
+      <Grid container>
+
+        <Grid item xs={3}>
+          <Paper elevation={0} className={classes.paper}>
+          {/* elevation={0} */}
             <Rating name="quarter-rating" value={starRating} precision={0.25} readOnly />
           </Paper>
         </Grid>
-        <Grid item xs={6} align={'right'}>
-          <Paper className={classes.paper}>{reviewData.reviewer_name}{', '}{dateFormat(reviewData.date, "mmmm dS, yyyy")}</Paper>
+        <Grid item xs={9}  align={'right'}>
+          <Paper elevation={0} className={classes.paper} >
+          <Typography style={{marginTop: '6px' }}>{reviewData.reviewer_name + ', ' + dateFormat(reviewData.date, "mmmm dS, yyyy")}</Typography>
+          </Paper>
         </Grid>
         <Grid item xs={12} >
-          <Paper className={classes.bold} className={classes.paper}>
+          <Paper elevation={0} className={classes.bold} className={classes.paper}>
             <Typography className={classes.bold}>
-              {reviewData.summary.slice(0, 60)}
+              {reviewData.summary.slice(0, 61)}
             </Typography>
           </Paper>
         </Grid>
 
-
-        {reviewData.body.length > 250 && (
-          <Grid item xs={12} >
-              <Accordion justifycontent='flex-start'>
-                <AccordionSummary>
-
-                  <Grid item xs={12} >
-                    <Grid item xs={12} >
-                      <Typography style={{ color: 'grey' }}>{reviewData.body.slice(0, 251) + '...'} </Typography>
-                    </Grid>
-                    {expanded && (
-                      <Grid item xs={12} style={{ marginTop: '8px', color: 'grey' }}>
-                        <Link className={classes.hover} component="button" underline="always" color="inherit"
-                        onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
-                          handleExpanded
-                        })
-                      }}>{'Show More'}</Link>
-                      </Grid>
-                    )}
-                  </Grid>
-
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography style={{ color: 'grey' }}>{reviewData.body.slice(251)}</Typography>
-                </AccordionDetails>
-              </Accordion>
-
-              <Grid item container style={{ marginTop: '14px' }} xs={12} >
-                <ImageList className={classes.imageList} cols={2.5}>
-                  {reviewData.photos.map((item) => (
-                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
-                      handleOpen
-                    })}}>
-                      <img src={item.url} onClick={handleOpen} />
-                      <Modal open={open} onClose={handleClose}>
-                        <Box sx={style} >
-                          <img src={item.url} height='100%' width='100%' />
-                        </Box>
-                      </Modal>
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-                </Grid>
-                </Grid>
-        )}
-
-        {reviewData.body.length <= 250 && (
-          <Grid item xs={12} >
-            <Paper className={classes.paper}>
-              <Typography>{reviewData.body}</Typography>
-
-
-              <Grid item container style={{ marginTop: '14px' }} xs={12} >
-                <ImageList className={classes.imageList} cols={2.5}>
-                  {reviewData.photos.map((item) => (
-                    <ImageListItem style={{ width: 100, height: 100 }} spacing={2} padding={1} key={item.id} onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
-                      handleOpen
-                    })}}>
-                      <img src={item.url} onClick={handleOpen} />
-                      <Modal open={open} onClose={handleClose}>
-                        <Box sx={style} >
-                          <img src={item.url} height='100%' width='100%' />
-                        </Box>
-                      </Modal>
-                    </ImageListItem>
-                  ))}
-                </ImageList>
+        <Grid item xs={12} >
+          <Paper elevation={0} className={classes.paper}>
+            <Grid item xs={12} >
+              <Grid item xs={12} >
+                {reviewData.body.length < 251 && (
+                  <Typography style={{ color: 'grey' }}>{reviewBody} </Typography>
+                )}
+                {reviewData.body.length > 250 && (
+                  <Typography style={{ color: 'grey' }}>{reviewBody + '...'} </Typography>
+                )}
               </Grid>
 
-            </Paper>
-          </Grid>
-        )}
+              {reviewData.body.length > 250 && (
+                <Grid item xs={12} style={{ marginTop: '8px', color: 'grey' }}>
+                  {linkClick && (
+                    <Link className={classes.hover} component="button" underline="always" color="inherit"
+                      onClick={(e) => {
+                        trackClick(e, 'ratings-and-reviews', () => {
+                          setReviewBody(reviewData.body);
+                          setLinkClick(false);
+                        })
+                      }}>{'Show More'}</Link>
+                  )}
+                </Grid>
+              )}
+            </Grid>
+
+            <Grid item container style={{ marginTop: '14px' }} xs={12} >
+              <ImageList className={classes.imageList} cols={2.5}>
+                {reviewData.photos.map((photo) => (
+                  <ImageListItem style={{ width: 100, height: 100 }}>
+                  <ReviewPhoto photo={photo} key={photo.url}/>
+                  </ImageListItem>
+                ))}
+              </ImageList>
+            </Grid>
+          </Paper>
+        </Grid>
+
         {reviewData.recommend && (
           <Grid item xs={12} >
-            <Paper className={classes.paper}>
-              <Typography style={{ textAlign: 'flex-start' }}>
-                <FaRegCheckCircle />
-                {'  I recommend this product'}
-              </Typography>
+            <Paper elevation={0} className={classes.paper}>
+              <Grid container item xs={12} >
+                <Typography style={{ textAlign: 'flex-start' }}>
+                  <FaRegCheckCircle />
+                  {'  I recommend this product'}
+                </Typography>
+              </Grid>
+
+              {/* <Grid container item xs={12} >
+                <Grid item xs={1} >
+                  <FaRegCheckCircle style={{ justifyContent: 'center', alignSelf: 'center' }} />
+                </Grid>
+                <Grid item xs={11} >
+                  <Typography style={{ textAlign: 'flex-start' }}>
+                    {'  I recommend this product'}
+                  </Typography>
+                </Grid>
+              </Grid> */}
+
             </Paper>
           </Grid>
         )}
         {reviewData.response && (
           <Grid item xs={12} >
-            <Paper className={classes.paper} style={{ backgroundColor: '#D3D3D3' }}>{'Response: "\n"' + reviewData.response}</Paper>
+            <Paper elevation={0} className={classes.paper} style={{ backgroundColor: '#D3D3D3' }}>{'Response: "\n"' + reviewData.response}</Paper>
           </Grid>
         )}
+
         <Grid item xs={12} >
-          <Paper className={classes.paper}>{'Was this review helpful? '}
+          <Paper elevation={0} className={classes.paper}>{'Was this review helpful? '}
 
             <Link className={classes.hover} style={voteStyle1} component="button" underline="always" color="inherit"
-              onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
-                if (yesCount === reviewData.helpfulness && vote < 1) {
-                  setYesCount(yesCount + 1);
-                  setVote(vote + 1);
-                  setVoteStyle1({
-                    color: 'blue',
-                    fontWeight: 800
-                  })
-                }
-                else if (yesCount === reviewData.helpfulness + 1) {
-                  setYesCount(yesCount - 1);
-                  setVote(vote - 1);
-                  setVoteStyle1()
-                }
-              })
+              onClick={(e) => {
+                trackClick(e, 'ratings-and-reviews', () => {
+                  if (yesCount === reviewData.helpfulness && vote < 1) {
+                    setYesCount(yesCount + 1);
+                    setVote(vote + 1);
+                    setVoteStyle1({
+                      color: 'blue',
+                      fontWeight: 800
+                    })
+                  }
+                  else if (yesCount === reviewData.helpfulness + 1) {
+                    setYesCount(yesCount - 1);
+                    setVote(vote - 1);
+                    setVoteStyle1()
+                  }
+                })
               }}>
               {' Yes '}
             </Link>
             {'(' + yesCount + ') '}
 
             <Link className={classes.hover} style={voteStyle2} component="button" underline="always" color="inherit"
-              onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
-                if (noCount === 0 && vote < 1) {
-                  setNoCount(noCount + 1);
-                  setVote(vote + 1);
-                  setVoteStyle2({
-                    color: 'blue',
-                    fontWeight: 800
-                  })
-                }
-                else if (noCount === 1) {
-                  setNoCount(noCount - 1);
-                  setVote(vote - 1);
-                  setVoteStyle2()
-                }
-              })
+              onClick={(e) => {
+                trackClick(e, 'ratings-and-reviews', () => {
+                  if (noCount === 0 && vote < 1) {
+                    setNoCount(noCount + 1);
+                    setVote(vote + 1);
+                    setVoteStyle2({
+                      color: 'blue',
+                      fontWeight: 800
+                    })
+                  }
+                  else if (noCount === 1) {
+                    setNoCount(noCount - 1);
+                    setVote(vote - 1);
+                    setVoteStyle2()
+                  }
+                })
               }}>
               {' No '}
             </Link>

@@ -352,6 +352,7 @@ function Overview(props) {
     getProduct(pid)
       .then((response) => {
         setProductInfo(response.data);
+        props.grabName(response.data.name);
       })
       .catch((err) => { console.log('info', err) });
   }, [pid])

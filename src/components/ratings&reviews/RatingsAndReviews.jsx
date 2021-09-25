@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Ratings({ productId }) {
+function Ratings({ productId, productName }) {
 
   const classes = useStyles();
 
@@ -75,6 +75,15 @@ function Ratings({ productId }) {
     setStarSortResult(sorted);
   };
 
+  const [prodName, setProdName] = useState('');
+
+  useEffect(() => {
+    setProdName(productName);
+  },[productName])
+
+  useEffect(() => {
+    setProductId(productId)
+  }, [productId])
 
   useEffect(() => {
     if (starSortResult.length > 0) {
@@ -98,7 +107,6 @@ function Ratings({ productId }) {
 
 
     useEffect(() => {
-
     getAllReviews(pid, sortList, totalReviewsCount)
       .then((response) => {
         setTotalReviewsData(response.data.results);
@@ -130,20 +138,20 @@ function Ratings({ productId }) {
       <Container maxWidth="xl">
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
+            <Paper elevation={12} className={classes.paper}>
               <Typography className={classes.bold} variant="h5" display="inline">{'Ratings & Reviews'}</Typography>
             </Paper>
           </Grid>
 
           <Grid item xs={4}>
-            <Paper className={classes.paper} >
+            <Paper elevation={6} className={classes.paper} >
               <Breakdown reviewsMetaData={reviewsMetaData} starSort={starSort} setTotalReviewsCount={setTotalReviewsCount} />
             </Paper>
           </Grid>
 
 
           <Grid item xs={8}>
-            <Paper className={classes.paper}>
+            <Paper elevation={6} className={classes.paper}>
               <Typography variant="body1" display="inline">{'Showing ' + reviewCount + ' of ' + totalReviewsCount + ' reviews, sorted by '}</Typography>
 
               {starSortResult.length === 0 && (
@@ -161,12 +169,12 @@ function Ratings({ productId }) {
                 <Link variant="body1" style={{color: 'black'}} color="inherit" display="inline" >{' star count '}</Link>
               )}
               <Grid item xs={12} container >
-                <Paper className={classes.paper}  padding={5} style={{marginBottom: '16px'}}>
+                <Paper elevation={12} className={classes.paper}  padding={5} style={{marginBottom: '12px'}}>
                   <List style={{ maxHeight: '66vh', maxWidth: '100%', overflow: 'auto' }}>
                     {reviewsData.map((reviewData, index) =>
-
+                      <Paper variant="outlined" key={index} className={classes.paper} style={{marginBottom:'12px', border: '4px solid #D3D3D3'}} >
                       <ReviewTile spacing={4} padding={4} key={index} reviewData={reviewData} />
-
+                      </Paper>
                     )}
                   </List>
                 </Paper>
@@ -175,7 +183,7 @@ function Ratings({ productId }) {
               <Grid item container justifycontent='flex-start'>
                 {reviewCount < totalReviewsCount && (
                   <Grid item xs={3}>
-                  <Button  variant="contained" className={classes.formControl} spacing={1}  onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
+                  <Button variant="contained" className={classes.formControl} spacing={1}  onClick={(e)=>{trackClick(e, 'ratings-and-reviews', () => {
                     if (starSortResult.length === 0) {
                       if ((reviewCount + 2) > totalReviewsCount) {
                         setReviewCount(reviewCount + 1)
@@ -192,7 +200,7 @@ function Ratings({ productId }) {
                   </Grid>
                 )}
                 <Grid item xs={3}>
-                <WriteReview/>
+                <WriteReview name={prodName} pid={pid}/>
                 </Grid>
               </Grid>
             </Paper>

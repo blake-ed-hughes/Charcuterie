@@ -18,8 +18,8 @@ function Header(props) {
 
 
   return (
-    <header>
-      <Container maxWidth="xl" style={{backgroundColor: '#D3D3D3', borderBottom: "10px solid black"}}>
+    <header style={{backgroundColor: '#D3D3D3', borderBottom: "10px solid black"}}>
+      <Container maxWidth="xl" >
         <Grid container justifyContent="space-between" alignItems="flex-end">
           <Grid item>
             <h1 style={{color:'blue'}} >Charcuterie</h1>

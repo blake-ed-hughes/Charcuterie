@@ -80,14 +80,14 @@ function Breakdown({ reviewsMetaData, starSort, setTotalReviewsCount }) {
 
         <Grid item xs={12}>
 
-          <Paper className={classes.paper} style={{ height: 70 }}>
+          <Paper elevation={12} className={classes.paper} style={{ height: 70 }}>
             <Grid item xs={12} container spacing={1} >
 
               <Grid style={{ textAlign: 'right' }} item xs={2} padding={2} >
                 <Typography variant="h4" className={classes.bold}>{starAvgRating + ''}</Typography>
               </Grid>
               <Grid style={{ textAlign: 'center' }} item xs={8}>
-                <Rating name="quarter-rating" value={starAvgRating} precision={0.25} readOnly />
+                <Rating name="quarter-rating" value={starAvgRating} precision={0.25} size="large" readOnly />
               </Grid>
 
               <Grid style={{ textAlign: 'left' }} item xs={12} style={{ height: 20 }}>
@@ -100,7 +100,7 @@ function Breakdown({ reviewsMetaData, starSort, setTotalReviewsCount }) {
         </Grid>
 
         <Grid item xs={12} >
-          <Paper className={classes.paper} >
+          <Paper elevation={12} className={classes.paper} >
             <Typography variant="caption" style={{ height: 10 }}>
               {recPercent}{'% of reviewers recommend this product'}
             </Typography>
@@ -108,13 +108,13 @@ function Breakdown({ reviewsMetaData, starSort, setTotalReviewsCount }) {
         </Grid>
 
         <Grid item xs={12} >
-          <Paper className={classes.paper}>
+          <Paper elevation={12} className={classes.paper}>
             <RatingBreakdown starRatings={reviewsMetaData.ratings} starSort={starSort}/>
             </Paper>
         </Grid>
 
         <Grid item xs={12} >
-          <Paper className={classes.paper}>
+          <Paper elevation={12} className={classes.paper}>
           <Characteristics characteristicData={reviewsMetaData.characteristics}/>
             </Paper>
         </Grid>
