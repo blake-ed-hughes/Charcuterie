@@ -66,7 +66,6 @@ export default function QnA() {
   const [buttonName, setButtonName] = useState('MORE ANSWERED QUESTIONS');
 
   const openModal = () => {
-    // console.log('inside openModal function');
     return (<QuestionModal />);
   }
   const moreAnsweredQuestions = () => {
