@@ -91,11 +91,11 @@ To get a local copy up and running follow these simple steps.
    npm install
    ```
 3. Duplicate copy config_copy.js to config.js
-4. Set Api key within config.js
+4. Set API key within config.js
    ```JS
    const API_key = 'Your API key goes here';
    ```
-5. Compile and Build Files tobe served
+5. Compile and Build Files to be served
    ```sh
    npm run build
    ```
@@ -109,5 +109,5 @@ To get a local copy up and running follow these simple steps.
 <!-- USAGE EXAMPLES -->
 ## Usage and Intention
 
-The old client is an outdated client-facing retail web-portal has become significantly outdated and has been proven to be hurting sales numbers. Project Catwalk comprises a complete redesign of the retail portal designed to address this concern and modernize the site. The intention of the initial release is to build out a product page with product overview, ratings & reviews, and Q&A modules. This will be used to display individual products as customers select them.
+The old client is an outdated client-facing retail web-portal that has become significantly outdated and has been proven to be hurting sales numbers. Project Catwalk comprises a complete redesign of the retail portal designed to address this concern and modernize the site. The intention of the initial release is to build out a product page with a product overview, ratings & reviews, and Q&A modules. This will be used to display individual products as customers select them.
 
