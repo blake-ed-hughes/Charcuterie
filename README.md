@@ -59,11 +59,7 @@ $ npm start
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#usage">Usage and Intention</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
@@ -118,11 +114,16 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    npm install
    ```
-3. Compile and Build Files tobe served
+3. Duplicate copy config_copy.js and to config.js
+4. Set Api key within config.js
+   ```sh
+   const API_key = 'Your API key goes here';
+   ```
+5. Compile and Build Files tobe served
    ```sh
    npm run build
    ```
-4. Launch server to listen on port 3000
+6. Launch server to listen on port 3000
    ```sh
    npm start
    ```
@@ -130,18 +131,10 @@ This is an example of how to list things you need to use the software and how to
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Usage and Intention
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+The old client is an outdated client-facing retail web-portal has become significantly outdated and has been proven to be hurting sales numbers. Project Catwalk comprises a complete redesign of the retail portal designed to address this concern and modernize the site. The intention of the initial release is to build out a product page with product overview, ratings & reviews, and Q&A modules. This will be used to display individual products as customers select them.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
 
 
 
