@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import API_key from '../config';
 
 function getProduct (pid) {
   return Axios({
