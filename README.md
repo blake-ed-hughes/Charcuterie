@@ -59,7 +59,7 @@ $ npm start
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage and Intention</a></li>
+    <li><a href="#Usage-and-Intention">Usage and Intention</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
