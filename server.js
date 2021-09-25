@@ -33,6 +33,7 @@ app.get('/api', (req,res) => {
 })
 
 app.post('/api', (req,res) => {
+  console.log(req);
   auth.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-atx/${req.query.urlExt}`, req.body)
   .then((response) => {
     res.status(response.status).send(response.data)
