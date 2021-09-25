@@ -7,7 +7,7 @@
   <h4 align="center">Hack Reactor Frontend Capstone</h4>
 
   <p align="center">
-    Project Catwalk is a Front End Capstone in which we will redesign an outdated website. Based on a supplied Business Requirement Document and Visual Design Doc.
+    Project Catwalk is a Front End Capstone in which we redesigned an outdated website. Based on a supplied Business Requirement Document and Visual Designs Document.
     <br />
     <a href="https://github.com/Team-Asiago/FEC"><strong>Explore the docs »</strong></a>
     <br />
