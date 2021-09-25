@@ -78,9 +78,20 @@ $ npm start
 
 ### Built With
 
-* [](Webpack)
-* []()
-* []()
+* Node js
+* Express
+* Axios
+* Webpack
+* Babel
+* React
+* React-Dom
+* Material UI/ MUI
+* [DateFormat]()
+* [Emotion]()
+* [React-Icons]()
+* [React-Inner-Image-Zoom]()
+* [Compression]()
+* [Moment]()
 
 
 
@@ -101,11 +112,19 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/Team-Asiago/FEC.git
    ```
 2. Install NPM packages
    ```sh
    npm install
+   ```
+3. Compile and Build Files tobe served
+   ```sh
+   npm run build
+   ```
+4. Launch server to listen on port 3000
+   ```sh
+   npm start
    ```
 
 
