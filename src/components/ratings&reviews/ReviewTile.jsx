@@ -29,7 +29,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 'auto',
+  maxWidth: '75%',
   height: '90%',
   bgcolor: 'transparent',
   boxShadow: 24,
@@ -146,7 +146,7 @@ function ReviewTile({ reviewData }) {
                     <img src={item.url} onClick={handleOpen} />
                     <Modal open={open} onClose={handleClose}>
                       <Box sx={style} >
-                        <img src={item.url} height='100%' width='100%' />
+                        <img src={item.url} height='100%' width='100%'/>
                       </Box>
                     </Modal>
                   </ImageListItem>

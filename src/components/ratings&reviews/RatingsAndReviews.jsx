@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Ratings({ productId }) {
+function Ratings({ productId, productName }) {
 
   const classes = useStyles();
 
@@ -75,6 +75,12 @@ function Ratings({ productId }) {
     setStarSortResult(sorted);
   };
 
+  const [prodName, setProdName] = useState('');
+
+  useEffect(() => {
+    setProdName(productName);
+  },[productName])
+
   useEffect(() => {
     setProductId(productId)
   }, [productId])
@@ -101,7 +107,6 @@ function Ratings({ productId }) {
 
 
     useEffect(() => {
-
     getAllReviews(pid, sortList, totalReviewsCount)
       .then((response) => {
         setTotalReviewsData(response.data.results);
@@ -195,7 +200,7 @@ function Ratings({ productId }) {
                   </Grid>
                 )}
                 <Grid item xs={3}>
-                <WriteReview/>
+                <WriteReview name={prodName} pid={pid}/>
                 </Grid>
               </Grid>
             </Paper>

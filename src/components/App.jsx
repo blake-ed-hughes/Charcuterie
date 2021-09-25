@@ -7,14 +7,19 @@ import Grid from '@material-ui/core/Grid';
 import Axios from 'axios';
 
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
+      productName: 'name',
       productId: 38322
     });
     this.onSearch = this.onSearch.bind(this);
+    this.grabName = this.grabName.bind(this);
+  }
+
+  grabName(name) {
+    this.setState({productName: name})
   }
 
   onSearch(pid) {
@@ -45,14 +50,14 @@ class App extends React.Component {
         <Header onSearch={this.onSearch}/>
         <Grid container justifyContent="space-evenly" alignItems="center" spacing={3} padding={3} direction="column">
           <Grid item xs container>
-            <Overview productId={this.state.productId}/>
+            <Overview productId={this.state.productId} grabName={this.grabName}/>
           </Grid>
           <Grid item xs container>
             <Questions productId={this.state.productId}/>
           </Grid>
           <Grid item xs container>
             <span id='ratings'></span>
-            <Ratings productId={this.state.productId}/>
+            <Ratings productId={this.state.productId} productName={this.state.productName}/>
           </Grid>
         </Grid>
       </div>

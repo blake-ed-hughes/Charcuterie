@@ -87,7 +87,7 @@ function Breakdown({ reviewsMetaData, starSort, setTotalReviewsCount }) {
                 <Typography variant="h4" className={classes.bold}>{starAvgRating + ''}</Typography>
               </Grid>
               <Grid style={{ textAlign: 'center' }} item xs={8}>
-                <Rating name="quarter-rating" value={starAvgRating} precision={0.25} readOnly />
+                <Rating name="quarter-rating" value={starAvgRating} precision={0.25} size="large" readOnly />
               </Grid>
 
               <Grid style={{ textAlign: 'left' }} item xs={12} style={{ height: 20 }}>
