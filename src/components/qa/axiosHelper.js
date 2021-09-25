@@ -31,6 +31,19 @@ function postQuestion (obj) {
   })
 }
 
+function postAnswer (obj, pid) {
+  return Axios({
+    method: 'post',
+    url: '/api',
+    params: {
+      urlExt: `qa/questions/${pid}/answers`,
+    },
+    data: obj,
+    headers: {
+      'x-no-compression': true
+    }
+  })
+}
 
-export {getQuestions};
+export {getQuestions, postQuestion, postAnswer};
 
