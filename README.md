@@ -116,7 +116,7 @@ This is an example of how to list things you need to use the software and how to
    ```
 3. Duplicate copy config_copy.js and to config.js
 4. Set Api key within config.js
-   ```sh
+   ```JS
    const API_key = 'Your API key goes here';
    ```
 5. Compile and Build Files tobe served
