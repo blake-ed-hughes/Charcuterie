@@ -49,6 +49,7 @@ $ npm start
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+        <li><a href="contributors">Contributors</a> </li>
         <li><a href="#built-with">Built With</a> </li>
       </ul>
     </li>
@@ -60,7 +61,6 @@ $ npm start
       </ul>
     </li>
     <li><a href="#Usage-and-Intention">Usage and Intention</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -70,7 +70,10 @@ $ npm start
 ## About The Project
 <!-- Screen Shot when finished-->
 
-
+### Contributors
+* William Fink [Github](https://github.com/wwfink30)
+* Pingping Xiao [Github](https://github.com/Applebear912)
+* Blake Hughes [Github](https://github.com/blake-ed-hughes)
 
 ### Built With
 
@@ -87,7 +90,6 @@ $ npm start
 * [React-Icons]()
 * [React-Inner-Image-Zoom]()
 * [Compression]()
-* [Moment]()
 
 
 
@@ -135,41 +137,3 @@ This is an example of how to list things you need to use the software and how to
 
 The old client is an outdated client-facing retail web-portal has become significantly outdated and has been proven to be hurting sales numbers. Project Catwalk comprises a complete redesign of the retail portal designed to address this concern and modernize the site. The intention of the initial release is to build out a product page with product overview, ratings & reviews, and Q&A modules. This will be used to display individual products as customers select them.
 
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-
-<!-- LICENSE -->
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
-
-* []()
-* []()
-* []()
