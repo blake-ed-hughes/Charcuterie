@@ -5,25 +5,20 @@
 <details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#contributors">Contributors</a> </li>
-        <ul>
-        <li><a href="#william-fink">William Fink</a></li>
-        <li><a href="#blake-hughes">Blake Hughes</a></li>
-        <li><a href="#pingping-xiao">Pingping Xiao</a></li>
-      </ul>
-        <li><a href="#tech-stack">Tech Stack</a> </li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#contributors">Contributors</a> </li>
+    <ul>
+      <li><a href="#william-fink">William Fink</a></li>
+      <li><a href="#blake-hughes">Blake Hughes</a></li>
+      <li><a href="#pingping-xiao">Pingping Xiao</a></li>
+    </ul>
+    <li><a href="#tech-stack">Tech Stack</a> </li>
+    <li><a href="#getting-started">Getting Started</a>
+    <ul>
+      <li><a href="#prerequisites">Prerequisites</a></li>
+      <li><a href="#installation">Installation</a></li>
+    </ul>
+    <li><a href="#Application Demo">Application Demo</a> </li>
   </ol>
 </details>
 <br />
@@ -45,7 +40,7 @@ wwfink30@gmail.com
 
 Product Overview
 
- <img src="ReadmeImages/WilliamFink.jpg" alt="William Fink Headshot" height="200">
+ <img src="ReadMeImages/WilliamFink.jpeg" alt="William Fink Headshot" height="200">
 
 [![linkedin-shield]][william-linkedin]
 [![github-shield]][william-github]
@@ -58,20 +53,20 @@ blake.ed.hughes@gmail.com
 
 Ratings & Reviews
 
- <img src="ReadmeImages/BlakeHughes.png" alt="Blake Hughes Headshot" width="210">
+ <img src="ReadMeImages/BlakeHughes.jpeg" alt="Blake Hughes Headshot" width="210">
 
 [![linkedin-shield]][blake-linkedin]
 [![github-shield]][blake-github]
 
 <br/>
 
-## Pingping Xiao
+### Pingping Xiao
 
 xiaopingping1994@gmail.com
 
 Questions & Answers
 
- <img src="ReadmeImages/PingpingXiao.jpg" alt="Pingping Xiao Headshot" width="210">
+ <img src="ReadMeImages/PingpingXiao.jpeg" alt="Pingping Xiao Headshot" width="210">
 
 [![linkedin-shield]][pingping-linkedin]
 [![github-shield]][pingping-github]
