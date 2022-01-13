@@ -1,9 +1,13 @@
 # Charcuterie
-  <br />
+<br />
+
+## Modernization of an outdated retail site
+<br/>
 
 <!-- TABLE OF CONTENTS -->
+
 <details open="open">
-  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <summary>Table of Contents</summary>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#contributors">Contributors</a> </li>
@@ -18,7 +22,7 @@
       <li><a href="#prerequisites">Prerequisites</a></li>
       <li><a href="#installation">Installation</a></li>
     </ul>
-    <li><a href="#Application Demo">Application Demo</a> </li>
+    <li><a href="#application-demo">Application Demo</a> </li>
   </ol>
 </details>
 <br />
