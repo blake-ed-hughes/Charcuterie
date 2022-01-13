@@ -26,6 +26,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+<br>
+<div align="center">
+<img src="ReadMeImages/mainPage.png" width="600" height="auto" alt="Shows Main Feed"/>
+</div><br><br>
+
  A three person team was tasked to redesigned an outdated client-facing retail website (Catwalk) over the course of a week based on a supplied business requirement document.
 
  Charcuterie, a front end capstone project comprises the complete redesign and modernization of the site. The intention of this initial release is to first build out a product page with product overview, questions & answers and ratings & reviews modules.
@@ -130,7 +135,29 @@ To get a local copy up and running follow these simple steps.
 
 ## Application Demo
 
-<br />
+> ### Sorting reviews by category
+
+<br>
+<div align="center">
+<img src="ReadMeImages/cDemo1.gif" width="600" height="auto" alt="Page Navigation"/>
+</div>
+<br><br>
+
+> ### Sorting reviews by rating
+
+<br>
+<div align="center">
+<img src="ReadMeImages/cDemo2.gif" width="600" height="auto" alt="Page Navigation"/>
+</div>
+<br><br>
+
+> ### Adding a review
+
+<br>
+<div align="center">
+<img src="ReadMeImages/cDemo3.gif" width="600" height="auto" alt="Page Navigation"/>
+</div>
+<br><br>
 
 
 <!-- Contributor Links -->
