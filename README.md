@@ -1,21 +1,5 @@
-
-
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <h2 align="center">Project Catwalk (The Charcuterie Board)</h2>
-  <h4 align="center">Hack Reactor Frontend Capstone</h4>
-
-  <p align="center">
-    Project Catwalk is a Front End Capstone in which we redesigned an outdated website. Based on a supplied Business Requirement Document and Visual Designs Document.
-    <br />
-    <a href="https://github.com/Team-Asiago/FEC"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-  </p>
-</p>
-
-
+# Charcuterie
+  <br />
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -25,7 +9,12 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#contributors">Contributors</a> </li>
-        <li><a href="#built-with">Built With</a> </li>
+        <ul>
+        <li><a href="#william-fink">William Fink</a></li>
+        <li><a href="#blake-hughes">Blake Hughes</a></li>
+        <li><a href="#pingping-xiao">Pingping Xiao</a></li>
+      </ul>
+        <li><a href="#tech-stack">Tech Stack</a> </li>
       </ul>
     </li>
     <li>
@@ -35,37 +24,76 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#Usage-and-Intention">Usage and Intention</a></li>
   </ol>
 </details>
-
-
+<br />
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+
+ A three person team was tasked to redesigned an outdated client-facing retail website (Catwalk) over the course of a week based on a supplied business requirement document.
+
+ Charcuterie, a front end capstone project comprises the complete redesign and modernization of the site. The intention of this initial release is to first build out a product page with product overview, questions & answers and ratings & reviews modules.
+
 <!-- Screen Shot when finished-->
 
-### Contributors
-* William Fink [Github](https://github.com/wwfink30)
-* Pingping Xiao [Github](https://github.com/Applebear912)
-* Blake Hughes [Github](https://github.com/blake-ed-hughes)
+## Contributors
 
-### Built With
+### William Fink
 
-* Node js
-* Express
-* Axios
-* Webpack
-* Babel
-* React
-* React-Dom
-* Material UI/ MUI
-* [DateFormat](https://github.com/felixge/node-dateformat)
-* [Emotion](https://github.com/emotion-js/emotion)
-* [React-Icons](https://github.com/react-icons/react-icons)
-* [React-Inner-Image-Zoom](https://github.com/laurenashpole/react-inner-image-zoom)
-* [Compression](https://github.com/expressjs/compression)
+wwfink30@gmail.com
 
+Product Overview
+
+ <img src="ReadmeImages/WilliamFink.jpg" alt="William Fink Headshot" height="200">
+
+[![linkedin-shield]][william-linkedin]
+[![github-shield]][william-github]
+
+<br/>
+
+### Blake Hughes
+
+blake.ed.hughes@gmail.com
+
+Ratings & Reviews
+
+ <img src="ReadmeImages/BlakeHughes.png" alt="Blake Hughes Headshot" width="210">
+
+[![linkedin-shield]][blake-linkedin]
+[![github-shield]][blake-github]
+
+<br/>
+
+## Pingping Xiao
+
+xiaopingping1994@gmail.com
+
+Questions & Answers
+
+ <img src="ReadmeImages/PingpingXiao.jpg" alt="Pingping Xiao Headshot" width="210">
+
+[![linkedin-shield]][pingping-linkedin]
+[![github-shield]][pingping-github]
+
+<br />
+
+## Tech Stack
+
+- [NodeJS](https://nodejs.org/)
+- [React](https://reactjs.org/)
+- [MaterialUI](https://mui.com/)
+- [Axios](https://axios-http.com/)
+- [Express](https://expressjs.com/)
+- [Webpack](https://webpack.js.org/)
+- [Babel](https://babeljs.io/)
+- [DateFormat](https://github.com/felixge/node-dateformat)
+- [Emotion](https://github.com/emotion-js/emotion)
+- [React-Icons](https://github.com/react-icons/react-icons)
+- [React-Inner-Image-Zoom](https://github.com/laurenashpole/react-inner-image-zoom)
+- [Compression](https://github.com/expressjs/compression)
+
+<br />
 
 
 <!-- GETTING STARTED -->
@@ -103,11 +131,20 @@ To get a local copy up and running follow these simple steps.
    ```sh
    npm start
    ```
+<br />
+
+## Application Demo
+
+<br />
 
 
+<!-- Contributor Links -->
 
-<!-- USAGE EXAMPLES -->
-## Usage and Intention
-
-The old client is an outdated client-facing retail web-portal that has become significantly outdated and has been proven to be hurting sales numbers. Project Catwalk comprises a complete redesign of the retail portal designed to address this concern and modernize the site. The intention of the initial release is to build out a product page with a product overview, ratings & reviews, and Q&A modules. This will be used to display individual products as customers select them.
-
+[william-linkedin]: https://www.linkedin.com/in/william-w-fink/
+[william-github]: https://github.com/wwfink30
+[blake-linkedin]: https://www.linkedin.com/in/blakeedwardhughes/
+[blake-github]: https://github.com/blake-ed-hughes
+[pingping-linkedin]: https://www.linkedin.com/in/pingpingxiao/
+[pingping-github]: https://github.com/Applebear912
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-grey?style=for-the-badge&logo=linkedin
+[github-shield]: https://img.shields.io/badge/-GitHub-grey?style=for-the-badge&logo=github
